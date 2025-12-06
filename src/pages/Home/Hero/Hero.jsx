@@ -2,39 +2,28 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
+import banner1 from "../../../assets/Banner/banner1.png";
+import banner2 from "../../../assets/Banner/banner2.png";
+import banner3 from "../../../assets/Banner/banner3.png";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 const Hero = () => {
     const slides = [
-        {
-            id: 1,
-            title: "Find the Best Tutors Easily",
-            subtitle: "Browse verified tutors and connect instantly.",
-            img: "https://i.ibb.co/8bFB9db/slider1.jpg",
-        },
-        {
-            id: 2,
-            title: "Post Your Tuition Requirements",
-            subtitle: "Students can post tuition and get tutor applications.",
-            img: "https://i.ibb.co/nQfSqPg/slider2.jpg",
-        },
-        {
-            id: 3,
-            title: "Smart Tuition Management",
-            subtitle: "Track applications, payments, and ongoing tuitions.",
-            img: "https://i.ibb.co/1vf25QK/slider3.jpg",
-        },
+        { id: 1, img: banner1 },
+        { id: 2, img: banner2 },
+        { id: 3, img: banner3 },
     ];
 
     return (
-        <div className="w-full h-[450px] overflow-hidden">
+        <div className="w-full h-[500px] rounded-xl overflow-hidden">
             <Swiper
                 spaceBetween={0}
                 centeredSlides={true}
                 autoplay={{
-                    delay: 3500,
+                    delay: 3000,
                     disableOnInteraction: false,
                 }}
                 pagination={{
@@ -46,30 +35,15 @@ const Hero = () => {
             >
                 {slides.map((slide) => (
                     <SwiperSlide key={slide.id}>
-                        <div className="relative w-full h-[80vh]">
-                            {/* Background Image */}
+                        <div className="relative w-full h-[500px]">
                             <img
                                 src={slide.img}
-                                alt="slide"
+                                alt="Banner"
                                 className="w-full h-full object-cover"
                             />
 
-                            {/* Overlay */}
-                            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-
-                            {/* Text Content */}
-                            <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-6">
-                                <h1 className="text-3xl md:text-5xl font-bold mb-4">
-                                    {slide.title}
-                                </h1>
-                                <p className="text-lg md:text-xl mb-6">
-                                    {slide.subtitle}
-                                </p>
-
-                                <button className="btn btn-primary px-8">
-                                    Get Started
-                                </button>
-                            </div>
+                            {/* Optional Overlay (Remove if not needed) */}
+                            <div className="absolute inset-0 bg-black/10"></div>
                         </div>
                     </SwiperSlide>
                 ))}
