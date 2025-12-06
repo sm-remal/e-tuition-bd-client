@@ -5,6 +5,9 @@ import Tuitions from "../pages/Tuitions/Tuitions";
 import Tutors from "../pages/Tutors/Tutors";
 import About from "../pages/About/About";
 import Contact from "../pages/Contact/Contact";
+import AuthLayout from "../layouts/AuthLayout";
+import Login from "../pages/Auth/Login/Login";
+import Register from "../pages/Auth/Register/Register";
 
 export const router = createBrowserRouter([
   {
@@ -33,4 +36,18 @@ export const router = createBrowserRouter([
       }
     ]
   },
+  {
+    path: "/",
+    Component: AuthLayout,
+    children: [
+      {
+        path: "/login",
+        Component: Login,
+      },
+      {
+        path: "/register",
+        Component: Register,
+      }
+    ]
+  }
 ]);

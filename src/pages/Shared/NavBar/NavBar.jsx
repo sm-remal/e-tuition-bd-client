@@ -1,10 +1,11 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
 import { FaUserCircle } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
 
 const NavBar = () => {
 
-    const user = true; 
+    const {user} = useAuth()
     const handleLogout = () => {
         console.log("logout");
     };
@@ -132,8 +133,8 @@ const NavBar = () => {
             <div className="navbar-end text-white">
                 {!user && (
                     <div className="flex gap-3">
-                        <Link to="/login" className="btn btn-sm text-white">Login</Link>
-                        <Link to="/register" className="btn btn-sm btn-primary">Register</Link>
+                        <Link to="/login" className="text-white font-semibold">Login</Link>
+                        <Link to="/register" className="text-white font-semibold">Register</Link>
                     </div>
                 )}
 
@@ -149,7 +150,7 @@ const NavBar = () => {
 
                         <ul
                             tabIndex={0}
-                            className="menu dropdown-content bg-blue-900/95 text-white rounded-box w-40 p-2 shadow mt-4.5 -mr-3"
+                            className="menu dropdown-content bg-blue-900/95 text-white rounded-box w-40 p-2 shadow mt-4.5 -mr-4 md:-mr-7"
                         >
                             <li>
                                 <NavLink 
