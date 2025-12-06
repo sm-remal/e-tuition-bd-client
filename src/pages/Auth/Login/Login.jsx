@@ -4,13 +4,13 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
+// import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
 
-    const axiosSecure = useAxiosSecure();
+    // const axiosSecure = useAxiosSecure();
 
     // react-hook-form 
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
@@ -44,19 +44,20 @@ const Login = () => {
         googleSignIn()
             .then(res => {
                 console.log(res.user)
+                navigate(location.state || "/");
 
                 // Create user in the Database
-                const userInfo = {
-                    email: res.user.email,
-                    displayName: res.user.displayName,
-                    photoURL: res.user.photoURL,
-                }
+                // const userInfo = {
+                //     email: res.user.email,
+                //     displayName: res.user.displayName,
+                //     photoURL: res.user.photoURL,
+                // }
 
-                axiosSecure.post("/users", userInfo)
-                    .then(res => {
-                        console.log("User data has been stored", res.data)
-                        navigate(location.state || "/");
-                    })
+                // axiosSecure.post("/users", userInfo)
+                //     .then(res => {
+                //         console.log("User data has been stored", res.data)
+                //         navigate(location.state || "/");
+                //     })
             })
             .catch(error => {
                 console.log(error)
@@ -64,7 +65,7 @@ const Login = () => {
     }
 
     return (
-        <div className='flex justify-center items-center mt-16 min-h-full'>
+        <div className='flex justify-center items-center -mt-10 min-h-full'>
             <div className="card-body w-full max-w-md">
 
                 {/* ======= Heading ======= */}
@@ -76,10 +77,10 @@ const Login = () => {
                         Don’t have an account?
                         <Link
                             state={location.state}
-                            to="/registration"
+                            to="/register"
                             className="text-blue-600 ml-1 font-semibold hover:underline"
                         >
-                            Registration
+                            Register
                         </Link>
                     </p>
                 </div>
