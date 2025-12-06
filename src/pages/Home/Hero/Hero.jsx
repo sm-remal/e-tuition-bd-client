@@ -18,7 +18,7 @@ const Hero = () => {
     ];
 
     return (
-        <div className="w-full h-[500px] rounded-xl overflow-hidden">
+        <div className="w-full h-[35vh] md:h-[500px] rounded-xl overflow-hidden">
             <Swiper
                 spaceBetween={0}
                 centeredSlides={true}
@@ -35,7 +35,7 @@ const Hero = () => {
             >
                 {slides.map((slide) => (
                     <SwiperSlide key={slide.id}>
-                        <div className="relative w-full h-[500px]">
+                        <div className="relative w-full h-[35vh] md:h-[500px]">
                             <img
                                 src={slide.img}
                                 alt="Banner"
