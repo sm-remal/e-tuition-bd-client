@@ -36,7 +36,7 @@ const Register = () => {
                 axios.post(image_Api_URL, formData)
                     .then(res => {
                         const photoURL = res.data.data.url;
-
+                        // console.log(res.data)
                         // Update Firebase Profile
                         updateUserProfile(data.name, photoURL)
                             .then(() => {
@@ -87,7 +87,7 @@ const Register = () => {
     };
 
     return (
-        <div className='w-full px-4 sm:px-6 md:px-0 mt-12 flex justify-center items-center min-h-full'>
+        <div className='flex justify-center items-center bg-base-300 min-h-full'>
             <div className="card-body w-full max-w-md">
 
                 {/* Heading */}

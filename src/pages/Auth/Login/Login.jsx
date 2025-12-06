@@ -65,7 +65,7 @@ const Login = () => {
     }
 
     return (
-        <div className='flex justify-center items-center -mt-10 min-h-full'>
+        <div className='flex justify-center items-center mt-16 md:-mt-10 min-h-full'>
             <div className="card-body w-full max-w-md">
 
                 {/* ======= Heading ======= */}
