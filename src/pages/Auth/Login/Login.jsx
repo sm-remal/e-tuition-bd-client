@@ -4,65 +4,70 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
-// import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import axios from 'axios';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
 
-    // const axiosSecure = useAxiosSecure();
-
-    // react-hook-form 
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
-
-    // useAuth
     const { signInUser, googleSignIn } = useAuth();
 
     const location = useLocation();
     const navigate = useNavigate();
 
-    //  Find the current value
+    // Keep email state updated
     const watchedEmail = watch("email");
-
-    // watchedEmail set to email state 
     useEffect(() => {
         setEmail(watchedEmail || "");
     }, [watchedEmail]);
 
-    const handleLogin = (data) => {
-        signInUser(data.email, data.password)
-            .then((res) => {
-                console.log(res.user);
-                navigate(location.state || "/");
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
+    // ---------------------------
+    // Normal Email/Password Login
+    // ---------------------------
+    const handleLogin = async (data) => {
+        try {
+            const res = await signInUser(data.email, data.password);
+            console.log(res.user);
+            navigate(location.state || "/");
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-    const handleGoogleSignIn = () => {
-        googleSignIn()
-            .then(res => {
-                console.log(res.user)
-                navigate(location.state || "/");
+    // ---------------------------
+    // Google Sign-In Login
+    // ---------------------------
+    const handleGoogleSignIn = async () => {
+        try {
+            const res = await googleSignIn();
+            const user = res.user;
 
-                // Create user in the Database
-                // const userInfo = {
-                //     email: res.user.email,
-                //     displayName: res.user.displayName,
-                //     photoURL: res.user.photoURL,
-                // }
+            // Check if user already exists in DB
+            const { data } = await axios.get(`http://localhost:3000/users/${user.email}`);
 
-                // axiosSecure.post("/users", userInfo)
-                //     .then(res => {
-                //         console.log("User data has been stored", res.data)
-                //         navigate(location.state || "/");
-                //     })
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
+            if (!data.exists) {
+                // If user not exist → add to DB
+                const userInfo = {
+                    name: user.displayName,
+                    email: user.email,
+                    phone: "",
+                    role: "student",
+                    photoURL: user.photoURL,
+                    createdAt: new Date()
+                };
+
+                await axios.post("http://localhost:3000/users", userInfo);
+                console.log("New Google user added to DB");
+            } else {
+                console.log("Google user already exists in DB");
+            }
+
+            navigate(location.state || "/");
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     return (
         <div className='flex justify-center items-center mt-16 md:-mt-10 min-h-full'>
@@ -85,23 +90,22 @@ const Login = () => {
                     </p>
                 </div>
 
+                {/* ======= Form ======= */}
                 <form onSubmit={handleSubmit(handleLogin)}>
                     <fieldset className="fieldset">
 
-                        {/* ======= Email Input ======= */}
+                        {/* Email */}
                         <label className="label text-gray-800 font-medium">Email Address</label>
                         <input
                             type="email"
                             {...register("email", { required: true })}
-                            className="input w-full border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-gray-500 px-4"
+                            className="input w-full border border-gray-300 px-4"
                             placeholder="example@email.com"
                         />
-                        {errors.email?.type === "required" && (
-                            <p className='text-red-500'>Email is required</p>
-                        )}
+                        {errors.email && <p className='text-red-500'>Email is required</p>}
 
-                        {/* ======= Password ======= */}
-                        <label className="label text-gray-800 font-medium">Password</label>
+                        {/* Password */}
+                        <label className="label text-gray-800 font-medium mt-3">Password</label>
                         <div className="relative flex items-center">
                             <input
                                 type={showPassword ? "text" : "password"}
@@ -110,46 +114,23 @@ const Login = () => {
                                     minLength: 6,
                                     pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
                                 })}
-                                className="input w-full border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-gray-500 pr-12 px-4"
+                                className="input w-full border border-gray-300 pr-12 px-4"
                                 placeholder="Enter a strong password"
                             />
                             <div
                                 onClick={() => setShowPassword(!showPassword)}
                                 className="absolute right-4 text-gray-600 cursor-pointer z-10"
                             >
-                                {showPassword ? <FaEye size={18} /> : <FaEyeSlash size={18} />}
+                                {showPassword ? <FaEye /> : <FaEyeSlash />}
                             </div>
                         </div>
 
-                        {/* Password Errors */}
-                        {errors.password?.type === "required" && (
-                            <p className='text-red-500'>Password is required</p>
-                        )}
-                        {errors.password?.type === "minLength" && (
-                            <p className='text-red-500'>Password must be 6 characters or longer</p>
-                        )}
-                        {errors.password?.type === "pattern" && (
-                            <p className='text-red-500'>
-                                Password must include uppercase, lowercase, number & special character
-                            </p>
-                        )}
+                        {errors.password?.type === "required" && <p className='text-red-500'>Password is required</p>}
+                        {errors.password?.type === "minLength" && <p className='text-red-500'>Password must be 6+ characters</p>}
+                        {errors.password?.type === "pattern" && <p className='text-red-500'>Password must include uppercase, lowercase, number & special character</p>}
 
-                        {/* ======= Forgot Password Link ======= */}
-                        <div>
-                            <Link
-                                to="/forget-password"
-                                state={{ email }}
-                                className="link link-hover"
-                                onClick={() =>
-                                    navigate("/forget-password", { state: { email } })
-                                }
-                            >
-                                Forgot password?
-                            </Link>
-                        </div>
-
-                        {/* ======= Sign In Button ======= */}
-                        <button className="btn w-full bg-blue-600 text-white font-semibold mt-4 shadow-sm hover:shadow-lg transition-all duration-300">
+                        {/* Sign In Button */}
+                        <button className="btn w-full bg-blue-600 text-white font-semibold mt-4">
                             Sign In
                         </button>
 
@@ -159,15 +140,14 @@ const Login = () => {
                 {/* Divider */}
                 <div className="divider text-gray-400">or</div>
 
-                {/* ======= Google Sign In ======= */}
-                <div>
-                    <button
-                        onClick={handleGoogleSignIn}
-                        className="btn w-full btn-outline flex items-center justify-center gap-2 transition"
-                    >
-                        <FcGoogle size={20} /> Sign In with Google
-                    </button>
-                </div>
+                {/* Google Sign-In */}
+                <button
+                    onClick={handleGoogleSignIn}
+                    className="btn w-full btn-outline flex items-center justify-center gap-2"
+                >
+                    <FcGoogle size={20} /> Sign In with Google
+                </button>
+
             </div>
         </div>
     );
