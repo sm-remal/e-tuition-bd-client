@@ -1,8 +1,8 @@
 import React from 'react';
 import Logo from '../components/Logo/Logo';
 import { Link, Outlet } from 'react-router';
-// import authImage from "../assets/authImage.png"
 import loginImg from "../assets/Auth/loginImg.jpg"
+import { Toaster } from 'react-hot-toast';
 const AuthLayout = () => {
     return (
         <div className='min-h-screen bg-base-300 flex flex-col'>
@@ -31,6 +31,7 @@ const AuthLayout = () => {
                 </div>
 
             </div>
+            <Toaster /> 
         </div>
     );
 };

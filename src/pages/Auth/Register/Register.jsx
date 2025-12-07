@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
-import { Link, useLocation, useNavigate } from 'react-router';
-import useAuth from '../../../hooks/useAuth';
-import axios from 'axios';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { Link, useLocation, useNavigate } from "react-router";
+import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -17,81 +18,81 @@ const Register = () => {
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
 
-    // ===========================
+    // -------------------------------------
     // Handle Registration
-    // ===========================
-    const handleRegistration = (data) => {
+    // -------------------------------------
+    const handleRegistration = async (data) => {
+        try {
+            const profileImage = data.photo[0];
 
-        const profileImage = data.photo[0];
+            // Step 1: Firebase createUser
+            await createUser(data.email, data.password);
 
-        createUser(data.email, data.password)
-            .then(() => {
+            // Step 2: Upload image to imgbb
+            const formData = new FormData();
+            formData.append("image", profileImage);
 
-                // Upload image to imgbb
-                const formData = new FormData();
-                formData.append("image", profileImage);
+            const imageURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
+            const imgRes = await axios.post(imageURL, formData);
+            const photoURL = imgRes.data.data.url;
 
-                const image_Api_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
+            // Step 3: Update Firebase Profile
+            await updateUserProfile(data.name, photoURL);
 
-                axios.post(image_Api_URL, formData)
-                    .then(res => {
-                        const photoURL = res.data.data.url;
-                        // console.log(res.data)
-                        // Update Firebase Profile
-                        updateUserProfile(data.name, photoURL)
-                            .then(() => {
-                                navigate(location.state || "/");
-                                // Save user to database
-                                // const userInfo = {
-                                //     name: data.name,
-                                //     email: data.email,
-                                //     phone: data.phone,          
-                                //     role: data.role,             
-                                //     photoURL: photoURL,
-                                // };
+            // Step 4: Prepare user data for server
+            const userInfo = {
+                name: data.name,
+                email: data.email,
+                phone: data.phone,
+                role: data.role,
+                photoURL: photoURL,
+                createdAt: new Date()
+            };
 
-                                // axiosSecure.post("/users", userInfo)
-                                //     .then(() => {
-                                //         console.log("User stored in DB");
+            // Step 5: Save to server
+            await axiosSecure.post("/users", userInfo);
 
-                                //         navigate(location.state || "/");
-                                //     });
-                            })
-                            .catch(err => console.log(err));
-                    });
-            })
-            .catch(error => {
-                console.log(error);
-            });
+            navigate(location.state || "/");
+        } catch (error) {
+            if (error.code === "auth/email-already-in-use") {
+                toast.error("Email already in use. Please login.");
+                navigate("/login");
+            }
+            console.log(error);
+        }
+
     };
 
-    // ===========================
+    // -------------------------------------
     // GOOGLE SIGN IN
-    // ===========================
-    const handleGoogleSignIn = () => {
-        googleSignIn()
-            .then(res => {
+    // -------------------------------------
+    const handleGoogleSignIn = async () => {
+        try {
+            const res = await googleSignIn();
 
-                const userInfo = {
-                    name: res.user.displayName,
-                    email: res.user.email,
-                    phone: "",            // Optional
-                    role: "student",      // Default role
-                    photoURL: res.user.photoURL,
-                };
+            const userInfo = {
+                name: res.user.displayName,
+                email: res.user.email,
+                phone: "",
+                role: "student",
+                photoURL: res.user.photoURL,
+                createdAt: new Date()
+            };
 
-                axiosSecure.post("/users", userInfo)
-                    .then(() => navigate(location.state || "/"));
-            })
-            .catch(err => console.log(err));
+            await axios.post("http://localhost:3000/users", userInfo);
+
+            navigate(location.state || "/");
+        } catch (err) {
+            console.log(err);
+        }
     };
+
 
     return (
-        <div className='flex justify-center items-center bg-base-300 min-h-full'>
+        <div className="flex justify-center items-center bg-base-300 min-h-full">
             <div className="card-body w-full max-w-md">
-
                 {/* Heading */}
-                <div className='flex flex-col justify-center mb-4 text-center space-y-4'>
+                <div className="flex flex-col justify-center mb-4 text-center space-y-4">
                     <h1 className="text-3xl font-bold text-gray-700">
                         Create Your Account
                     </h1>
@@ -119,7 +120,7 @@ const Register = () => {
                             className="input w-full border border-gray-300 px-4"
                             placeholder="Enter your name"
                         />
-                        {errors.name && <p className='text-red-500'>Name is required</p>}
+                        {errors.name && <p className="text-red-500">Name is required</p>}
 
                         {/* Photo */}
                         <label className="label text-gray-800 font-medium mt-3">Upload Photo</label>
@@ -128,7 +129,7 @@ const Register = () => {
                             {...register("photo", { required: true })}
                             className="file-input w-full border border-gray-300"
                         />
-                        {errors.photo && <p className='text-red-500'>Photo is required</p>}
+                        {errors.photo && <p className="text-red-500">Photo is required</p>}
 
                         {/* Email */}
                         <label className="label text-gray-800 font-medium mt-3">Email Address</label>
@@ -138,15 +139,15 @@ const Register = () => {
                             className="input w-full border border-gray-300 px-4"
                             placeholder="example@email.com"
                         />
-                        {errors.email && <p className='text-red-500'>Email is required</p>}
+                        {errors.email && <p className="text-red-500">Email is required</p>}
 
-                        {/* Phone (International Format) */}
+                        {/* Phone */}
                         <label className="label text-gray-800 font-medium mt-3">Phone Number</label>
                         <input
                             type="text"
                             {...register("phone", {
                                 required: true,
-                                pattern: /^[0-9]{7,15}$/ // any country number
+                                pattern: /^[0-9]{7,15}$/ // accepts any country number
                             })}
                             className="input w-full border border-gray-300 px-4"
                             placeholder="Enter your phone number"
@@ -155,7 +156,7 @@ const Register = () => {
                             <p className="text-red-500">Phone number is required</p>
                         )}
                         {errors.phone?.type === "pattern" && (
-                            <p className="text-red-500">Enter a valid phone number (7–15 digits)</p>
+                            <p className="text-red-500">Enter a valid phone number</p>
                         )}
 
                         {/* Role */}
@@ -168,9 +169,7 @@ const Register = () => {
                             <option value="student">Student</option>
                             <option value="tutor">Tutor</option>
                         </select>
-                        {errors.role && (
-                            <p className="text-red-500">Role is required</p>
-                        )}
+                        {errors.role && <p className="text-red-500">Role is required</p>}
 
                         {/* Password */}
                         <label className="label text-gray-800 font-medium mt-3">Password</label>
@@ -180,8 +179,7 @@ const Register = () => {
                                 {...register("password", {
                                     required: true,
                                     minLength: 6,
-                                    pattern:
-                                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/
+                                    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
                                 })}
                                 className="input w-full border border-gray-300 pr-12 px-4"
                                 placeholder="Enter a strong password"
@@ -189,16 +187,15 @@ const Register = () => {
 
                             <div
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-4 text-gray-600 cursor-pointer">
+                                className="absolute right-4 text-gray-600 cursor-pointer"
+                            >
                                 {showPassword ? <FaEye /> : <FaEyeSlash />}
                             </div>
                         </div>
 
-                        {errors.password?.type === "required" && <p className='text-red-500'>Password is required</p>}
-                        {errors.password?.type === "minLength" && <p className='text-red-500'>Must be 6+ characters</p>}
-                        {errors.password?.type === "pattern" && (
-                            <p className='text-red-500'>
-                                Include uppercase, lowercase, number & special character
+                        {errors.password && (
+                            <p className="text-red-500">
+                                Password must include A-Z, a-z, number & special character
                             </p>
                         )}
 
@@ -210,7 +207,8 @@ const Register = () => {
                                 className="checkbox checkbox-sm checkbox-secondary"
                             />
                             <span className="text-gray-700">
-                                I agree to the <span className="text-green-600 font-medium">terms & conditions</span>.
+                                I agree to the{" "}
+                                <span className="text-green-600 font-medium">terms & conditions</span>.
                             </span>
                         </label>
                         {errors.terms && (
@@ -219,7 +217,7 @@ const Register = () => {
                             </p>
                         )}
 
-                        {/* Submit Button */}
+                        {/* Submit */}
                         <button className="btn w-full bg-blue-600 text-white font-semibold mt-4">
                             Sign Up
                         </button>
@@ -227,7 +225,6 @@ const Register = () => {
                     </fieldset>
                 </form>
 
-                {/* Divider */}
                 <div className="divider text-gray-400">or</div>
 
                 {/* Google Sign Up */}
