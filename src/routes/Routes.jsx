@@ -15,6 +15,7 @@ import AppliedTutors from "../pages/Dashboard/AppliedTutors/AppliedTutors";
 import PrivateRoutes from "./PrivateRoute";
 import TuitionManagement from "../pages/Dashboard/Admin/TuitionManagement/TuitionManagement";
 import UserManagement from "../pages/Dashboard/Admin/UserManagement/UserManagement";
+import TuitionDetails from "../pages/TuitionDetails/TuitionDetails";
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       {
         path: "tuitions",
         Component: Tuitions,
+      },
+      {
+        path: "tuition-details/:id",
+        Component: TuitionDetails,
       },
       {
         path: "tutors",
