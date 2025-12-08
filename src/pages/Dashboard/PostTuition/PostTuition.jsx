@@ -1,42 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BookOpen, MapPin, DollarSign, Calendar, FileText, Send, Loader2 } from 'lucide-react';
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import useAuth from '../../../hooks/useAuth';
 
 const PostTuition = () => {
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    subject: '',
-    class: '',
-    location: '',
-    budget: '',
-    schedule: '',
-    description: '',
-    requirements: ''
-  });
+  const navigate = useNavigate();
+  const { user } = useAuth(); // useAuth user is enough
 
-  const [errors, setErrors] = useState({});
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting }
+  } = useForm();
 
-  // Subject options
   const subjects = [
-    'Mathematics', 'Physics', 'Chemistry', 'Biology', 
-    'English', 'Bangla', 'ICT', 'Economics', 
-    'Accounting', 'Business Studies', 'History', 'Geography'
+    'Mathematics','Physics','Chemistry','Biology',
+    'English','Bangla','ICT','Economics',
+    'Accounting','Business Studies','History','Geography'
   ];
 
-  // Class options
   const classes = [
-    'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5',
-    'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10',
-    'Class 11', 'Class 12', 'O Level', 'A Level', 'University'
+    'Class 1','Class 2','Class 3','Class 4','Class 5',
+    'Class 6','Class 7','Class 8','Class 9','Class 10',
+    'Class 11','Class 12','O Level','A Level','University'
   ];
 
-  // Location options (Dhaka areas)
   const locations = [
-    'Dhanmondi', 'Gulshan', 'Banani', 'Mirpur', 'Uttara',
-    'Mohammadpur', 'Bashundhara', 'Motijheel', 'Farmgate', 'Tejgaon',
-    'Rampura', 'Badda', 'Kakrail', 'Malibagh', 'Elephant Road'
+    'Dhanmondi','Gulshan','Banani','Mirpur','Uttara',
+    'Mohammadpur','Bashundhara','Motijheel','Farmgate','Tejgaon',
+    'Rampura','Badda','Kakrail','Malibagh','Elephant Road'
   ];
 
-  // Schedule options
   const schedules = [
     'Daily - Morning (8AM-12PM)',
     'Daily - Afternoon (12PM-5PM)',
@@ -49,105 +46,49 @@ const PostTuition = () => {
     'Flexible Schedule'
   ];
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.subject.trim()) {
-      newErrors.subject = 'Subject is required';
-    }
-    if (!formData.class.trim()) {
-      newErrors.class = 'Class is required';
-    }
-    if (!formData.location.trim()) {
-      newErrors.location = 'Location is required';
-    }
-    if (!formData.budget || formData.budget <= 0) {
-      newErrors.budget = 'Valid budget is required';
-    }
-    if (!formData.schedule.trim()) {
-      newErrors.schedule = 'Schedule is required';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setLoading(true);
-
+  const onSubmit = async (data) => {
     try {
-      // Simulate API call
+      const token = localStorage.getItem("token");
+
       const tuitionData = {
-        ...formData,
-        status: 'Pending',
-        studentId: 'current-user-id', // Replace with actual user ID from context/auth
-        studentEmail: 'user@example.com', // Replace with actual email
-        createdAt: new Date().toISOString()
+        ...data,
+        budget: Number(data.budget),
+        status: "Pending",
+
+        // VERY IMPORTANT → user info attached here
+        studentId: user?._id,
+        studentEmail: user?.email,
+        studentName: user?.name,
+
+        applicationsCount: 0,
       };
 
-      // Real API call example:
-      // const response = await axios.post('/api/tuitions', tuitionData, {
-      //   headers: { Authorization: `Bearer ${token}` }
-      // });
+      const response = await axios.post(
+        "http://localhost:3000/tuitions",
+        tuitionData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      console.log('Tuition Data:', tuitionData);
-
-      // Simulate delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      // Success
-      alert('✅ Tuition posted successfully! It will be visible after admin approval.');
-      
-      // Reset form
-      setFormData({
-        subject: '',
-        class: '',
-        location: '',
-        budget: '',
-        schedule: '',
-        description: '',
-        requirements: ''
-      });
-
-      // Navigate to My Tuitions page
-      // For actual implementation use: navigate('/dashboard/my-tuitions');
-      console.log('Redirecting to My Tuitions...');
-
+      if (response.data.success) {
+        alert("Tuition posted successfully!");
+        reset();
+        navigate("/dashboard/my-tuitions");
+      }
     } catch (error) {
-      console.error('Error posting tuition:', error);
-      alert('❌ Failed to post tuition. Please try again.');
-    } finally {
-      setLoading(false);
+      console.log(error);
+      alert("Failed to post tuition.");
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        
-        {/* Header */}
+
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
             Post New Tuition
@@ -155,13 +96,12 @@ const PostTuition = () => {
           <p className="text-gray-600">Fill in the details to find the perfect tutor</p>
         </div>
 
-        {/* Form Card */}
         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-          <div className="space-y-6">
-            
-            {/* Subject & Class - Grid */}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+
+            {/* Subject & Class */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
+
               {/* Subject */}
               <div>
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
@@ -169,21 +109,16 @@ const PostTuition = () => {
                   Subject *
                 </label>
                 <select
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all ${
-                    errors.subject ? 'border-red-500' : 'border-gray-300'
+                  {...register("subject", { required: "Subject is required" })}
+                  className={`w-full px-4 py-3 border rounded-lg ${
+                    errors.subject ? "border-red-500" : "border-gray-300"
                   }`}
                 >
                   <option value="">Select Subject</option>
-                  {subjects.map(subject => (
-                    <option key={subject} value={subject}>{subject}</option>
+                  {subjects.map((s) => (
+                    <option key={s} value={s}>{s}</option>
                   ))}
                 </select>
-                {errors.subject && (
-                  <p className="text-red-500 text-sm mt-1">{errors.subject}</p>
-                )}
               </div>
 
               {/* Class */}
@@ -192,50 +127,43 @@ const PostTuition = () => {
                   <BookOpen className="w-4 h-4 text-blue-600" />
                   Class/Grade *
                 </label>
+
                 <select
-                  name="class"
-                  value={formData.class}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all ${
-                    errors.class ? 'border-red-500' : 'border-gray-300'
+                  {...register("class", { required: "Class is required" })}
+                  className={`w-full px-4 py-3 border rounded-lg ${
+                    errors.class ? "border-red-500" : "border-gray-300"
                   }`}
                 >
                   <option value="">Select Class</option>
-                  {classes.map(cls => (
+                  {classes.map((cls) => (
                     <option key={cls} value={cls}>{cls}</option>
                   ))}
                 </select>
-                {errors.class && (
-                  <p className="text-red-500 text-sm mt-1">{errors.class}</p>
-                )}
               </div>
+
             </div>
 
-            {/* Location & Budget - Grid */}
+            {/* Location & Budget */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
+
               {/* Location */}
               <div>
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
                   <MapPin className="w-4 h-4 text-blue-600" />
                   Location *
                 </label>
+
                 <select
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all ${
-                    errors.location ? 'border-red-500' : 'border-gray-300'
+                  {...register("location", { required: "Location is required" })}
+                  className={`w-full px-4 py-3 border rounded-lg ${
+                    errors.location ? "border-red-500" : "border-gray-300"
                   }`}
                 >
                   <option value="">Select Location</option>
-                  {locations.map(location => (
-                    <option key={location} value={location}>{location}, Dhaka</option>
+                  {locations.map((loc) => (
+                    <option key={loc} value={loc}>{loc}, Dhaka</option>
                   ))}
                 </select>
-                {errors.location && (
-                  <p className="text-red-500 text-sm mt-1">{errors.location}</p>
-                )}
               </div>
 
               {/* Budget */}
@@ -244,20 +172,18 @@ const PostTuition = () => {
                   <DollarSign className="w-4 h-4 text-blue-600" />
                   Budget (BDT/Month) *
                 </label>
+
                 <input
                   type="number"
-                  name="budget"
-                  value={formData.budget}
-                  onChange={handleChange}
-                  placeholder="e.g. 8000"
-                  min="0"
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all ${
-                    errors.budget ? 'border-red-500' : 'border-gray-300'
+                  {...register("budget", {
+                    required: "Budget is required",
+                    min: { value: 1, message: "Budget must be greater than 0" }
+                  })}
+                  className={`w-full px-4 py-3 border rounded-lg ${
+                    errors.budget ? "border-red-500" : "border-gray-300"
                   }`}
+                  placeholder="e.g. 8000"
                 />
-                {errors.budget && (
-                  <p className="text-red-500 text-sm mt-1">{errors.budget}</p>
-                )}
               </div>
             </div>
 
@@ -267,22 +193,18 @@ const PostTuition = () => {
                 <Calendar className="w-4 h-4 text-blue-600" />
                 Schedule *
               </label>
+
               <select
-                name="schedule"
-                value={formData.schedule}
-                onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all ${
-                  errors.schedule ? 'border-red-500' : 'border-gray-300'
+                {...register("schedule", { required: "Schedule is required" })}
+                className={`w-full px-4 py-3 border rounded-lg ${
+                  errors.schedule ? "border-red-500" : "border-gray-300"
                 }`}
               >
                 <option value="">Select Schedule</option>
-                {schedules.map(schedule => (
-                  <option key={schedule} value={schedule}>{schedule}</option>
+                {schedules.map((s) => (
+                  <option key={s} value={s}>{s}</option>
                 ))}
               </select>
-              {errors.schedule && (
-                <p className="text-red-500 text-sm mt-1">{errors.schedule}</p>
-              )}
             </div>
 
             {/* Description */}
@@ -291,13 +213,12 @@ const PostTuition = () => {
                 <FileText className="w-4 h-4 text-blue-600" />
                 Description (Optional)
               </label>
+
               <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
+                {...register("description")}
                 rows="4"
-                placeholder="Describe what you expect from the tutor..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                placeholder="Describe what you expect..."
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg"
               />
             </div>
 
@@ -307,34 +228,25 @@ const PostTuition = () => {
                 <FileText className="w-4 h-4 text-blue-600" />
                 Special Requirements (Optional)
               </label>
+
               <textarea
-                name="requirements"
-                value={formData.requirements}
-                onChange={handleChange}
+                {...register("requirements")}
                 rows="3"
-                placeholder="e.g. Female tutor preferred, Must have 3+ years experience..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                placeholder="e.g. Female tutor preferred..."
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg"
               />
             </div>
 
-            {/* Info Note */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-sm text-blue-800">
-                <strong>Note:</strong> Your tuition post will be reviewed by admin before it becomes visible to tutors. 
-                You will be notified once it's approved.
-              </p>
-            </div>
-
-            {/* Submit Button */}
+            {/* Submit */}
             <div className="flex gap-4 pt-4">
               <button
-                onClick={handleSubmit}
-                disabled={loading}
-                className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all ${
-                  loading ? 'opacity-70 cursor-not-allowed' : 'hover:scale-101'
-                }`}
+                disabled={isSubmitting}
+                className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r 
+                from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg ${
+                  isSubmitting ? "opacity-70" : "hover:scale-105"
+                } transition-all`}
               >
-                {loading ? (
+                {isSubmitting ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
                     Posting...
@@ -348,19 +260,17 @@ const PostTuition = () => {
               </button>
 
               <button
-                onClick={() => console.log('Cancel - Navigate to My Tuitions')}
-                className="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-semibold transition-all"
+                type="button"
+                onClick={() => navigate("/dashboard/my-tuitions")}
+                className="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-semibold"
               >
                 Cancel
               </button>
             </div>
-          </div>
+
+          </form>
         </div>
 
-        {/* Bottom Help Text */}
-        <div className="mt-6 text-center text-sm text-gray-600">
-          Need help? Contact us at <span className="text-blue-600 font-semibold">support@etuitionbd.com</span>
-        </div>
       </div>
     </div>
   );
