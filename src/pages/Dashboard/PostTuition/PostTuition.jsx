@@ -331,7 +331,7 @@ const PostTuition = () => {
                 onClick={handleSubmit}
                 disabled={loading}
                 className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all ${
-                  loading ? 'opacity-70 cursor-not-allowed' : 'hover:scale-105'
+                  loading ? 'opacity-70 cursor-not-allowed' : 'hover:scale-101'
                 }`}
               >
                 {loading ? (

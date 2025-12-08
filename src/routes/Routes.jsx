@@ -11,6 +11,8 @@ import Register from "../pages/Auth/Register/Register";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyTuitions from "../pages/Dashboard/MyTuitions/MyTuitions";
 import PostTuition from "../pages/Dashboard/PostTuition/PostTuition";
+import AppliedTutors from "../pages/Dashboard/AppliedTutors/AppliedTutors";
+import PrivateRoutes from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -55,7 +57,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashboardLayout></DashboardLayout>,
+    element: <PrivateRoutes><DashboardLayout></DashboardLayout></PrivateRoutes>,
     children: [
       {
         path: "my-tuitions",
@@ -64,6 +66,10 @@ export const router = createBrowserRouter([
       {
         path: "post-tuition",
         Component: PostTuition,
+      },
+      {
+        path: "apply-tutors",
+        Component: AppliedTutors,
       }
     ]
   }

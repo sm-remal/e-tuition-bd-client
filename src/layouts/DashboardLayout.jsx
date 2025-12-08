@@ -4,6 +4,7 @@ import Logo from '../components/Logo/Logo';
 import { PiAddressBookFill } from "react-icons/pi";
 import { IoHome } from "react-icons/io5";
 import { IoIosCreate } from "react-icons/io";
+import { IoSend } from "react-icons/io5";
 
 const DashboardLayout = () => {
     return (
@@ -50,6 +51,12 @@ const DashboardLayout = () => {
                                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Post Tuition">
                                 <IoIosCreate size={24}/>
                                 <span className="is-drawer-close:hidden">Post Tuition</span>
+                            </Link>
+                            <Link
+                                to={"/dashboard/apply-tutors"}
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Apply Tutors">
+                                <IoSend size={24}/>
+                                <span className="is-drawer-close:hidden">Apply Tutors</span>
                             </Link>
                         </li>
                     </ul>
