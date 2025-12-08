@@ -13,6 +13,8 @@ import MyTuitions from "../pages/Dashboard/MyTuitions/MyTuitions";
 import PostTuition from "../pages/Dashboard/PostTuition/PostTuition";
 import AppliedTutors from "../pages/Dashboard/AppliedTutors/AppliedTutors";
 import PrivateRoutes from "./PrivateRoute";
+import TuitionManagement from "../pages/Dashboard/Admin/TuitionManagement/TuitionManagement";
+import UserManagement from "../pages/Dashboard/Admin/UserManagement/UserManagement";
 
 export const router = createBrowserRouter([
   {
@@ -70,6 +72,16 @@ export const router = createBrowserRouter([
       {
         path: "apply-tutors",
         Component: AppliedTutors,
+      },
+
+      //---------- Admin Only Route ---------- //
+      {
+        path: "tuition-management",
+        element: <TuitionManagement></TuitionManagement>
+      },
+      {
+        path: "userManagement",
+        element: <UserManagement></UserManagement>
       }
     ]
   }

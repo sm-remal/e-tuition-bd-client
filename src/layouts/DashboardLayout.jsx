@@ -5,6 +5,7 @@ import { PiAddressBookFill } from "react-icons/pi";
 import { IoHome } from "react-icons/io5";
 import { IoIosCreate } from "react-icons/io";
 import { IoSend } from "react-icons/io5";
+import { IoIosListBox } from "react-icons/io";
 
 const DashboardLayout = () => {
     return (
@@ -57,6 +58,14 @@ const DashboardLayout = () => {
                                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Apply Tutors">
                                 <IoSend size={24}/>
                                 <span className="is-drawer-close:hidden">Apply Tutors</span>
+                            </Link>
+
+                             {/* --------- Admin ----------  */}
+                            <Link
+                                to={"/dashboard/tuition-management"}
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Tuition Management">
+                                <IoIosListBox size={24}/>
+                                <span className="is-drawer-close:hidden">Tuition Management</span>
                             </Link>
                         </li>
                     </ul>
