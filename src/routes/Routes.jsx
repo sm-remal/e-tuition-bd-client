@@ -8,6 +8,9 @@ import Contact from "../pages/Contact/Contact";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
+import DashboardLayout from "../layouts/DashboardLayout";
+import MyTuitions from "../pages/Dashboard/MyTuitions/MyTuitions";
+import PostTuition from "../pages/Dashboard/PostTuition/PostTuition";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +50,20 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      }
+    ]
+  },
+  {
+    path: "dashboard",
+    element: <DashboardLayout></DashboardLayout>,
+    children: [
+      {
+        path: "my-tuitions",
+        Component: MyTuitions,
+      },
+      {
+        path: "post-tuition",
+        Component: PostTuition,
       }
     ]
   }

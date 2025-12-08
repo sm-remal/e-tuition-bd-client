@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+// import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 
 const Register = () => {
@@ -16,7 +16,7 @@ const Register = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
-    const axiosSecure = useAxiosSecure();
+    // const axiosSecure = useAxiosSecure();
 
     // -------------------------------------
     // Handle Registration
@@ -25,10 +25,10 @@ const Register = () => {
         try {
             const profileImage = data.photo[0];
 
-            // Step 1: Firebase createUser
+            // Firebase createUser
             await createUser(data.email, data.password);
 
-            // Step 2: Upload image to imgbb
+            // Upload image to imgbb
             const formData = new FormData();
             formData.append("image", profileImage);
 
@@ -36,10 +36,10 @@ const Register = () => {
             const imgRes = await axios.post(imageURL, formData);
             const photoURL = imgRes.data.data.url;
 
-            // Step 3: Update Firebase Profile
+            // Update Firebase Profile
             await updateUserProfile(data.name, photoURL);
 
-            // Step 4: Prepare user data for server
+            // Prepare user data for server
             const userInfo = {
                 name: data.name,
                 email: data.email,
@@ -49,8 +49,8 @@ const Register = () => {
                 createdAt: new Date()
             };
 
-            // Step 5: Save to server
-            await axiosSecure.post("/users", userInfo);
+            // Save to server
+            await axios.post("http://localhost:3000/users", userInfo);
 
             navigate(location.state || "/");
         } catch (error) {
