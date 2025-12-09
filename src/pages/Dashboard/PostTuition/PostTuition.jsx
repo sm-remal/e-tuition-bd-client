@@ -7,7 +7,7 @@ import useAuth from '../../../hooks/useAuth';
 
 const PostTuition = () => {
   const navigate = useNavigate();
-  const { user } = useAuth(); // useAuth user is enough
+  const { user } = useAuth();
 
   const {
     register,
@@ -17,21 +17,21 @@ const PostTuition = () => {
   } = useForm();
 
   const subjects = [
-    'Mathematics','Physics','Chemistry','Biology',
-    'English','Bangla','ICT','Economics',
-    'Accounting','Business Studies','History','Geography'
+    'Mathematics', 'Physics', 'Chemistry', 'Biology',
+    'English', 'Bangla', 'ICT', 'Economics',
+    'Accounting', 'Business Studies', 'History', 'Geography'
   ];
 
   const classes = [
-    'Class 1','Class 2','Class 3','Class 4','Class 5',
-    'Class 6','Class 7','Class 8','Class 9','Class 10',
-    'Class 11','Class 12','O Level','A Level','University'
+    'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5',
+    'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10',
+    'Class 11', 'Class 12', 'O Level', 'A Level', 'University'
   ];
 
   const locations = [
-    'Dhanmondi','Gulshan','Banani','Mirpur','Uttara',
-    'Mohammadpur','Bashundhara','Motijheel','Farmgate','Tejgaon',
-    'Rampura','Badda','Kakrail','Malibagh','Elephant Road'
+    'Dhanmondi', 'Gulshan', 'Banani', 'Mirpur', 'Uttara',
+    'Mohammadpur', 'Bashundhara', 'Motijheel', 'Farmgate', 'Tejgaon',
+    'Rampura', 'Badda', 'Kakrail', 'Malibagh', 'Elephant Road'
   ];
 
   const schedules = [
@@ -48,30 +48,31 @@ const PostTuition = () => {
 
   const onSubmit = async (data) => {
     try {
-      const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("image", data.subjectImage[0]);
+
+      const imageUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
+      const imgRes = await axios.post(imageUrl, formData);
+      const subjectImageURL = imgRes.data.data.url;
 
       const tuitionData = {
         ...data,
         budget: Number(data.budget),
         status: "Pending",
+        applicationsCount: 0,
 
-        // VERY IMPORTANT → user info attached here
         studentId: user?._id,
         studentEmail: user?.email,
-        studentName: user?.name,
+        studentName: user?.displayName,
+        userImage: user?.photoURL,
 
-        applicationsCount: 0,
+        subjectImage: subjectImageURL,
       };
 
       const response = await axios.post(
         "http://localhost:3000/tuitions",
         tuitionData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers: { "Content-Type": "application/json" } }
       );
 
       if (response.data.success) {
@@ -79,6 +80,7 @@ const PostTuition = () => {
         reset();
         navigate("/dashboard/my-tuitions");
       }
+
     } catch (error) {
       console.log(error);
       alert("Failed to post tuition.");
@@ -119,6 +121,9 @@ const PostTuition = () => {
                     <option key={s} value={s}>{s}</option>
                   ))}
                 </select>
+                {errors.subject && (
+                  <p className="text-red-500 text-sm">{errors.subject.message}</p>
+                )}
               </div>
 
               {/* Class */}
@@ -139,6 +144,9 @@ const PostTuition = () => {
                     <option key={cls} value={cls}>{cls}</option>
                   ))}
                 </select>
+                {errors.class && (
+                  <p className="text-red-500 text-sm">{errors.class.message}</p>
+                )}
               </div>
 
             </div>
@@ -164,6 +172,10 @@ const PostTuition = () => {
                     <option key={loc} value={loc}>{loc}, Dhaka</option>
                   ))}
                 </select>
+
+                {errors.location && (
+                  <p className="text-red-500 text-sm">{errors.location.message}</p>
+                )}
               </div>
 
               {/* Budget */}
@@ -184,57 +196,94 @@ const PostTuition = () => {
                   }`}
                   placeholder="e.g. 8000"
                 />
+                {errors.budget && (
+                  <p className="text-red-500 text-sm">{errors.budget.message}</p>
+                )}
               </div>
             </div>
 
-            {/* Schedule */}
-            <div>
-              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                <Calendar className="w-4 h-4 text-blue-600" />
-                Schedule *
-              </label>
+            {/* Image & Schedule */}
+            <div className='flex justify-between items-center gap-6'>
+              
+              {/* Image Upload */}
+              <div className='flex-1'>
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
+                  <FileText className="w-4 h-4 text-blue-600" />
+                  Subject Image *
+                </label>
 
-              <select
-                {...register("schedule", { required: "Schedule is required" })}
-                className={`w-full px-4 py-3 border rounded-lg ${
-                  errors.schedule ? "border-red-500" : "border-gray-300"
-                }`}
-              >
-                <option value="">Select Schedule</option>
-                {schedules.map((s) => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
+                <input
+                  type="file"
+                  accept="image/*"
+                  {...register("subjectImage", { required: "Image is required" })}
+                  className="w-full border border-gray-300 rounded-lg p-3"
+                />
+
+                {errors.subjectImage && (
+                  <p className="text-red-500 text-sm">{errors.subjectImage.message}</p>
+                )}
+              </div>
+
+              {/* Schedule */}
+              <div className='flex-1'>
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
+                  <Calendar className="w-4 h-4 text-blue-600" />
+                  Schedule *
+                </label>
+
+                <select
+                  {...register("schedule", { required: "Schedule is required" })}
+                  className={`w-full px-4 py-3 border rounded-lg ${
+                    errors.schedule ? "border-red-500" : "border-gray-300"
+                  }`}
+                >
+                  <option value="">Select Schedule</option>
+                  {schedules.map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+
+                {errors.schedule && (
+                  <p className="text-red-500 text-sm">{errors.schedule.message}</p>
+                )}
+              </div>
+
             </div>
 
             {/* Description */}
             <div>
               <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
                 <FileText className="w-4 h-4 text-blue-600" />
-                Description (Optional)
+                Description *
               </label>
 
               <textarea
-                {...register("description")}
+                {...register("description", { required: "Description is required" })}
                 rows="4"
                 placeholder="Describe what you expect..."
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg"
               />
+              {errors.description && (
+                <p className="text-red-500 text-sm">{errors.description.message}</p>
+              )}
             </div>
 
             {/* Requirements */}
             <div>
               <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
                 <FileText className="w-4 h-4 text-blue-600" />
-                Special Requirements (Optional)
+                Special Requirements *
               </label>
 
               <textarea
-                {...register("requirements")}
+                {...register("requirements", { required: "Requirements is required" })}
                 rows="3"
                 placeholder="e.g. Female tutor preferred..."
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg"
               />
+              {errors.requirements && (
+                <p className="text-red-500 text-sm">{errors.requirements.message}</p>
+              )}
             </div>
 
             {/* Submit */}

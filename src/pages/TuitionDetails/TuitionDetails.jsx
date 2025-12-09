@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import axios from "axios";
+import dayjs from "dayjs";
 
 const TuitionDetails = () => {
   const { id } = useParams();
@@ -46,45 +47,94 @@ const TuitionDetails = () => {
 
   return (
     <div className="container mx-auto px-4 py-10">
-      
       {/* Back Button */}
       <button onClick={() => navigate(-1)} className="btn btn-outline mb-6">
         ← Back
       </button>
 
-      <div className="card shadow-xl bg-base-100 p-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          {tuition.subject} ({tuition.class})
-        </h1>
-
-        <p className="text-gray-600 mb-4">{tuition.description}</p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* Left Info */}
-          <div className="space-y-4">
-            <p><strong>Location:</strong> {tuition.location}</p>
-            <p><strong>Schedule:</strong> {tuition.schedule}</p>
-            <p><strong>Student Email:</strong> {tuition.studentEmail}</p>
-          </div>
-
-          {/* Right Info */}
-          <div className="space-y-4">
-            <p>
-              <strong>Budget:</strong>{" "}
-              <span className="text-green-600 font-bold">
-                ৳{tuition.budget?.toLocaleString()} / month
-              </span>
-            </p>
-
-            <p>
-              <strong>Total Applications:</strong> {tuition.applicationsCount || 0}
-            </p>
-          </div>
+      <div className="flex flex-col md:flex-row bg-white shadow-sm rounded-lg overflow-hidden">
+        {/* Left Side: Subject Image */}
+        <div className="md:w-1/3">
+          <img
+            src={tuition.subjectImage}
+            alt={tuition.subject}
+            className="w-full h-full object-cover"
+          />
         </div>
 
-        <div className="mt-8">
-          <button className="btn btn-primary">Apply Now</button>
+        {/* Right Side: Details */}
+        <div className="md:w-2/3 p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl font-bold text-gray-800">
+              {tuition.subject} ({tuition.class})
+            </h1>
+            {tuition.userImage && (
+              <img
+                src={tuition.userImage}
+                alt="Student"
+                className="w-12 h-12 rounded-full object-cover border-2 border-blue-500"
+                title="Student"
+              />
+            )}
+          </div>
+
+          {/* Description */}
+          {tuition.description && (
+            <p className="text-gray-600">{tuition.description}</p>
+          )}
+
+          {/* Requirements */}
+          {tuition.requirements && (
+            <p className="text-gray-600 italic">
+              <strong>Requirements:</strong> {tuition.requirements}
+            </p>
+          )}
+
+          {/* Info Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div className="space-y-2">
+              <p>
+                <strong>Location:</strong> {tuition.location}
+              </p>
+              <p>
+                <strong>Schedule:</strong> {tuition.schedule}
+              </p>
+              <p>
+                <strong>Student Email:</strong> {tuition.studentEmail}
+              </p>
+              <p>
+                <strong>Status:</strong>{" "}
+                <span
+                  className={`font-semibold ${
+                    tuition.status === "Pending" ? "text-yellow-500" : "text-green-600"
+                  }`}
+                >
+                  {tuition.status}
+                </span>
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <p>
+                <strong>Budget:</strong>{" "}
+                <span className="text-green-600 font-bold">
+                  ৳{tuition.budget?.toLocaleString()} / month
+                </span>
+              </p>
+              <p>
+                <strong>Total Applications:</strong> {tuition.applicationsCount || 0}
+              </p>
+              <p>
+                <strong>Created At:</strong>{" "}
+                {dayjs(tuition.createdAt).format("DD MMM, YYYY HH:mm")}
+              </p>
+            </div>
+          </div>
+
+          {/* Apply Button */}
+          <div className="mt-6">
+            <button className="btn btn-primary btn-lg">Apply Now</button>
+          </div>
         </div>
       </div>
     </div>
