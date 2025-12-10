@@ -28,6 +28,7 @@ const AppliedTutors = () => {
     fetchData();
   }, [email]);
 
+  // Approve 
   const handleApprove = (app) => {
     Swal.fire({
       title: "Approve Tutor?",
@@ -50,7 +51,8 @@ const AppliedTutors = () => {
       }
     });
   };
-
+  
+  // Reject 
   const handleReject = async (appId) => {
     try {
       const res = await axios.patch(
