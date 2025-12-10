@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const LatestTuitions = () => {
   const [tuitions, setTuitions] = useState([]);
@@ -32,7 +32,7 @@ const LatestTuitions = () => {
 
   return (
     <div className="my-10">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800">
+      <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-gray-800">
         Latest Tuitions
       </h2>
 
@@ -78,7 +78,9 @@ const LatestTuitions = () => {
           </div>
         ))}
       </div>
-
+        <div className="flex justify-center mt-10">
+            <Link to={"/tuitions"} className="btn bg-green-600 text-white">See All Tuitions</Link>
+        </div>
     </div>
   );
 };
