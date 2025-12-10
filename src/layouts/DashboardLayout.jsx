@@ -6,6 +6,7 @@ import { IoHome } from "react-icons/io5";
 import { IoIosCreate } from "react-icons/io";
 import { IoSend } from "react-icons/io5";
 import { IoIosListBox } from "react-icons/io";
+import { MdMobileScreenShare } from "react-icons/md";
 
 const DashboardLayout = () => {
     return (
@@ -59,6 +60,17 @@ const DashboardLayout = () => {
                                 <IoSend size={24}/>
                                 <span className="is-drawer-close:hidden">Apply Tutors</span>
                             </Link>
+
+                            {/* --------- Tutors ----------  */}
+                            <Link
+                                to={"/dashboard/my-applications"}
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Applications">
+                                <MdMobileScreenShare size={24}/>
+                                <span className="is-drawer-close:hidden">My Applications</span>
+                            </Link>
+
+
+
 
                              {/* --------- Admin ----------  */}
                             <Link
