@@ -9,6 +9,7 @@ import { IoIosListBox } from "react-icons/io";
 import { MdMobileScreenShare } from "react-icons/md";
 import { MdPayments } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
+import { MdAssignmentTurnedIn } from "react-icons/md";
 
 const DashboardLayout = () => {
     return (
@@ -81,6 +82,12 @@ const DashboardLayout = () => {
                                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Applications">
                                 <MdMobileScreenShare size={24}/>
                                 <span className="is-drawer-close:hidden">My Applications</span>
+                            </Link>
+                            <Link
+                                to={"/dashboard/ongoing-tuitions"}
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Ongoing Tuitions">
+                                <MdAssignmentTurnedIn size={24}/>
+                                <span className="is-drawer-close:hidden">Ongoing Tuitions</span>
                             </Link>
 
 

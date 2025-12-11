@@ -20,6 +20,7 @@ import MyApplications from "../pages/Dashboard/Tutors/MyApplications/MyApplicati
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess/PaymentSuccess";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import ProfileSettings from "../pages/Dashboard/ProfileSettings/ProfileSettings";
+import OngoingTuitions from "../pages/Dashboard/Tutors/OngoingTuitions/OngoingTuitions";
 
 export const router = createBrowserRouter([
   {
@@ -101,6 +102,10 @@ export const router = createBrowserRouter([
       {
         path: "my-applications",
         element: <MyApplications />
+      },
+      {
+        path: "ongoing-tuitions",
+        element: <OngoingTuitions />
       },
 
       //---------- Admin Only Route ---------- //
