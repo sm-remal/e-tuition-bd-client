@@ -22,6 +22,7 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import ProfileSettings from "../pages/Dashboard/ProfileSettings/ProfileSettings";
 import OngoingTuitions from "../pages/Dashboard/Tutors/OngoingTuitions/OngoingTuitions";
 import RevenueHistory from "../pages/Dashboard/Tutors/RevenueHistory/RevenueHistory";
+import ReportsAnalytics from "../pages/Dashboard/Admin/ReportsAnalytics/ReportsAnalytics";
 
 export const router = createBrowserRouter([
   {
@@ -115,12 +116,16 @@ export const router = createBrowserRouter([
 
       //---------- Admin Only Route ---------- //
       {
+        path: "users-management",
+        element: <UserManagement></UserManagement>
+      },
+      {
         path: "tuition-management",
         element: <TuitionManagement></TuitionManagement>
       },
       {
-        path: "userManagement",
-        element: <UserManagement></UserManagement>
+        path: "reports-analytics",
+        element: <ReportsAnalytics></ReportsAnalytics>
       }
     ]
   }

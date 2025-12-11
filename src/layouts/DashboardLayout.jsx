@@ -11,6 +11,8 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdAssignmentTurnedIn } from "react-icons/md";
 import { RiMoneyDollarBoxFill } from "react-icons/ri";
 import { TbBoxMultipleFilled } from "react-icons/tb";
+import { FaUserCog } from "react-icons/fa";
+import { FaSquarePollVertical } from "react-icons/fa6";
 
 const DashboardLayout = () => {
     return (
@@ -106,6 +108,18 @@ const DashboardLayout = () => {
                                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Tuition Management">
                                 <IoIosListBox size={24}/>
                                 <span className="is-drawer-close:hidden">Tuition Management</span>
+                            </Link>
+                            <Link
+                                to={"/dashboard/users-management"}
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Tuition Management">
+                                <FaUserCog size={24}/>
+                                <span className="is-drawer-close:hidden">Tuition Management</span>
+                            </Link>
+                            <Link
+                                to={"/dashboard/reports-analytics"}
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Reports Analytics">
+                                <FaSquarePollVertical size={24}/>
+                                <span className="is-drawer-close:hidden">Reports Analytics</span>
                             </Link>
                         </li>
                     </ul>
