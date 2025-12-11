@@ -17,6 +17,7 @@ import TuitionManagement from "../pages/Dashboard/Admin/TuitionManagement/Tuitio
 import UserManagement from "../pages/Dashboard/Admin/UserManagement/UserManagement";
 import TuitionDetails from "../pages/TuitionDetails/TuitionDetails";
 import MyApplications from "../pages/Dashboard/Tutors/MyApplications/MyApplications";
+import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess/PaymentSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ export const router = createBrowserRouter([
       {
         path: "apply-tutors",
         Component: AppliedTutors,
+      },
+      {
+        path: 'payment-success',
+        element: <PaymentSuccess />
       },
 
       // ---------- Tutors Only Route ---------- //
