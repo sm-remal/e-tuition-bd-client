@@ -12,29 +12,29 @@ const AppliedTutors = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Handle payment cancelled
+  // Handle payment statuses
   useEffect(() => {
-    const payment = searchParams.get('payment');
+    const payment = searchParams.get("payment");
 
-    if (payment === 'cancelled') {
+    if (payment === "cancelled") {
       Swal.fire({
-        icon: 'warning',
-        title: 'Payment Cancelled',
-        text: 'You cancelled the payment process',
+        icon: "warning",
+        title: "Payment Cancelled",
+        text: "You cancelled the payment process",
       });
       setSearchParams({});
-    } else if (payment === 'error') {
+    } else if (payment === "error") {
       Swal.fire({
-        icon: 'error',
-        title: 'Payment Error',
-        text: 'Something went wrong with the payment',
+        icon: "error",
+        title: "Payment Error",
+        text: "Something went wrong with the payment",
       });
       setSearchParams({});
-    } else if (payment === 'failed') {
+    } else if (payment === "failed") {
       Swal.fire({
-        icon: 'error',
-        title: 'Payment Failed',
-        text: 'Payment could not be completed',
+        icon: "error",
+        title: "Payment Failed",
+        text: "Payment could not be completed",
       });
       setSearchParams({});
     }
@@ -47,17 +47,16 @@ const AppliedTutors = () => {
     const fetchApplications = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(
-          "http://localhost:3000/applications/student",
-          { params: { email } }
-        );
+        const res = await axios.get("http://localhost:3000/applications/student", {
+          params: { email },
+        });
         setApplications(res.data.data);
       } catch (error) {
         console.error("Error fetching applications:", error);
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Failed to load applications',
+          icon: "error",
+          title: "Error",
+          text: "Failed to load applications",
         });
       } finally {
         setLoading(false);
@@ -67,7 +66,7 @@ const AppliedTutors = () => {
     fetchApplications();
   }, [email]);
 
-  // Approve → redirect to Stripe checkout
+  // Approve → Stripe checkout
   const handleApprove = async (app) => {
     const bdtAmount = app.expectedSalary;
     const usdAmount = Math.ceil(bdtAmount / 120);
@@ -79,7 +78,7 @@ const AppliedTutors = () => {
           <p class="mb-2">You are about to approve <strong>${app.tutorName}</strong></p>
           <div class="bg-gray-100 p-3 rounded-lg mt-3">
             <p class="text-sm"><strong>Amount:</strong> ৳${bdtAmount} BDT</p>
-            <p class="text-sm text-gray-600">(Approximately $${usdAmount} USD)</p>
+            <p class="text-sm text-gray-600">(≈ $${usdAmount} USD)</p>
           </div>
           <p class="text-xs text-gray-500 mt-3">⚠️ Payment will be processed in USD via Stripe</p>
         </div>
@@ -93,29 +92,24 @@ const AppliedTutors = () => {
 
     if (confirm.isConfirmed) {
       try {
-        // Show loading
         Swal.fire({
-          title: 'Processing...',
-          text: 'Redirecting to payment gateway',
+          title: "Processing...",
+          text: "Redirecting to payment gateway",
           allowOutsideClick: false,
           didOpen: () => {
             Swal.showLoading();
-          }
+          },
         });
 
-        const res = await axios.post(
-          "http://localhost:3000/create-checkout-session",
-          {
-            applicationId: app._id,
-            salary: app.expectedSalary,
-            studentEmail: email,
-            tutorName: app.tutorName,
-            tutorImage: app.tutorImage,
-          }
-        );
+        const res = await axios.post("http://localhost:3000/create-checkout-session", {
+          applicationId: app._id,
+          salary: app.expectedSalary,
+          studentEmail: email,
+          tutorName: app.tutorName,
+          tutorImage: app.tutorImage,
+        });
 
         if (res.data.url) {
-          // Redirect to Stripe Checkout
           window.location.assign(res.data.url);
         } else {
           Swal.fire("Error!", "No checkout URL received", "error");
@@ -131,24 +125,23 @@ const AppliedTutors = () => {
     }
   };
 
-  // Reject
+  // Reject tutor
   const handleReject = async (appId) => {
     const confirm = await Swal.fire({
-      title: 'Reject Tutor?',
+      title: "Reject Tutor?",
       text: "This action cannot be undone",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes, Reject',
-      cancelButtonText: 'Cancel',
-      confirmButtonColor: '#ef4444',
+      confirmButtonText: "Yes, Reject",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#ef4444",
     });
 
     if (confirm.isConfirmed) {
       try {
-        const res = await axios.patch(
-          `http://localhost:3000/applications/update-status/${appId}`,
-          { status: "Rejected" }
-        );
+        const res = await axios.patch(`http://localhost:3000/applications/update-status/${appId}`, {
+          status: "Rejected",
+        });
 
         if (res.data.success) {
           Swal.fire("Rejected!", "Tutor application has been rejected.", "success");
@@ -166,83 +159,93 @@ const AppliedTutors = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="loading loading-spinner loading-lg"></div>
+        <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
       </div>
     );
   }
 
   return (
-    <div className="p-5">
+    <div className="p-6 bg-white rounded-lg shadow-md">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">My Applied Tutors</h1>
-        <p className="text-gray-600 mt-1">Manage tutor applications for your tuitions</p>
+        <h1 className="text-3xl font-bold text-gray-800">My Applied Tutors</h1>
+        <p className="text-gray-500 mt-1">Manage tutor applications for your tuitions</p>
       </div>
 
       {applications.length === 0 ? (
         <div className="text-center py-12">
-          <div className="text-6xl mb-4">📚</div>
-          <p className="text-xl text-gray-500">No tutors have applied yet</p>
+          <div className="text-7xl mb-4 animate-bounce">📚</div>
+          <p className="text-xl text-gray-500 font-medium">No tutors have applied yet</p>
           <p className="text-sm text-gray-400 mt-2">Applications will appear here once tutors apply</p>
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="table w-full border">
+          <table className="table-auto w-full border border-gray-200 shadow-sm rounded-lg overflow-hidden">
             <thead className="bg-gray-100">
               <tr>
-                <th>#</th>
-                <th>Image</th>
-                <th>Tutor Name</th>
-                <th>Email</th>
-                <th>Qualifications</th>
-                <th>Experience</th>
-                <th>Salary (৳)</th>
-                <th>Status</th>
-                <th className="text-center">Actions</th>
+                <th className="px-4 py-2 text-left">#</th>
+                <th className="px-4 py-2">Image</th>
+                <th className="px-4 py-2 text-left">Tutor Name</th>
+                <th className="px-4 py-2 text-left">Email</th>
+                <th className="px-4 py-2 text-left">Qualifications</th>
+                <th className="px-4 py-2 text-left">Experience</th>
+                <th className="px-4 py-2 text-left">Salary (৳)</th>
+                <th className="px-4 py-2 text-left">Status</th>
+                <th className="px-4 py-2 text-center">Actions</th>
               </tr>
             </thead>
 
             <tbody>
               {applications.map((app, index) => (
-                <tr key={app._id} className="hover">
-                  <td>{index + 1}</td>
-                  <td>
+                <tr
+                  key={app._id}
+                  className="hover:bg-gray-50 transition duration-200 text-sm"
+                >
+                  <td className="px-4 py-3 align-middle">{index + 1}</td>
+
+                  <td className="px-4 py-3 align-middle">
                     <img
                       src={app.tutorImage}
-                      alt="Tutor"
+                      alt={app.tutorName}
                       className="w-12 h-12 rounded-full object-cover border"
                     />
                   </td>
-                  <td className="font-semibold">{app.tutorName}</td>
-                  <td className="text-sm text-gray-600">{app.tutorEmail}</td>
-                  <td>{app.qualifications}</td>
-                  <td>{app.experience}</td>
-                  <td className="text-green-700 font-bold">৳{app.expectedSalary}</td>
-                  <td>
+
+                  <td className="px-4 py-3 align-middle font-semibold text-gray-700">{app.tutorName}</td>
+
+                  <td className="px-4 py-3 align-middle text-gray-600">{app.tutorEmail}</td>
+
+                  <td className="px-4 py-3 align-middle">{app.qualifications}</td>
+
+                  <td className="px-4 py-3 align-middle">{app.experience}</td>
+
+                  <td className="px-4 py-3 align-middle text-green-700 font-bold">৳{app.expectedSalary}</td>
+
+                  <td className="px-4 py-3 align-middle">
                     <span
-                      className={`badge ${
-                        app.status === "Pending"
-                          ? "badge-warning"
+                      className={`px-2 py-1 rounded-full text-sm font-medium ${app.status === "Pending"
+                          ? "bg-yellow-100 text-yellow-800"
                           : app.status === "Approved"
-                          ? "badge-success"
-                          : "badge-error"
-                      }`}
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
                     >
                       {app.status}
                     </span>
                   </td>
-                  <td>
-                    <div className="flex items-center gap-2 justify-center">
+
+                  <td className="px-4 py-3 align-middle text-center">
+                    <div className="flex gap-2 justify-center items-center">
                       {app.status === "Pending" && (
                         <>
                           <button
                             onClick={() => handleApprove(app)}
-                            className="btn btn-success btn-xs"
+                            className="btn btn-success btn-xs h-8"
                           >
                             Approve
                           </button>
                           <button
                             onClick={() => handleReject(app._id)}
-                            className="btn btn-error btn-xs"
+                            className="btn btn-error btn-xs h-8"
                           >
                             Reject
                           </button>
@@ -261,6 +264,7 @@ const AppliedTutors = () => {
                 </tr>
               ))}
             </tbody>
+
           </table>
         </div>
       )}

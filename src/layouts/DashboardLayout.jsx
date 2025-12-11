@@ -89,6 +89,12 @@ const DashboardLayout = () => {
                                 <MdAssignmentTurnedIn size={24}/>
                                 <span className="is-drawer-close:hidden">Ongoing Tuitions</span>
                             </Link>
+                            <Link
+                                to={"/dashboard/revenue-history"}
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Revenue History">
+                                <MdAssignmentTurnedIn size={24}/>
+                                <span className="is-drawer-close:hidden">Revenue History</span>
+                            </Link>
 
 
 

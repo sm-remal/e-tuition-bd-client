@@ -21,6 +21,7 @@ import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess/PaymentSuc
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import ProfileSettings from "../pages/Dashboard/ProfileSettings/ProfileSettings";
 import OngoingTuitions from "../pages/Dashboard/Tutors/OngoingTuitions/OngoingTuitions";
+import RevenueHistory from "../pages/Dashboard/Tutors/RevenueHistory/RevenueHistory";
 
 export const router = createBrowserRouter([
   {
@@ -106,6 +107,10 @@ export const router = createBrowserRouter([
       {
         path: "ongoing-tuitions",
         element: <OngoingTuitions />
+      },
+      {
+        path: "revenue-history",
+        element: <RevenueHistory />
       },
 
       //---------- Admin Only Route ---------- //
