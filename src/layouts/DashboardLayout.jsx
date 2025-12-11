@@ -6,10 +6,11 @@ import { IoHome } from "react-icons/io5";
 import { IoIosCreate } from "react-icons/io";
 import { IoSend } from "react-icons/io5";
 import { IoIosListBox } from "react-icons/io";
-import { MdMobileScreenShare } from "react-icons/md";
 import { MdPayments } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { MdAssignmentTurnedIn } from "react-icons/md";
+import { RiMoneyDollarBoxFill } from "react-icons/ri";
+import { TbBoxMultipleFilled } from "react-icons/tb";
 
 const DashboardLayout = () => {
     return (
@@ -80,7 +81,7 @@ const DashboardLayout = () => {
                             <Link
                                 to={"/dashboard/my-applications"}
                                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Applications">
-                                <MdMobileScreenShare size={24}/>
+                                <TbBoxMultipleFilled size={24}/>
                                 <span className="is-drawer-close:hidden">My Applications</span>
                             </Link>
                             <Link
@@ -92,7 +93,7 @@ const DashboardLayout = () => {
                             <Link
                                 to={"/dashboard/revenue-history"}
                                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Revenue History">
-                                <MdAssignmentTurnedIn size={24}/>
+                                <RiMoneyDollarBoxFill size={24}/>
                                 <span className="is-drawer-close:hidden">Revenue History</span>
                             </Link>
 
