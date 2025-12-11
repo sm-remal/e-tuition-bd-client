@@ -19,6 +19,7 @@ import TuitionDetails from "../pages/TuitionDetails/TuitionDetails";
 import MyApplications from "../pages/Dashboard/Tutors/MyApplications/MyApplications";
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess/PaymentSuccess";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import ProfileSettings from "../pages/Dashboard/ProfileSettings/ProfileSettings";
 
 export const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: "apply-tutors",
         Component: AppliedTutors,
+      },
+      {
+        path: 'profile-settings',
+        element: <ProfileSettings />
       },
 
       // ---------- Payment Only Route ---------- //

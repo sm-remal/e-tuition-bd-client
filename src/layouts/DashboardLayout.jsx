@@ -8,6 +8,7 @@ import { IoSend } from "react-icons/io5";
 import { IoIosListBox } from "react-icons/io";
 import { MdMobileScreenShare } from "react-icons/md";
 import { MdPayments } from "react-icons/md";
+import { FaUserCircle } from "react-icons/fa";
 
 const DashboardLayout = () => {
     return (
@@ -66,6 +67,12 @@ const DashboardLayout = () => {
                                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment History">
                                 <MdPayments size={24}/>
                                 <span className="is-drawer-close:hidden">Payment History</span>
+                            </Link>
+                            <Link
+                                to={"/dashboard/profile-settings"}
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Profile Settings">
+                                <FaUserCircle size={24}/>
+                                <span className="is-drawer-close:hidden">Profile Settings</span>
                             </Link>
 
                             {/* --------- Tutors ----------  */}
