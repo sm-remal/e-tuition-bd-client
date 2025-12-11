@@ -110,6 +110,7 @@ const AppliedTutors = () => {
             salary: app.expectedSalary,
             studentEmail: email,
             tutorName: app.tutorName,
+            tutorImage: app.tutorImage,
           }
         );
 

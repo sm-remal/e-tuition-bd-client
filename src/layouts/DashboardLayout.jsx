@@ -7,6 +7,7 @@ import { IoIosCreate } from "react-icons/io";
 import { IoSend } from "react-icons/io5";
 import { IoIosListBox } from "react-icons/io";
 import { MdMobileScreenShare } from "react-icons/md";
+import { MdPayments } from "react-icons/md";
 
 const DashboardLayout = () => {
     return (
@@ -59,6 +60,12 @@ const DashboardLayout = () => {
                                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Apply Tutors">
                                 <IoSend size={24}/>
                                 <span className="is-drawer-close:hidden">Apply Tutors</span>
+                            </Link>
+                            <Link
+                                to={"/dashboard/payment-history"}
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment History">
+                                <MdPayments size={24}/>
+                                <span className="is-drawer-close:hidden">Payment History</span>
                             </Link>
 
                             {/* --------- Tutors ----------  */}
