@@ -12,7 +12,6 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import MyTuitions from "../pages/Dashboard/MyTuitions/MyTuitions";
 import PostTuition from "../pages/Dashboard/PostTuition/PostTuition";
 import AppliedTutors from "../pages/Dashboard/AppliedTutors/AppliedTutors";
-import PrivateRoutes from "./PrivateRoute";
 import TuitionManagement from "../pages/Dashboard/Admin/TuitionManagement/TuitionManagement";
 import UserManagement from "../pages/Dashboard/Admin/UserManagement/UserManagement";
 import TuitionDetails from "../pages/TuitionDetails/TuitionDetails";
@@ -23,6 +22,10 @@ import ProfileSettings from "../pages/Dashboard/ProfileSettings/ProfileSettings"
 import OngoingTuitions from "../pages/Dashboard/Tutors/OngoingTuitions/OngoingTuitions";
 import RevenueHistory from "../pages/Dashboard/Tutors/RevenueHistory/RevenueHistory";
 import ReportsAnalytics from "../pages/Dashboard/Admin/ReportsAnalytics/ReportsAnalytics";
+import TutorRoute from "./TutorRoute";
+import AdminRoute from "./AdminRoute";
+import PrivateRoute from "./PrivateRoute";
+import DashboardIndexRedirect from "./DashboardIndexRedirect";
 
 export const router = createBrowserRouter([
   {
@@ -71,7 +74,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <PrivateRoutes><DashboardLayout></DashboardLayout></PrivateRoutes>,
+    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
     children: [
       {
         path: "my-tuitions",
@@ -103,29 +106,29 @@ export const router = createBrowserRouter([
       // ---------- Tutors Only Route ---------- //
       {
         path: "my-applications",
-        element: <MyApplications />
+        element: <TutorRoute><MyApplications /></TutorRoute>
       },
       {
         path: "ongoing-tuitions",
-        element: <OngoingTuitions />
+        element: <TutorRoute><OngoingTuitions /></TutorRoute>
       },
       {
         path: "revenue-history",
-        element: <RevenueHistory />
+        element: <TutorRoute><RevenueHistory /></TutorRoute>
       },
 
       //---------- Admin Only Route ---------- //
       {
         path: "users-management",
-        element: <UserManagement></UserManagement>
+        element: <AdminRoute><UserManagement /></AdminRoute>
       },
       {
         path: "tuition-management",
-        element: <TuitionManagement></TuitionManagement>
+        element: <AdminRoute><TuitionManagement /></AdminRoute>
       },
       {
         path: "reports-analytics",
-        element: <ReportsAnalytics></ReportsAnalytics>
+        element: <AdminRoute><ReportsAnalytics /></AdminRoute>
       }
     ]
   }

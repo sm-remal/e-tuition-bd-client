@@ -2,12 +2,16 @@ import React from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { FaUserCircle } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
+import useRole from "../../../hooks/useRole";
 
 const NavBar = () => {
 
     const { user, signOutUser } = useAuth();
     const navigate = useNavigate()
+    const {role} = useRole()
 
+
+    
     const handleSignOut = () => {
         signOutUser()
             .then(res => {
@@ -15,6 +19,20 @@ const NavBar = () => {
                 navigate("/")
             })
             .catch(error => console.log(error));
+    }
+
+
+    const handleRole = () => {
+
+        if(role === "admin"){
+            navigate("/dashboard/users-management")
+        }
+        if(role === "student"){
+            navigate("/dashboard/my-tuitions")
+        }
+        if(role === "tutor"){
+            navigate("/dashboard/my-applications")
+        }
     }
 
     const activeStyle =
@@ -57,7 +75,7 @@ const NavBar = () => {
                                 <li><NavLink to="/register" className={normalStyle}>Register</NavLink></li>
                             </>
                         ) : (
-                            <li><NavLink to="/dashboard" className={({ isActive }) => isActive ? activeStyle : normalStyle}>Dashboard</NavLink></li>
+                            <li><button onClick={handleRole}  className=''>Dashboard</button></li>
                         )}
                     </ul>
                 </div>
@@ -102,7 +120,7 @@ const NavBar = () => {
                         </div>
 
                         <ul tabIndex={0} className="menu dropdown-content bg-blue-900/95 text-white rounded-box w-40 p-2 shadow mt-4 -mr-4 md:-mr-7">
-                            <li><NavLink to="/dashboard" className={({ isActive }) => isActive ? activeStyle : normalStyle}>Dashboard</NavLink></li>
+                            <li><button onClick={handleRole}  className=''>Dashboard</button></li>
                             <li>
                                 <button className="hover:text-gray-200" onClick={handleSignOut}>
                                     Logout

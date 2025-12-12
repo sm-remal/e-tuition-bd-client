@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router';
-import useAuth from '../hooks/useAuth';
 import Loading from '../components/Loading/Loading';
+import useAuth from '../hooks/useAuth';
 
-const PrivateRoutes = ({children}) => {
+const PrivateRoute = ({children}) => {
 
      const {user, loading} = useAuth()
 
@@ -22,4 +22,4 @@ const PrivateRoutes = ({children}) => {
    
 };
 
-export default PrivateRoutes;
+export default PrivateRoute;
