@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { DollarSign, TrendingUp, CreditCard, Calendar, Download, Eye } from 'lucide-react';
+import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
 
 const ReportsAnalytics = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [viewMode, setViewMode] = useState('recent'); 
+    const [viewMode, setViewMode] = useState('recent');
+    const [chartType, setChartType] = useState('bar'); // 'bar', 'line', 'area'
 
     const API_URL = 'http://localhost:3000';
 
@@ -17,7 +19,7 @@ const ReportsAnalytics = () => {
             setLoading(true);
             const response = await fetch(`${API_URL}/admin/reports`);
             const result = await response.json();
-            
+
             if (result.success) {
                 setData(result.data);
             }
@@ -51,7 +53,7 @@ const ReportsAnalytics = () => {
         if (!data) return;
 
         const transactions = viewMode === 'recent' ? data.recentTransactions : data.allTransactions;
-        
+
         const headers = ['Date', 'Transaction ID', 'Student Email', 'Tutor Name', 'Amount (BDT)', 'Amount (USD)', 'Status'];
         const rows = transactions.map(t => [
             formatDate(t.paidAt),
@@ -76,6 +78,30 @@ const ReportsAnalytics = () => {
         a.click();
     };
 
+    // Prepare chart data from monthlyData
+    const prepareChartData = () => {
+        if (!data || !data.monthlyData) return [];
+
+        return Object.entries(data.monthlyData).map(([month, amount]) => ({
+            month: month,
+            earnings: amount,
+            formattedEarnings: formatCurrency(amount)
+        }));
+    };
+
+    // Custom tooltip for chart
+    const CustomTooltip = ({ active, payload }) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className="bg-white p-3 shadow-lg rounded-lg border border-gray-200">
+                    <p className="text-sm font-semibold text-gray-800">{payload[0].payload.month}</p>
+                    <p className="text-lg font-bold text-blue-600">{payload[0].payload.formattedEarnings}</p>
+                </div>
+            );
+        }
+        return null;
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
@@ -93,6 +119,7 @@ const ReportsAnalytics = () => {
     }
 
     const transactions = viewMode === 'recent' ? data.recentTransactions : data.allTransactions;
+    const chartData = prepareChartData();
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -156,28 +183,117 @@ const ReportsAnalytics = () => {
 
                 {/* Monthly Earnings Chart */}
                 <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-                    <h2 className="text-xl font-bold text-gray-800 mb-6">Monthly Earnings Overview</h2>
-                    <div className="space-y-4">
-                        {Object.entries(data.monthlyData).slice(0, 6).map(([month, amount]) => {
-                            const maxAmount = Math.max(...Object.values(data.monthlyData));
-                            const percentage = (amount / maxAmount) * 100;
-                            
-                            return (
-                                <div key={month}>
-                                    <div className="flex items-center justify-between mb-2">
-                                        <span className="text-sm font-medium text-gray-700">{month}</span>
-                                        <span className="text-sm font-bold text-gray-900">{formatCurrency(amount)}</span>
-                                    </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                                        <div 
-                                            className="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full transition-all duration-500"
-                                            style={{ width: `${percentage}%` }}
-                                        ></div>
-                                    </div>
-                                </div>
-                            );
-                        })}
+                    <div className="flex items-center justify-between mb-6">
+                        <div>
+                            <h2 className="text-xl font-bold text-gray-800">Monthly Earnings Overview</h2>
+                            <p className="text-sm text-gray-600 mt-1">Last 12 months performance</p>
+                        </div>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => setChartType('bar')}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${chartType === 'bar'
+                                    ? 'bg-blue-600 text-white'
+                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    }`}
+                            >
+                                Bar Chart
+                            </button>
+                            <button
+                                onClick={() => setChartType('line')}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${chartType === 'line'
+                                    ? 'bg-blue-600 text-white'
+                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    }`}
+                            >
+                                Line Chart
+                            </button>
+                            <button
+                                onClick={() => setChartType('area')}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${chartType === 'area'
+                                    ? 'bg-blue-600 text-white'
+                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    }`}
+                            >
+                                Area Chart
+                            </button>
+                        </div>
                     </div>
+
+                    <ResponsiveContainer width="100%" height={400}>
+                        {chartType === 'bar' ? (
+                            <BarChart data={chartData}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                                <XAxis
+                                    dataKey="month"
+                                    stroke="#6b7280"
+                                    style={{ fontSize: '12px' }}
+                                />
+                                <YAxis
+                                    stroke="#6b7280"
+                                    style={{ fontSize: '12px' }}
+                                    tickFormatter={(value) => `৳${(value / 1000).toFixed(0)}k`}
+                                />
+                                <Tooltip content={<CustomTooltip />} />
+                                <Legend />
+                                <Bar
+                                    dataKey="earnings"
+                                    fill="#3b82f6"
+                                    radius={[8, 8, 0, 0]}
+                                    name="Earnings (BDT)"
+                                />
+                            </BarChart>
+                        ) : chartType === 'line' ? (
+                            <LineChart data={chartData}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                                <XAxis
+                                    dataKey="month"
+                                    stroke="#6b7280"
+                                    style={{ fontSize: '12px' }}
+                                />
+                                <YAxis
+                                    stroke="#6b7280"
+                                    style={{ fontSize: '12px' }}
+                                    tickFormatter={(value) => `৳${(value / 1000).toFixed(0)}k`}
+                                />
+                                <Tooltip content={<CustomTooltip />} />
+                                <Legend />
+                                <Line
+                                    type="monotone"
+                                    dataKey="earnings"
+                                    stroke="#3b82f6"
+                                    strokeWidth={3}
+                                    dot={{ fill: '#3b82f6', r: 5 }}
+                                    activeDot={{ r: 7 }}
+                                    name="Earnings (BDT)"
+                                />
+                            </LineChart>
+                        ) : (
+                            <AreaChart data={chartData}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                                <XAxis
+                                    dataKey="month"
+                                    stroke="#6b7280"
+                                    style={{ fontSize: '12px' }}
+                                />
+                                <YAxis
+                                    stroke="#6b7280"
+                                    style={{ fontSize: '12px' }}
+                                    tickFormatter={(value) => `৳${(value / 1000).toFixed(0)}k`}
+                                />
+                                <Tooltip content={<CustomTooltip />} />
+                                <Legend />
+                                <Area
+                                    type="monotone"
+                                    dataKey="earnings"
+                                    stroke="#3b82f6"
+                                    fill="#3b82f6"
+                                    fillOpacity={0.3}
+                                    strokeWidth={2}
+                                    name="Earnings (BDT)"
+                                />
+                            </AreaChart>
+                        )}
+                    </ResponsiveContainer>
                 </div>
 
                 {/* Transaction History */}
