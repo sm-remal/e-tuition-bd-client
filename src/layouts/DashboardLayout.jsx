@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Outlet } from 'react-router';
+import { NavLink, Outlet } from 'react-router';
 import Logo from '../components/Logo/Logo';
 import { PiAddressBookFill } from "react-icons/pi";
 import { IoHome } from "react-icons/io5";
@@ -62,9 +62,15 @@ const DashboardLayout = () => {
         );
     }
 
+    // Active and normal styles for NavLink
+    const getNavLinkClass = (isActive) => {
+        return isActive 
+            ? "is-drawer-close:tooltip is-drawer-close:tooltip-right text-blue-600"
+            : "is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-blue-50";
+    };
 
     return (
-        <div className="drawer lg:drawer-open">
+        <div className="drawer lg:drawer-open max-w-screen-2xl m-auto max-xl:max-w-7xl max-lg:max-w-5xl max-md:max-w-3xl max-sm:max-w-screen-sm">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
                 {/* Navbar */}
@@ -90,99 +96,108 @@ const DashboardLayout = () => {
                     <ul className="menu w-full grow">
                         {/* List item */}
                         <li>
-                            <Link
+                            <NavLink
                                 to={"/"}
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
+                                className={({ isActive }) => getNavLinkClass(isActive)}
+                                data-tip="Homepage">
                                 <IoHome size={24} />
                                 <span className="is-drawer-close:hidden">Homepage</span>
-                            </Link>
+                            </NavLink>
                         </li>
 
                         {/* ---------- Student Route ---------- */}
                         <li>
                             {userRole === "student" && (
                                 <>
-                                    <Link
+                                    <NavLink
                                         to={"/dashboard/my-tuitions"}
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Tuitions">
-                                        <PiAddressBookFill size={24} />
+                                        className={({ isActive }) => getNavLinkClass(isActive)}
+                                        data-tip="My Tuitions">
+                                        <PiAddressBookFill size={28} />
                                         <span className="is-drawer-close:hidden">My Tuitions</span>
-                                    </Link>
-                                    <Link
+                                    </NavLink>
+                                    <NavLink
                                         to={"/dashboard/post-tuition"}
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Post Tuition">
-                                        <IoIosCreate size={24} />
+                                        className={({ isActive }) => getNavLinkClass(isActive)}
+                                        data-tip="Post Tuition">
+                                        <IoIosCreate size={28} />
                                         <span className="is-drawer-close:hidden">Post Tuition</span>
-                                    </Link>
-                                    <Link
+                                    </NavLink>
+                                    <NavLink
                                         to={"/dashboard/apply-tutors"}
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Apply Tutors">
-                                        <IoSend size={24} />
+                                        className={({ isActive }) => getNavLinkClass(isActive)}
+                                        data-tip="Apply Tutors">
+                                        <IoSend size={28} />
                                         <span className="is-drawer-close:hidden">Apply Tutors</span>
-                                    </Link>
-                                    <Link
+                                    </NavLink>
+                                    <NavLink
                                         to={"/dashboard/payment-history"}
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment History">
-                                        <MdPayments size={24} />
+                                        className={({ isActive }) => getNavLinkClass(isActive)}
+                                        data-tip="Payment History">
+                                        <MdPayments size={28} />
                                         <span className="is-drawer-close:hidden">Payment History</span>
-                                    </Link>
-                                    <Link
+                                    </NavLink>
+                                    <NavLink
                                         to={"/dashboard/profile-settings"}
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Profile Settings">
-                                        <FaUserCircle size={24} />
+                                        className={({ isActive }) => getNavLinkClass(isActive)}
+                                        data-tip="Profile Settings">
+                                        <FaUserCircle size={28} />
                                         <span className="is-drawer-close:hidden">Profile Settings</span>
-                                    </Link>
+                                    </NavLink>
                                 </>
                             )}
 
                             {/* --------- Tutors ----------  */}
                             {userRole === "tutor" && (
                                 <>
-                                    <Link
+                                    <NavLink
                                         to={"/dashboard/my-applications"}
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Applications">
-                                        <TbBoxMultipleFilled size={24} />
+                                        className={({ isActive }) => getNavLinkClass(isActive)}
+                                        data-tip="My Applications">
+                                        <TbBoxMultipleFilled size={28} />
                                         <span className="is-drawer-close:hidden">My Applications</span>
-                                    </Link>
-                                    <Link
+                                    </NavLink>
+                                    <NavLink
                                         to={"/dashboard/ongoing-tuitions"}
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Ongoing Tuitions">
-                                        <MdAssignmentTurnedIn size={24} />
+                                        className={({ isActive }) => getNavLinkClass(isActive)}
+                                        data-tip="Ongoing Tuitions">
+                                        <MdAssignmentTurnedIn size={28} />
                                         <span className="is-drawer-close:hidden">Ongoing Tuitions</span>
-                                    </Link>
-                                    <Link
+                                    </NavLink>
+                                    <NavLink
                                         to={"/dashboard/revenue-history"}
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Revenue History">
-                                        <RiMoneyDollarBoxFill size={24} />
+                                        className={({ isActive }) => getNavLinkClass(isActive)}
+                                        data-tip="Revenue History">
+                                        <RiMoneyDollarBoxFill size={28} />
                                         <span className="is-drawer-close:hidden">Revenue History</span>
-                                    </Link>
+                                    </NavLink>
                                 </>
                             )}
-
-
-
 
                             {/* --------- Admin ----------  */}
                             {userRole === "admin" && (
                                 <>
-                                    <Link
+                                    <NavLink
                                         to={"/dashboard/tuition-management"}
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Tuition Management">
-                                        <IoIosListBox size={24} />
+                                        className={({ isActive }) => getNavLinkClass(isActive)}
+                                        data-tip="Tuition Management">
+                                        <IoIosListBox size={28} />
                                         <span className="is-drawer-close:hidden">Tuition Management</span>
-                                    </Link>
-                                    <Link
+                                    </NavLink>
+                                    <NavLink
                                         to={"/dashboard/users-management"}
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="User Management">
-                                        <FaUserCog size={24} />
+                                        className={({ isActive }) => getNavLinkClass(isActive)}
+                                        data-tip="User Management">
+                                        <FaUserCog size={28} />
                                         <span className="is-drawer-close:hidden">User Management</span>
-                                    </Link>
-                                    <Link
+                                    </NavLink>
+                                    <NavLink
                                         to={"/dashboard/reports-analytics"}
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Reports Analytics">
-                                        <FaSquarePollVertical size={24} />
+                                        className={({ isActive }) => getNavLinkClass(isActive)}
+                                        data-tip="Reports Analytics">
+                                        <FaSquarePollVertical size={28} />
                                         <span className="is-drawer-close:hidden">Reports Analytics</span>
-                                    </Link>
+                                    </NavLink>
                                 </>
                             )}
                         </li>
@@ -194,4 +209,3 @@ const DashboardLayout = () => {
 };
 
 export default DashboardLayout;
-

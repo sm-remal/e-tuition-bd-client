@@ -18,7 +18,7 @@ const Hero = () => {
     ];
 
     return (
-        <div className="w-full h-[35vh] md:h-[500px] rounded-xl overflow-hidden">
+        <div className="w-full h-[35vh] md:h-[500px] overflow-hidden">
             <Swiper
                 spaceBetween={0}
                 centeredSlides={true}

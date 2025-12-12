@@ -119,13 +119,42 @@ const NavBar = () => {
                             )}
                         </div>
 
-                        <ul tabIndex={0} className="menu dropdown-content bg-blue-900/95 text-white rounded-box w-40 p-2 shadow mt-4 -mr-4 md:-mr-7">
-                            <li><button onClick={handleRole} className=''>Dashboard</button></li>
-                            <li>
-                                <button className="hover:text-gray-200" onClick={handleSignOut}>
-                                    Logout
-                                </button>
-                            </li>
+                        <ul tabIndex={0} className="menu dropdown-content bg-white text-gray-800 rounded-lg w-64 p-0 shadow-xl mt-4 -mr-4 md:-mr-7 overflow-hidden">
+                            {/* User Info Section */}
+                            <div className="px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+                                <div className="flex items-center gap-3">
+                                    <div className="flex-1 min-w-0">
+                                        <p className="font-semibold text-sm truncate">{user?.displayName || "User"}</p>
+                                        <p className="text-xs opacity-90 truncate">{user?.email}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Menu Items */}
+                            <div className="py-2">
+                                <li>
+                                    <button
+                                        onClick={handleRole}
+                                        className="flex items-center gap-3 px-4 py-2.5 hover:bg-blue-50 text-gray-700 hover:text-blue-600 transition-colors"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                        </svg>
+                                        <span className="font-medium">Dashboard</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        className="flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 text-gray-700 hover:text-red-600 transition-colors"
+                                        onClick={handleSignOut}
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                        </svg>
+                                        <span className="font-medium">Logout</span>
+                                    </button>
+                                </li>
+                            </div>
                         </ul>
                     </div>
                 )}

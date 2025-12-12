@@ -8,9 +8,11 @@ const Home = () => {
     return (
         <div>
             <Hero></Hero>
-            <LatestTuitions></LatestTuitions>
-            <HowItWorks></HowItWorks>
-            <WhyChooseUs></WhyChooseUs>
+            <div className='px-4 md:px-6'>
+                <LatestTuitions></LatestTuitions>
+                <HowItWorks></HowItWorks>
+                <WhyChooseUs></WhyChooseUs>
+            </div>
         </div>
     );
 };

@@ -112,7 +112,7 @@ const PostTuition = () => {
                 </label>
                 <select
                   {...register("subject", { required: "Subject is required" })}
-                  className={`w-full px-4 py-3 border rounded-lg ${
+                  className={`w-full px-4 py-3 border rounded-lg select ${
                     errors.subject ? "border-red-500" : "border-gray-300"
                   }`}
                 >
@@ -135,7 +135,7 @@ const PostTuition = () => {
 
                 <select
                   {...register("class", { required: "Class is required" })}
-                  className={`w-full px-4 py-3 border rounded-lg ${
+                  className={`w-full px-4 py-3 border rounded-lg select ${
                     errors.class ? "border-red-500" : "border-gray-300"
                   }`}
                 >
@@ -163,7 +163,7 @@ const PostTuition = () => {
 
                 <select
                   {...register("location", { required: "Location is required" })}
-                  className={`w-full px-4 py-3 border rounded-lg ${
+                  className={`w-full px-4 py-3 border rounded-lg select ${
                     errors.location ? "border-red-500" : "border-gray-300"
                   }`}
                 >
@@ -233,7 +233,7 @@ const PostTuition = () => {
 
                 <select
                   {...register("schedule", { required: "Schedule is required" })}
-                  className={`w-full px-4 py-3 border rounded-lg ${
+                  className={`w-full px-4 py-3 border rounded-lg select ${
                     errors.schedule ? "border-red-500" : "border-gray-300"
                   }`}
                 >
