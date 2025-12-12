@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Outlet } from 'react-router';
 import Logo from '../components/Logo/Logo';
 import { PiAddressBookFill } from "react-icons/pi";
@@ -13,8 +13,56 @@ import { RiMoneyDollarBoxFill } from "react-icons/ri";
 import { TbBoxMultipleFilled } from "react-icons/tb";
 import { FaUserCog } from "react-icons/fa";
 import { FaSquarePollVertical } from "react-icons/fa6";
+import useAuth from '../hooks/useAuth';
 
 const DashboardLayout = () => {
+
+    const { user } = useAuth();
+    const [userRole, setUserRole] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    // ---------------- FETCH USER ROLE ----------------
+    useEffect(() => {
+        const fetchUserRole = async () => {
+            try {
+                const userEmail = user?.email;
+
+                console.log("User Email:", userEmail);
+
+                if (!userEmail) {
+                    setLoading(false);
+                    return;
+                }
+
+                const res = await fetch(
+                    `http://localhost:3000/users/details/${userEmail}`
+                );
+                const data = await res.json();
+
+                console.log("Backend User Data:", data);
+
+                if (data.success) {
+                    setUserRole(data.role);
+                }
+            } catch (error) {
+                console.error("Error loading role:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserRole();
+    }, [user]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-spinner loading-lg"></span>
+            </div>
+        );
+    }
+
+
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -47,80 +95,94 @@ const DashboardLayout = () => {
                                 <span className="is-drawer-close:hidden">Homepage</span>
                             </Link>
                         </li>
+
+                        {/* ---------- Student Route ---------- */}
                         <li>
-                            <Link
-                                to={"/dashboard/my-tuitions"}
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Tuitions">
-                                <PiAddressBookFill size={24} />
-                                <span className="is-drawer-close:hidden">My Tuitions</span>
-                            </Link>
-                            <Link
-                                to={"/dashboard/post-tuition"}
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Post Tuition">
-                                <IoIosCreate size={24}/>
-                                <span className="is-drawer-close:hidden">Post Tuition</span>
-                            </Link>
-                            <Link
-                                to={"/dashboard/apply-tutors"}
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Apply Tutors">
-                                <IoSend size={24}/>
-                                <span className="is-drawer-close:hidden">Apply Tutors</span>
-                            </Link>
-                            <Link
-                                to={"/dashboard/payment-history"}
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment History">
-                                <MdPayments size={24}/>
-                                <span className="is-drawer-close:hidden">Payment History</span>
-                            </Link>
-                            <Link
-                                to={"/dashboard/profile-settings"}
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Profile Settings">
-                                <FaUserCircle size={24}/>
-                                <span className="is-drawer-close:hidden">Profile Settings</span>
-                            </Link>
+                            {userRole === "student" && (
+                                <>
+                                    <Link
+                                        to={"/dashboard/my-tuitions"}
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Tuitions">
+                                        <PiAddressBookFill size={24} />
+                                        <span className="is-drawer-close:hidden">My Tuitions</span>
+                                    </Link>
+                                    <Link
+                                        to={"/dashboard/post-tuition"}
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Post Tuition">
+                                        <IoIosCreate size={24} />
+                                        <span className="is-drawer-close:hidden">Post Tuition</span>
+                                    </Link>
+                                    <Link
+                                        to={"/dashboard/apply-tutors"}
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Apply Tutors">
+                                        <IoSend size={24} />
+                                        <span className="is-drawer-close:hidden">Apply Tutors</span>
+                                    </Link>
+                                    <Link
+                                        to={"/dashboard/payment-history"}
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment History">
+                                        <MdPayments size={24} />
+                                        <span className="is-drawer-close:hidden">Payment History</span>
+                                    </Link>
+                                    <Link
+                                        to={"/dashboard/profile-settings"}
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Profile Settings">
+                                        <FaUserCircle size={24} />
+                                        <span className="is-drawer-close:hidden">Profile Settings</span>
+                                    </Link>
+                                </>
+                            )}
 
                             {/* --------- Tutors ----------  */}
-                            <Link
-                                to={"/dashboard/my-applications"}
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Applications">
-                                <TbBoxMultipleFilled size={24}/>
-                                <span className="is-drawer-close:hidden">My Applications</span>
-                            </Link>
-                            <Link
-                                to={"/dashboard/ongoing-tuitions"}
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Ongoing Tuitions">
-                                <MdAssignmentTurnedIn size={24}/>
-                                <span className="is-drawer-close:hidden">Ongoing Tuitions</span>
-                            </Link>
-                            <Link
-                                to={"/dashboard/revenue-history"}
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Revenue History">
-                                <RiMoneyDollarBoxFill size={24}/>
-                                <span className="is-drawer-close:hidden">Revenue History</span>
-                            </Link>
+                            {userRole === "tutor" && (
+                                <>
+                                    <Link
+                                        to={"/dashboard/my-applications"}
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Applications">
+                                        <TbBoxMultipleFilled size={24} />
+                                        <span className="is-drawer-close:hidden">My Applications</span>
+                                    </Link>
+                                    <Link
+                                        to={"/dashboard/ongoing-tuitions"}
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Ongoing Tuitions">
+                                        <MdAssignmentTurnedIn size={24} />
+                                        <span className="is-drawer-close:hidden">Ongoing Tuitions</span>
+                                    </Link>
+                                    <Link
+                                        to={"/dashboard/revenue-history"}
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Revenue History">
+                                        <RiMoneyDollarBoxFill size={24} />
+                                        <span className="is-drawer-close:hidden">Revenue History</span>
+                                    </Link>
+                                </>
+                            )}
 
 
 
 
-                             {/* --------- Admin ----------  */}
-                            <Link
-                                to={"/dashboard/tuition-management"}
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Tuition Management">
-                                <IoIosListBox size={24}/>
-                                <span className="is-drawer-close:hidden">Tuition Management</span>
-                            </Link>
-                            <Link
-                                to={"/dashboard/users-management"}
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Tuition Management">
-                                <FaUserCog size={24}/>
-                                <span className="is-drawer-close:hidden">Tuition Management</span>
-                            </Link>
-                            <Link
-                                to={"/dashboard/reports-analytics"}
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Reports Analytics">
-                                <FaSquarePollVertical size={24}/>
-                                <span className="is-drawer-close:hidden">Reports Analytics</span>
-                            </Link>
+                            {/* --------- Admin ----------  */}
+                            {userRole === "admin" && (
+                                <>
+                                    <Link
+                                        to={"/dashboard/tuition-management"}
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Tuition Management">
+                                        <IoIosListBox size={24} />
+                                        <span className="is-drawer-close:hidden">Tuition Management</span>
+                                    </Link>
+                                    <Link
+                                        to={"/dashboard/users-management"}
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="User Management">
+                                        <FaUserCog size={24} />
+                                        <span className="is-drawer-close:hidden">User Management</span>
+                                    </Link>
+                                    <Link
+                                        to={"/dashboard/reports-analytics"}
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Reports Analytics">
+                                        <FaSquarePollVertical size={24} />
+                                        <span className="is-drawer-close:hidden">Reports Analytics</span>
+                                    </Link>
+                                </>
+                            )}
                         </li>
                     </ul>
                 </div>
@@ -130,3 +192,4 @@ const DashboardLayout = () => {
 };
 
 export default DashboardLayout;
+

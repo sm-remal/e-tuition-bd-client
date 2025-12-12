@@ -88,7 +88,7 @@ const NavBar = () => {
                 {user && (
                     <div className="dropdown dropdown-end">
 
-                        {/* 🔥 User Photo OR default icon */}
+                        {/*  User Photo OR default icon */}
                         <div tabIndex={0} role="button" className="cursor-pointer">
                             {user?.photoURL ? (
                                 <img
@@ -102,7 +102,7 @@ const NavBar = () => {
                         </div>
 
                         <ul tabIndex={0} className="menu dropdown-content bg-blue-900/95 text-white rounded-box w-40 p-2 shadow mt-4 -mr-4 md:-mr-7">
-                            <li><NavLink to="/dashboard/my-tuitions" className={({ isActive }) => isActive ? activeStyle : normalStyle}>Dashboard</NavLink></li>
+                            <li><NavLink to="/dashboard" className={({ isActive }) => isActive ? activeStyle : normalStyle}>Dashboard</NavLink></li>
                             <li>
                                 <button className="hover:text-gray-200" onClick={handleSignOut}>
                                     Logout
