@@ -25,7 +25,6 @@ import ReportsAnalytics from "../pages/Dashboard/Admin/ReportsAnalytics/ReportsA
 import TutorRoute from "./TutorRoute";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
-import DashboardIndexRedirect from "./DashboardIndexRedirect";
 
 export const router = createBrowserRouter([
   {

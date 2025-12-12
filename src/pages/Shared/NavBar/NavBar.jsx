@@ -8,10 +8,10 @@ const NavBar = () => {
 
     const { user, signOutUser } = useAuth();
     const navigate = useNavigate()
-    const {role} = useRole()
+    const { role } = useRole()
 
 
-    
+
     const handleSignOut = () => {
         signOutUser()
             .then(res => {
@@ -24,13 +24,13 @@ const NavBar = () => {
 
     const handleRole = () => {
 
-        if(role === "admin"){
+        if (role === "admin") {
             navigate("/dashboard/users-management")
         }
-        if(role === "student"){
+        if (role === "student") {
             navigate("/dashboard/my-tuitions")
         }
-        if(role === "tutor"){
+        if (role === "tutor") {
             navigate("/dashboard/my-applications")
         }
     }
@@ -75,7 +75,7 @@ const NavBar = () => {
                                 <li><NavLink to="/register" className={normalStyle}>Register</NavLink></li>
                             </>
                         ) : (
-                            <li><button onClick={handleRole}  className=''>Dashboard</button></li>
+                            <li><button onClick={handleRole} className=''>Dashboard</button></li>
                         )}
                     </ul>
                 </div>
@@ -120,7 +120,7 @@ const NavBar = () => {
                         </div>
 
                         <ul tabIndex={0} className="menu dropdown-content bg-blue-900/95 text-white rounded-box w-40 p-2 shadow mt-4 -mr-4 md:-mr-7">
-                            <li><button onClick={handleRole}  className=''>Dashboard</button></li>
+                            <li><button onClick={handleRole} className=''>Dashboard</button></li>
                             <li>
                                 <button className="hover:text-gray-200" onClick={handleSignOut}>
                                     Logout

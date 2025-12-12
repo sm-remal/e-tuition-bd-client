@@ -14,13 +14,15 @@ const AuthLayout = () => {
                 <div className='flex flex-col md:flex-row min-h-screen'>
 
                     {/* LEFT SIDE FORM */}
-                    <div className='flex-1 min-h-[60vh] md:min-h-screen'>
+                    <div className='flex-1 min-h-[60vh] md:min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'>
                         <div className='ml-5 mt-2'>
                             <Link to="/" className="text-xl md:text-3xl font-bold">
                                 eTuitionBD
                             </Link>
                         </div>
-                        <Outlet />
+                        <div className=''>
+                            <Outlet />
+                        </div>
                     </div>
 
                     {/* RIGHT SIDE IMAGE */}

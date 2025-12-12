@@ -77,7 +77,9 @@ const DashboardLayout = () => {
                 </nav>
 
                 {/* Page content here */}
-                <Outlet></Outlet>
+                <div className='min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'>
+                    <Outlet></Outlet>
+                </div>
 
             </div>
 
