@@ -278,7 +278,7 @@ const TuitionDetails = () => {
 
       {/* Apply Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-[9999] p-4 animate-fadeIn">
+        <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-[9999] p-4 animate-fadeIn">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md relative transform animate-slideUp">
             <button 
               className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800 transition-colors" 
@@ -349,16 +349,16 @@ const TuitionDetails = () => {
 
               <div className="mt-8 flex gap-3">
                 <button 
-                  className="flex-1 py-3 px-6 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors" 
+                  className="flex-1 py-3 px-6 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors cursor-pointer" 
                   onClick={() => setShowModal(false)}
                 >
                   Cancel
                 </button>
                 <button 
-                  className="flex-1 py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all" 
+                  className="flex-1 py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all cursor-pointer" 
                   onClick={handleApplySubmit}
                 >
-                  Submit Application
+                  Submit
                 </button>
               </div>
             </div>
