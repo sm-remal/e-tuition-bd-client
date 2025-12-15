@@ -4,10 +4,13 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const PostTuition = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  const axiosSecure = useAxiosSecure()
 
   const {
     register,
@@ -69,11 +72,7 @@ const PostTuition = () => {
         subjectImage: subjectImageURL,
       };
 
-      const response = await axios.post(
-        "http://localhost:3000/tuitions",
-        tuitionData,
-        { headers: { "Content-Type": "application/json" } }
-      );
+      const response = await axiosSecure.post("/tuitions", tuitionData);
 
       if (response.data.success) {
         alert("Tuition posted successfully!");

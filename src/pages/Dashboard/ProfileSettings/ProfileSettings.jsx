@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ProfileSettings = () => {
     const { user, updateUserProfile } = useAuth();
+    const axiosSecure = useAxiosSecure();
 
     const [formData, setFormData] = useState({
         name: user?.displayName || "",
@@ -64,8 +66,7 @@ const ProfileSettings = () => {
             }
 
             // Step 2: Update MongoDB user
-            const res = await axios.put(
-                `http://localhost:3000/users/${user.email}`,
+            const res = await axiosSecure.put(`/users/${user.email}`,
                 {
                     name: formData.name,
                     photoURL: formData.photoURL,

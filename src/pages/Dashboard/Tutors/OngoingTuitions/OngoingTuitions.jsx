@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../../../hooks/useAuth";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 const OngoingTuitions = () => {
     const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
     const [ongoing, setOngoing] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -11,9 +13,8 @@ const OngoingTuitions = () => {
 
         const fetchData = async () => {
             try {
-                const url = "http://localhost:3000/ongoing-tuitions/" + user.email;
-                const response = await fetch(url);
-                const data = await response.json();
+                const response = await axiosSecure.get("/ongoing-tuitions/" + user.email);
+                const data = response.data; 
                 setOngoing(data?.data || []);
             } catch (error) {
                 console.error("Error fetching ongoing tuitions:", error);

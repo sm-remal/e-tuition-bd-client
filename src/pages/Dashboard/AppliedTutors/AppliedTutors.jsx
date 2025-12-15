@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 import { useSearchParams } from "react-router";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AppliedTutors = () => {
   const { user } = useAuth();
@@ -11,6 +11,8 @@ const AppliedTutors = () => {
 
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const axiosSecure = useAxiosSecure();
 
   // Handle payment statuses
   useEffect(() => {
@@ -47,7 +49,7 @@ const AppliedTutors = () => {
     const fetchApplications = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("http://localhost:3000/applications/student", {
+        const res = await axiosSecure.get("/applications/student", {
           params: { email },
         });
         setApplications(res.data.data);
@@ -101,7 +103,7 @@ const AppliedTutors = () => {
           },
         });
 
-        const res = await axios.post("http://localhost:3000/create-checkout-session", {
+        const res = await axiosSecure.post("/create-checkout-session", {
           applicationId: app._id,
           salary: app.expectedSalary,
           studentEmail: email,
@@ -139,7 +141,7 @@ const AppliedTutors = () => {
 
     if (confirm.isConfirmed) {
       try {
-        const res = await axios.patch(`http://localhost:3000/applications/update-status/${appId}`, {
+        const res = await axiosSecure.patch(`/applications/update-status/${appId}`, {
           status: "Rejected",
         });
 

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 const MyApplications = () => {
   const { user } = useAuth();
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const axiosSecure = useAxiosSecure()
 
   // For edit modal
   const [editingApp, setEditingApp] = useState(null);
@@ -20,9 +22,7 @@ const MyApplications = () => {
 
   const fetchApplications = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:3000/applications/${user.email}`
-      );
+      const res = await axiosSecure.get(`/applications/${user.email}`);
       setApplications(res.data.data);
     } catch (error) {
       console.log("Error fetching applications:", error);
@@ -55,7 +55,7 @@ const MyApplications = () => {
     if (!result.isConfirmed) return;
 
     try {
-      await axios.delete(`http://localhost:3000/applications/delete/${id}`);
+      await axiosSecure.delete(`/applications/delete/${id}`);
       Swal.fire("Deleted!", "Application removed.", "success");
       fetchApplications();
     } catch (error) {
@@ -66,10 +66,7 @@ const MyApplications = () => {
   // UPDATE application
   const handleUpdate = async () => {
     try {
-      await axios.put(
-        `http://localhost:3000/applications/update/${editingApp._id}`,
-        { expectedSalary: editSalary }
-      );
+      await axiosSecure.put(`/applications/update/${editingApp._id}`, { expectedSalary: editSalary });
 
       Swal.fire("Updated!", "Application updated successfully.", "success");
 

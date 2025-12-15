@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 const TuitionManagement = () => {
     const [tuitions, setTuitions] = useState([]);
@@ -9,6 +9,8 @@ const TuitionManagement = () => {
     const [selectedTuition, setSelectedTuition] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
+    const axiosSecure = useAxiosSecure();
+
     useEffect(() => {
         fetchTuitions();
     }, []);
@@ -16,7 +18,7 @@ const TuitionManagement = () => {
     const fetchTuitions = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:3000/admin/tuitions');
+            const response = await axiosSecure.get('/admin/tuitions');
             setTuitions(response.data);
         } catch (error) {
             console.error('Error:', error);
@@ -44,8 +46,7 @@ const TuitionManagement = () => {
 
         if (result.isConfirmed) {
             try {
-                const response = await axios.patch(
-                    `http://localhost:3000/tuitions/${id}/tuitionStatus`,
+                const response = await axiosSecure.patch(`/tuitions/${id}/tuitionStatus`,
                     { status: 'Approved' }
                 );
 
@@ -83,8 +84,7 @@ const TuitionManagement = () => {
 
         if (result.isConfirmed) {
             try {
-                const response = await axios.patch(
-                    `http://localhost:3000/tuitions/${id}/tuitionStatus`,
+                const response = await axiosSecure.patch(`/tuitions/${id}/tuitionStatus`,
                     { status: 'Rejected' }
                 );
 

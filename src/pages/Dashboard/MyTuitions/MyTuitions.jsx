@@ -4,6 +4,7 @@ import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const MyTuitions = () => {
   const { user } = useAuth();
@@ -12,13 +13,15 @@ const MyTuitions = () => {
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
+  const axiosSecure = useAxiosSecure();
+
   // Fetch tuitions
   useEffect(() => {
     const fetchTuitions = async () => {
       if (!user?.email) return;
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:3000/tuitions/${user.email}`);
+        const response = await axiosSecure.get(`/tuitions/${user.email}`);
         if (response.data.success) {
           setTuitions(response.data.data);
         }
@@ -44,7 +47,7 @@ const MyTuitions = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const { data } = await axios.delete(`http://localhost:3000/tuitions/${id}`);
+          const { data } = await axiosSecure.delete(`/tuitions/${id}`);
           if (data.success) {
             Swal.fire({
               title: "Deleted!",
@@ -96,7 +99,7 @@ const MyTuitions = () => {
 
     if (formValues) {
       try {
-        const response = await axios.put(`http://localhost:3000/tuitions/${tuition._id}`, formValues);
+        const response = await axiosSecure.put(`/tuitions/${tuition._id}`, formValues);
         if (response.data.success) {
           Swal.fire({
             title: "Updated!",

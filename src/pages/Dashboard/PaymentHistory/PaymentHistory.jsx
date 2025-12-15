@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import dayjs from 'dayjs';
-import useAuth from '../../../hooks/useAuth'; // Your auth hook
+import useAuth from '../../../hooks/useAuth'; 
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const PaymentHistory = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const email = user?.email;
 
   const [payments, setPayments] = useState([]);
@@ -17,7 +18,7 @@ const PaymentHistory = () => {
     const fetchPayments = async () => {
       try {
         setLoading(true);
-        const res = await axios.get('http://localhost:3000/payments', {
+        const res = await axiosSecure.get('/payments', {
           params: { email }
         });
         setPayments(res.data);

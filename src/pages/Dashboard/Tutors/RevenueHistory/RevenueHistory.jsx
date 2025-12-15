@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import dayjs from "dayjs";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 const RevenueHistory = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,11 +15,9 @@ const RevenueHistory = () => {
 
     const fetchPayments = async () => {
       try {
-        const url = "http://localhost:3000/payments?email=" + user.email;
-        const response = await fetch(url);
-        const data = await response.json();
+        const response = await axiosSecure.get("/payments?email=" + user.email);
+        setPayments(response.data || []);
 
-        setPayments(data || []);
       } catch (err) {
         console.error("Error fetching revenue:", err);
         setError("Failed to load revenue history");
@@ -27,7 +27,7 @@ const RevenueHistory = () => {
     };
 
     fetchPayments();
-  }, [user?.email]);
+  }, [user?.email, axiosSecure]);
 
   const formatDate = (dateString) =>
     dayjs(dateString).format("DD MMM YYYY, hh:mm A");

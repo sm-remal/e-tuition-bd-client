@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { DollarSign, TrendingUp, CreditCard, Calendar, Download, Eye, BarChart3, LineChart as LineChartIcon, Activity } from 'lucide-react';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 const ReportsAnalytics = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [viewMode, setViewMode] = useState('recent');
-    const [chartType, setChartType] = useState('bar'); 
+    const [chartType, setChartType] = useState('bar');
 
-    const API_URL = 'http://localhost:3000';
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         fetchReports();
@@ -17,8 +18,8 @@ const ReportsAnalytics = () => {
     const fetchReports = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`${API_URL}/admin/reports`);
-            const result = await response.json();
+            const response = await axiosSecure.get(`/admin/reports`);
+            const result = await response.data;
 
             if (result.success) {
                 setData(result.data);
@@ -191,33 +192,30 @@ const ReportsAnalytics = () => {
                         <div className="flex flex-wrap gap-2">
                             <button
                                 onClick={() => setChartType('bar')}
-                                className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition ${
-                                    chartType === 'bar'
+                                className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition ${chartType === 'bar'
                                         ? 'bg-blue-600 text-white'
                                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                }`}
+                                    }`}
                             >
                                 <BarChart3 size={16} />
                                 <span className="hidden sm:inline">Bar</span>
                             </button>
                             <button
                                 onClick={() => setChartType('line')}
-                                className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition ${
-                                    chartType === 'line'
+                                className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition ${chartType === 'line'
                                         ? 'bg-blue-600 text-white'
                                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                }`}
+                                    }`}
                             >
                                 <LineChartIcon size={16} />
                                 <span className="hidden sm:inline">Line</span>
                             </button>
                             <button
                                 onClick={() => setChartType('area')}
-                                className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition ${
-                                    chartType === 'area'
+                                className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition ${chartType === 'area'
                                         ? 'bg-blue-600 text-white'
                                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                }`}
+                                    }`}
                             >
                                 <Activity size={16} />
                                 <span className="hidden sm:inline">Area</span>
