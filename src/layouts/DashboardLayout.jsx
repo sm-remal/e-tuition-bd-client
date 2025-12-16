@@ -14,6 +14,7 @@ import { TbBoxMultipleFilled } from "react-icons/tb";
 import { FaUserCog } from "react-icons/fa";
 import { FaSquarePollVertical } from "react-icons/fa6";
 import useAuth from '../hooks/useAuth';
+import { Toaster } from 'react-hot-toast';
 
 const DashboardLayout = () => {
 
@@ -204,6 +205,7 @@ const DashboardLayout = () => {
                     </ul>
                 </div>
             </div>
+            <Toaster />
         </div>
     );
 };

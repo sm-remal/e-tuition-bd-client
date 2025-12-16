@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import Loading from '../../../../components/Loading/Loading';
 
 const TuitionManagement = () => {
     const [tuitions, setTuitions] = useState([]);
@@ -129,15 +130,12 @@ const TuitionManagement = () => {
     });
 
     if (loading) {
-        return (
-            <div className="flex justify-center items-center h-64">
-                <span className="loading loading-spinner loading-lg"></span>
-            </div>
-        );
+        return <Loading></Loading>
     }
 
     return (
         <div className="container mx-auto p-6">
+            <title>Tuitions Management | e-TuitionBD</title>
             {/* Header */}
             <div className="mb-6">
                 <h1 className="text-3xl font-bold text-gray-800 mb-2">

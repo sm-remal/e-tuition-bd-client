@@ -25,10 +25,14 @@ import ReportsAnalytics from "../pages/Dashboard/Admin/ReportsAnalytics/ReportsA
 import TutorRoute from "./TutorRoute";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
+import Loading from "../components/Loading/Loading";
+import ErrorPage from "../components/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
+    HydrateFallback: <Loading></Loading>,
+    errorElement: <ErrorPage></ErrorPage>,
     Component: MainLayout,
     children: [
       {

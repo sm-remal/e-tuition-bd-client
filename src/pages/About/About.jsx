@@ -56,6 +56,7 @@ const About = () => {
 
     return (
         <div className="min-h-scree">
+             <title>About | e-TuitionBD</title>
             {/* Hero Section */}
             <section className="relative bg-gradient-to-br from-blue-500 via-blue-700 to-blue-500 text-white overflow-hidden pb-16">
                 <div className="absolute inset-0 opacity-10">

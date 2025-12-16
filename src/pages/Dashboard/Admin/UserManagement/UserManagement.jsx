@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Edit2, Trash2, X } from 'lucide-react';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import Loading from '../../../../components/Loading/Loading';
 
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
@@ -158,15 +159,13 @@ const UserManagement = () => {
     };
 
     if (loading) {
-        return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-        );
+        return <Loading></Loading>
     }
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
+            <title>User Management | e-TuitionBD</title>
+
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="mb-8">

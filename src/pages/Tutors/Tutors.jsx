@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Mail, Phone, Calendar, Award } from "lucide-react";
 import dayjs from "dayjs";
+import Loading from "../../components/Loading/Loading";
 
 const Tutors = () => {
     const [tutors, setTutors] = useState([]);
@@ -27,18 +28,13 @@ const Tutors = () => {
     };
 
     if (loading) {
-        return (
-            <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-blue-50 to-indigo-100">
-                <div className="text-center">
-                    <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-indigo-500 border-t-transparent"></div>
-                    <p className="mt-4 text-gray-600 font-medium">Loading tutors...</p>
-                </div>
-            </div>
-        );
+        return <Loading></Loading>
     }
 
     return (
         <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+             <title>Tutors | e-TuitionBD</title>
+
             <h2 className="text-3xl md:text-4xl font-bold text-center mt-10">All Verified Tutors</h2>
             <div className="">
                 {/* Tutors Grid */}

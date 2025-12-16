@@ -82,6 +82,8 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 py-16 px-4">
+       <title>Contact | e-TuitionBD</title>
+
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}

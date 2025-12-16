@@ -5,6 +5,7 @@ import useAuth from '../../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import Loading from '../../../components/Loading/Loading';
 
 const MyTuitions = () => {
   const { user } = useAuth();
@@ -147,16 +148,13 @@ const MyTuitions = () => {
   });
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-gray-600 font-medium">Loading your tuitions...</p>
-      </div>
-    </div>
+    <Loading></Loading>
   );
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+      <title>My Tuitions | e-TuitionBD</title>
+
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">My Tuitions</h1>

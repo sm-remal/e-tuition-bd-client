@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import Loading from "../../../../components/Loading/Loading";
 
 const OngoingTuitions = () => {
     const { user } = useAuth();
@@ -25,9 +26,9 @@ const OngoingTuitions = () => {
         };
 
         fetchData();
-    }, [user?.email]);
+    }, [user?.email, axiosSecure]);
 
-    if (loading) return <p className="text-center py-10 text-gray-500">Loading...</p>;
+    if (loading) return <Loading></Loading>;
 
     if (!ongoing || ongoing.length === 0)
         return (
@@ -38,6 +39,8 @@ const OngoingTuitions = () => {
 
     return (
         <div className="p-6 bg-white rounded-lg shadow-lg">
+            <title>Ongoing Tuitions | e-TuitionBD</title>
+
             <h2 className="text-2xl font-bold mb-1 text-gray-800">Ongoing Tuitions</h2>
             {/* Total Card */}
             <h3 className="text-gray-700 font-semibold mb-6">Total Tuitions: {ongoing.length}</h3>

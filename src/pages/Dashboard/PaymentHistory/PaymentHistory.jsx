@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import useAuth from '../../../hooks/useAuth'; 
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import Loading from '../../../components/Loading/Loading';
 
 const PaymentHistory = () => {
   const { user } = useAuth();
@@ -52,14 +53,7 @@ const PaymentHistory = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <div className="loading loading-spinner loading-lg text-primary"></div>
-          <p className="mt-4 text-gray-600">Loading payment history...</p>
-        </div>
-      </div>
-    );
+    return <Loading></Loading>
   }
 
   if (error) {
@@ -77,6 +71,7 @@ const PaymentHistory = () => {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
+      <title>Payment History | e-TuitionBD</title>
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">Payment History</h1>

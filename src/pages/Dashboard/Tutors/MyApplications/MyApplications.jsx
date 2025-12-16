@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import Loading from "../../../../components/Loading/Loading";
 
 const MyApplications = () => {
   const { user } = useAuth();
@@ -78,15 +79,13 @@ const MyApplications = () => {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
+    return <Loading></Loading>
   }
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
+      <title>My Applications | e-TuitionBD</title>
+
       <h1 className="text-3xl font-bold mb-6 text-gray-800">
         My Applications
       </h1>

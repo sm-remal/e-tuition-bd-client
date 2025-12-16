@@ -8,6 +8,7 @@ import LatestTutors from '../LatestTutors/LatestTutors';
 const Home = () => {
     return (
         <div>
+             <title>Home | e-TuitionBD</title>
             <Hero></Hero>
             <div className='px-4 md:px-6'>
                 <LatestTuitions></LatestTuitions>

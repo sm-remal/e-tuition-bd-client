@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import Loading from "../../components/Loading/Loading";
 
 const Tuitions = () => {
   const [tuitions, setTuitions] = useState([]);
@@ -54,15 +55,12 @@ const Tuitions = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
+    return <Loading></Loading>
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
+       <title>Tuitions | e-TuitionBD</title>
 
       {/* Header */}
       <div className="mb-8 text-center">

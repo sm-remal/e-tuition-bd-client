@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DollarSign, TrendingUp, CreditCard, Calendar, Download, Eye, BarChart3, LineChart as LineChartIcon, Activity } from 'lucide-react';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import Loading from '../../../../components/Loading/Loading';
 
 const ReportsAnalytics = () => {
     const [data, setData] = useState(null);
@@ -104,11 +105,7 @@ const ReportsAnalytics = () => {
     };
 
     if (loading) {
-        return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-        );
+        return <Loading></Loading>
     }
 
     if (!data) {
@@ -124,6 +121,8 @@ const ReportsAnalytics = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 p-4 sm:p-6">
+            <title>Report Analytics | e-TuitionBD</title>
+
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="mb-6 sm:mb-8">

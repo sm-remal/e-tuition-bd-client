@@ -71,6 +71,8 @@ const Login = () => {
 
     return (
         <div className='flex justify-center items-center min-h-screen'>
+             <title>Login | e-TuitionBD</title>
+
             <div className="card-body w-full max-w-md">
 
                 {/* ======= Heading ======= */}

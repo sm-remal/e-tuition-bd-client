@@ -90,6 +90,8 @@ const Register = () => {
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+             <title>Registration | e-TuitionBD</title>
+
             <div className="card-body w-full max-w-md">
                 {/* Heading */}
                 <div className="flex flex-col justify-center mb-4 text-center space-y-4">

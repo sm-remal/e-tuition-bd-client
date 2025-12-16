@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 import { useSearchParams } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Loading from "../../../components/Loading/Loading";
 
 const AppliedTutors = () => {
   const { user } = useAuth();
@@ -159,15 +160,13 @@ const AppliedTutors = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
-      </div>
-    );
+    return <Loading></Loading>
   }
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
+      <title>Applied Tutors | e-TuitionBD</title>
+
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-800">My Applied Tutors</h1>
         <p className="text-gray-500 mt-1">Manage tutor applications for your tuitions</p>

@@ -17,6 +17,8 @@ const PaymentSuccess = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+      <title>Payment Success | e-TuitionBD</title>
+
       <div className="card bg-base-100 shadow-2xl p-10 text-center max-w-md animate-[fadeIn_0.5s_ease-in]">
         
         {/* Success Icon with Animation */}

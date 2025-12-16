@@ -88,6 +88,8 @@ const PostTuition = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4 md:p-8">
+      <title>Post Tuitions | e-TuitionBD</title>
+
       <div className="max-w-4xl mx-auto">
 
         <div className="mb-8">
