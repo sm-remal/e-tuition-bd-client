@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import useAuth from "./useAuth";
-import axios from "axios";
+import useAxiosSecure from "./useAxiosSecure";
 
 const useRole = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure()
   const [role, setRole] = useState("user");
   const [roleLoading, setRoleLoading] = useState(true);
 
@@ -15,7 +16,7 @@ const useRole = () => {
       }
 
       try {
-        const res = await axios.get(`http://localhost:3000/users/${user.email}`); 
+        const res = await axiosSecure.get(`/users/${user.email}`); 
 
         setRole(res.data?.role || "");
 
@@ -28,7 +29,7 @@ const useRole = () => {
     };
 
     fetchRole();
-  }, [user]);
+  }, [user, axiosSecure]);
 
   return { role, roleLoading };
 };
