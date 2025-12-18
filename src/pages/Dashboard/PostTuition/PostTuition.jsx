@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import toast from 'react-hot-toast';
 
 const PostTuition = () => {
   const navigate = useNavigate();
@@ -75,14 +76,14 @@ const PostTuition = () => {
       const response = await axiosSecure.post("/tuitions", tuitionData);
 
       if (response.data.success) {
-        alert("Tuition posted successfully!");
+        toast.success("Tuition posted successfully!");
         reset();
         navigate("/dashboard/my-tuitions");
       }
 
     } catch (error) {
       console.log(error);
-      alert("Failed to post tuition.");
+      toast.error("Failed to post tuition.");
     }
   };
 
@@ -291,9 +292,8 @@ const PostTuition = () => {
             <div className="flex gap-4 pt-4">
               <button
                 disabled={isSubmitting}
-                className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r 
-                from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg ${
-                  isSubmitting ? "opacity-70" : "hover:scale-105"
+                className={`flex-1 flex items-center justify-center cursor-pointer gap-2 px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold shadow-lg ${
+                  isSubmitting ? "opacity-70" : "hover:scale-101"
                 } transition-all`}
               >
                 {isSubmitting ? (

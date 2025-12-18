@@ -4,6 +4,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
+import toast from "react-hot-toast";
 
 const TuitionDetails = () => {
   const { id } = useParams();
@@ -55,7 +56,7 @@ const TuitionDetails = () => {
     try {
       const res = await axios.post("http://localhost:3000/applications", applicationData);
       if (res.data.success) {
-        alert("Application Submitted Successfully!");
+        toast.success("Application Submitted Successfully!");
         setShowModal(false);
       }
     } catch (error) {

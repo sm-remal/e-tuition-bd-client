@@ -5,8 +5,8 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
-// import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +16,7 @@ const Register = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
-    // const axiosSecure = useAxiosSecure();
+    const axiosSecure = useAxiosSecure();
 
     // -------------------------------------
     // Handle Registration
@@ -50,8 +50,8 @@ const Register = () => {
             };
 
             // Save to server
-            await axios.post("http://localhost:3000/users", userInfo);
-
+            await axiosSecure.post("/users", userInfo);
+            toast.success("SignUp Successfully!!")
             navigate(location.state || "/");
         } catch (error) {
             if (error.code === "auth/email-already-in-use") {
@@ -79,8 +79,8 @@ const Register = () => {
                 createdAt: new Date()
             };
 
-            await axios.post("http://localhost:3000/users", userInfo);
-
+            await axiosSecure.post("/users", userInfo);
+            toast.success("SignUp Successfully")
             navigate(location.state || "/");
         } catch (err) {
             console.log(err);
@@ -206,7 +206,7 @@ const Register = () => {
                             <input
                                 type="checkbox"
                                 {...register("terms", { required: true })}
-                                className="checkbox checkbox-sm checkbox-secondary"
+                                className="checkbox checkbox-sm"
                             />
                             <span className="text-gray-700">
                                 I agree to the{" "}

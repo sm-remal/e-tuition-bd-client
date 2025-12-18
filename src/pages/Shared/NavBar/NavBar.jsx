@@ -25,7 +25,7 @@ const NavBar = () => {
     const handleRole = () => {
 
         if (role === "admin") {
-            navigate("/dashboard/users-management")
+            navigate("/dashboard/tuition-management")
         }
         if (role === "student") {
             navigate("/dashboard/my-tuitions")

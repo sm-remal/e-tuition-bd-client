@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, Edit2, Trash2, X } from 'lucide-react';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import Loading from '../../../../components/Loading/Loading';
+import toast from 'react-hot-toast';
 
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
@@ -102,14 +103,14 @@ const UserManagement = () => {
             const data = response.data;
 
             if (data.success) {
-                alert('Role updated successfully!');
+                toast.success('Role updated successfully!');
                 fetchUsers();
             } else {
-                alert(data.message || 'Failed to update role');
+                toast(data.message || 'Failed to update role');
             }
         } catch (error) {
             console.error('Error updating role:', error);
-            alert('Failed to update role');
+            toast.error('Failed to update role');
         }
     };
 
@@ -125,13 +126,13 @@ const UserManagement = () => {
             if (data.success) {
                 setDeleteModal(null);
                 fetchUsers();
-                alert('User deleted successfully!');
+                toast.success('User deleted successfully!');
             } else {
                 alert(data.message || 'Failed to delete user');
             }
         } catch (error) {
             console.error('Error deleting user:', error);
-            alert('Failed to delete user');
+            toast.error('Failed to delete user');
         }
     };
 

@@ -229,7 +229,7 @@ const MyTuitions = () => {
                       <td className="px-6 py-4 text-center">{getStatusBadge(tuition.status)}</td>
                       <td className="px-6 py-4">
                         <div className="flex items-center justify-center gap-2">
-                          <button onClick={() => handleViewDetails(tuition._id)} className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-all"><Eye className="w-5 h-5" /></button>
+                          {/* <button onClick={() => handleViewDetails(tuition._id)} className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-all"><Eye className="w-5 h-5" /></button> */}
                           <button onClick={() => handleEdit(tuition)} className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-all"><Edit className="w-5 h-5" /></button>
                           <button onClick={() => handleDelete(tuition._id)} className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-all"><Trash2 className="w-5 h-5" /></button>
                         </div>

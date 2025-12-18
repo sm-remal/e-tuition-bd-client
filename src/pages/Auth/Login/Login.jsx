@@ -5,6 +5,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -29,6 +30,7 @@ const Login = () => {
         try {
             const res = await signInUser(data.email, data.password);
             console.log(res.user);
+            toast.success("Login Successful")
             navigate(location.state || "/");
         } catch (error) {
             console.log(error);
@@ -42,6 +44,7 @@ const Login = () => {
         try {
             const res = await googleSignIn();
             const user = res.user;
+            toast.success("Login Successful")
 
             // Check if user already exists in DB
             const { data } = await axios.get(`http://localhost:3000/users/${user.email}`);
