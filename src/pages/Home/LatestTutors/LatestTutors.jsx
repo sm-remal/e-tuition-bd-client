@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Mail, Phone, Calendar, Award } from "lucide-react";
 import dayjs from "dayjs";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const LatestTutors = () => {
     const [tutors, setTutors] = useState([]);
 
     useEffect(() => {
+        AOS.init({
+            duration: 800,
+            easing: "ease-out-cubic",
+            once: true,
+        });
+
         fetch("http://localhost:3000/users/role/latest-tutor")
             .then(res => res.json())
             .then(data => setTutors(data.data || []));
@@ -17,26 +25,40 @@ const LatestTutors = () => {
 
     return (
         <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mt-10">Latest Tutor Applications</h2>
+            <h2
+                className="text-3xl md:text-4xl font-bold text-center mt-10"
+                data-aos="fade-up"
+            >
+                Latest Tutor Applications
+            </h2>
+
             <div className="">
-                {/* Tutors Grid */}
-                <div className="container mx-auto px-4 py-12">
+                <div className="container mx-auto py-12">
                     {tutors.length === 0 ? (
-                        <div className="text-center py-20">
+                        <div
+                            className="text-center py-20"
+                            data-aos="fade-up"
+                        >
                             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 mb-4">
                                 <Award className="w-10 h-10 text-gray-400" />
                             </div>
-                            <p className="text-xl text-gray-500">No tutors available at the moment.</p>
-                            <p className="text-gray-400 mt-2">Check back soon for updates!</p>
+                            <p className="text-xl text-gray-500">
+                                No tutors available at the moment.
+                            </p>
+                            <p className="text-gray-400 mt-2">
+                                Check back soon for updates!
+                            </p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                            {tutors.map((tutor) => (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            {tutors.map((tutor, index) => (
                                 <div
                                     key={tutor._id}
+                                    data-aos="fade-up"
+                                    data-aos-delay={index * 100}
                                     className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-indigo-200"
                                 >
-                                    {/* Card Header with Gradient */}
+                                    {/* Card Header */}
                                     <div className="h-24 bg-gradient-to-r from-indigo-500 to-purple-500 relative">
                                         <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
                                             <div className="relative">
@@ -66,7 +88,9 @@ const LatestTutors = () => {
                                         <div className="space-y-3 mb-4">
                                             <div className="flex items-start gap-3 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
                                                 <Mail className="w-4 h-4 mt-0.5 text-indigo-500 flex-shrink-0" />
-                                                <span className="break-all">{tutor.email}</span>
+                                                <span className="break-all">
+                                                    {tutor.email}
+                                                </span>
                                             </div>
 
                                             <div className="flex items-center gap-3 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
@@ -76,7 +100,9 @@ const LatestTutors = () => {
 
                                             <div className="flex items-center gap-3 text-sm text-gray-500 bg-gray-50 p-3 rounded-lg">
                                                 <Calendar className="w-4 h-4 text-indigo-500 flex-shrink-0" />
-                                                <span>Joined {formatDate(tutor.createdAt)}</span>
+                                                <span>
+                                                    Joined {formatDate(tutor.createdAt)}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

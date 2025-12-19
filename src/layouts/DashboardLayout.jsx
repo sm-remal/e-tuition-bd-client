@@ -65,7 +65,7 @@ const DashboardLayout = () => {
 
     // Active and normal styles for NavLink
     const getNavLinkClass = (isActive) => {
-        return isActive 
+        return isActive
             ? "is-drawer-close:tooltip is-drawer-close:tooltip-right text-blue-600"
             : "is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-blue-50";
     };
@@ -138,13 +138,6 @@ const DashboardLayout = () => {
                                         <MdPayments size={28} />
                                         <span className="is-drawer-close:hidden">Payment History</span>
                                     </NavLink>
-                                    <NavLink
-                                        to={"/dashboard/profile-settings"}
-                                        className={({ isActive }) => getNavLinkClass(isActive)}
-                                        data-tip="Profile Settings">
-                                        <FaUserCircle size={28} />
-                                        <span className="is-drawer-close:hidden">Profile Settings</span>
-                                    </NavLink>
                                 </>
                             )}
 
@@ -201,6 +194,15 @@ const DashboardLayout = () => {
                                     </NavLink>
                                 </>
                             )}
+                        </li>
+                        <li>
+                            <NavLink
+                                to={"/dashboard/profile-settings"}
+                                className={({ isActive }) => getNavLinkClass(isActive)}
+                                data-tip="Profile Settings">
+                                <FaUserCircle size={28} />
+                                <span className="is-drawer-close:hidden">Profile Settings</span>
+                            </NavLink>
                         </li>
                     </ul>
                 </div>

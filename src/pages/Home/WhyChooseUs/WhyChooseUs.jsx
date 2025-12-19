@@ -37,11 +37,11 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <div className=" mt-[1200px] md:mt-0 py-16 px-4">
+    <div className=" mt-[1200px] md:mt-0 py-10 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Why Choose <span className="text-teal-600">E-Tuition BD</span>
+            Why Choose <span className="">E-Tuition BD</span>
           </h1>
           <p className="text-gray-600 text-sm md:text-base">
             Discover what makes us different and why our students love learning with us.

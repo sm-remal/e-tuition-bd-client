@@ -38,7 +38,7 @@ const Tutors = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-center mt-10">All Verified Tutors</h2>
             <div className="">
                 {/* Tutors Grid */}
-                <div className="container mx-auto px-4 py-12">
+                <div className="mx-auto px-4 py-12">
                     {tutors.length === 0 ? (
                         <div className="text-center py-20">
                             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 mb-4">
@@ -48,7 +48,7 @@ const Tutors = () => {
                             <p className="text-gray-400 mt-2">Check back soon for updates!</p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             {tutors.map((tutor) => (
                                 <div
                                     key={tutor._id}

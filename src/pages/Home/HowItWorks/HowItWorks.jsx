@@ -7,28 +7,33 @@ const HowItWorks = () => {
     {
       number: 1,
       icon: FileCheck,
-      title: "Sign up for free in 2 minutes",
-      description: "Provide some basic information such as your address and mortgage information"
+      title: "Create your account in minutes",
+      description:
+        "Sign up as a student or tutor using your email and basic information to get started quickly."
     },
     {
       number: 2,
       icon: Smartphone,
-      title: "Get personalised deals",
-      description: "We analyse your data and match you to products from the whole of market (So lenders+)"
+      title: "Post or find tuition easily",
+      description:
+        "Students can post tuition needs, and tutors can browse available tuition posts based on subject and location."
     },
     {
       number: 3,
       icon: Search,
-      title: "We keep looking for better deals",
-      description: "We monitor your mortgage and home value and alert you to changes, keeping you on the best mortgage"
+      title: "Apply & get matched",
+      description:
+        "Tutors apply for suitable tuitions, and students review applications to find the best match."
     },
     {
       number: 4,
       icon: UserCircle,
-      title: "Speak to a mortgage advisor",
-      description: "We've partnered with Fluent Mortgages who will support you through the application process."
+      title: "Start learning with confidence",
+      description:
+        "Once approved, connect directly and begin your learning journey with a trusted tutor."
     }
   ];
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -42,13 +47,13 @@ const HowItWorks = () => {
   };
 
   const cardVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: 50,
       scale: 0.9
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       scale: 1,
       transition: {
@@ -62,8 +67,8 @@ const HowItWorks = () => {
 
   const iconVariants = {
     hidden: { scale: 0, rotate: -180 },
-    visible: { 
-      scale: 1, 
+    visible: {
+      scale: 1,
       rotate: 0,
       transition: {
         type: "spring",
@@ -86,7 +91,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <div className=" bg-indigo-500 mt-24 mb-52 rounded-2xl py-16 h-[400px] px-4">
+    <div className=" bg-indigo-500 mt-12 mb-52 rounded-2xl py-16 h-[400px] px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -95,11 +100,11 @@ const HowItWorks = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
             How it works
           </h1>
-          <p className="text-xl md:text-2xl text-white/90">
-            Domun can help you save on your home-related finances
+          <p className="md:text-lg text-white/90">
+            A smart platform to connect students and tutors for quality education.
           </p>
         </motion.div>
 
@@ -116,7 +121,7 @@ const HowItWorks = () => {
               <motion.div
                 key={step.number}
                 variants={cardVariants}
-                whileHover={{ 
+                whileHover={{
                   y: -10,
                   transition: { duration: 0.3 }
                 }}
@@ -161,7 +166,7 @@ const HowItWorks = () => {
                   {/* Icon */}
                   <motion.div
                     variants={iconVariants}
-                    whileHover={{ 
+                    whileHover={{
                       rotate: [0, -10, 10, -10, 0],
                       transition: { duration: 0.5 }
                     }}
