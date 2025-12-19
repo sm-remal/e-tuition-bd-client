@@ -48,6 +48,7 @@ const NavBar = () => {
             <li><NavLink to="/tutors" className={({ isActive }) => isActive ? activeStyle : normalStyle}>Tutors</NavLink></li>
             <li><NavLink to="/about" className={({ isActive }) => isActive ? activeStyle : normalStyle}>About</NavLink></li>
             <li><NavLink to="/contact" className={({ isActive }) => isActive ? activeStyle : normalStyle}>Contact</NavLink></li>
+            {user && <li><button onClick={handleRole} className='text-white'>Dashboard</button></li>}
         </>
     );
 
