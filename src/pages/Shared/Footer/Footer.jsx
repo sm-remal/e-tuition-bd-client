@@ -57,9 +57,9 @@ const Footer = () => {
                         Legal
                     </h3>
                     <ul className="space-y-2">
-                        <li><Link to="#" className="hover:text-white">Terms of Use</Link></li>
-                        <li><Link to="#" className="hover:text-white">Privacy Policy</Link></li>
-                        <li><Link to="#" className="hover:text-white">Cookie Policy</Link></li>
+                        <li><Link to="/terms-condition" className="hover:text-white">Terms of Use</Link></li>
+                        <li><Link to="/privacy-policy" className="hover:text-white">Privacy Policy</Link></li>
+                        {/* <li><Link to="#" className="hover:text-white">Cookie Policy</Link></li> */}
                     </ul>
                 </div>
 
@@ -69,7 +69,7 @@ const Footer = () => {
                         Contact Info
                     </h3>
                     <ul className="space-y-2 text-gray-400 text-sm">
-                        <li>Email: support@etuitionbd.com</li>
+                        <li>Email: support@gmail.com</li>
                         <li>Phone: +880 1234 567890</li>
                         <li>Address: Dhaka, Bangladesh</li>
                     </ul>

@@ -5,6 +5,9 @@ import dayjs from "dayjs";
 import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
 import toast from "react-hot-toast";
+import Loading from "../../components/Loading/Loading";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import ErrorDetailsPage from "../../components/ErrorDetailsPage/ErrorDetailsPage";
 
 const TuitionDetails = () => {
   const { id } = useParams();
@@ -15,12 +18,13 @@ const TuitionDetails = () => {
 
   const { user } = useAuth();
   const { role } = useRole();
+  const axiosSecure = useAxiosSecure()
 
   useEffect(() => {
     const fetchTuitionDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/tuitions/details/${id}`
+        const response = await axiosSecure.get(
+          `/tuitions/details/${id}`
         );
         setTuition(response.data);
       } catch (error) {
@@ -31,7 +35,7 @@ const TuitionDetails = () => {
     };
 
     fetchTuitionDetails();
-  }, [id]);
+  }, [id, axiosSecure]);
 
   const handleApplySubmit = async () => {
     const qualifications = document.getElementById("qualifications").value;
@@ -65,33 +69,11 @@ const TuitionDetails = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-        <div className="text-center">
-          <span className="loading loading-spinner loading-lg text-blue-600"></span>
-          <p className="mt-4 text-gray-600 font-medium">Loading tuition details...</p>
-        </div>
-      </div>
-    );
+    return <Loading></Loading>
   }
 
-  if (!tuition) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
-        <div className="bg-white rounded-2xl shadow-xl p-10 text-center max-w-md">
-          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-          </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Tuition Not Found</h2>
-          <p className="text-gray-600 mb-6">The tuition you're looking for doesn't exist or has been removed.</p>
-          <button onClick={() => navigate(-1)} className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
-            ← Go Back
-          </button>
-        </div>
-      </div>
-    );
+  if (!tuition?._id) {
+    return <ErrorDetailsPage></ErrorDetailsPage>
   }
 
   return (

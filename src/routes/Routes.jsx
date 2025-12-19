@@ -27,6 +27,8 @@ import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import Loading from "../components/Loading/Loading";
 import ErrorPage from "../components/ErrorPage/ErrorPage";
+import PrivacyPolicy from "../pages/Home/PrivacyPolicy/PrivacyPolicy";
+import TermsCondition from "../pages/Home/TermsCondition/TermsCondition";
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +60,14 @@ export const router = createBrowserRouter([
       {
         path: "contact",
         Component: Contact,
+      },
+      {
+        path: "privacy-policy",
+        Component: PrivacyPolicy,
+      },
+      {
+        path: "terms-condition",
+        Component: TermsCondition
       }
     ]
   },
