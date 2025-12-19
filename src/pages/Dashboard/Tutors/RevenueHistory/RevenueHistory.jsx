@@ -1,102 +1,110 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../../../hooks/useAuth";
-import dayjs from "dayjs";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import dayjs from "dayjs";
 import Loading from "../../../../components/Loading/Loading";
 
-const RevenueHistory = () => {
+const TutorRevenueHistory = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const [payments, setPayments] = useState([]);
+
+  const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!user?.email) return;
 
-    const fetchPayments = async () => {
+    const fetchApplications = async () => {
       try {
-        const response = await axiosSecure.get("/payments?email=" + user.email);
-        setPayments(response.data || []);
-
+        // Fetch applications for this tutor
+        const response = await axiosSecure.get(`/applications/${user.email}`);
+        setApplications(response.data.data || []);
+        console.log("Fetched tutor applications:", response.data.data);
       } catch (err) {
-        console.error("Error fetching revenue:", err);
-        setError("Failed to load revenue history");
+        console.error("Error fetching tutor applications:", err);
+        setError("Failed to load tutor revenue history");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPayments();
+    fetchApplications();
   }, [user?.email, axiosSecure]);
 
   const formatDate = (dateString) =>
     dayjs(dateString).format("DD MMM YYYY, hh:mm A");
 
-  if (loading) {
-    return <Loading></Loading>
-  }
+  if (loading) return <Loading />;
 
-  if (error) {
+  if (error)
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="alert alert-error max-w-md">
-          <svg xmlns="http://www.w3.org/2000/svg"
-            className="stroke-current shrink-0 h-6 w-6"
-            fill="none" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
           <span>{error}</span>
         </div>
       </div>
     );
-  }
+
+  // Only count approved applications as actual revenue
+  const approvedApplications = applications.filter(
+    (app) => app.status === "Approved"
+  );
+
+  const totalRevenueBDT = approvedApplications.reduce(
+    (sum, app) => sum + (parseInt(app.expectedSalary) || 0),
+    0
+  );
+
+  const totalRevenueUSD = (totalRevenueBDT / 120).toFixed(2); 
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <title>Revenue History | e-TuitionBD</title>
+
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">
-          Revenue History
+          My Revenue History
         </h1>
-        <p className="text-gray-600">View all revenue you earned from tuitions</p>
+        <p className="text-gray-600">
+          View all your applications and earned revenue from tuitions
+        </p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-
         <div className="stat bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg shadow-md border border-blue-200">
-          <div className="stat-title text-blue-700">Total Payments Received</div>
-          <div className="stat-value text-blue-900">{payments.length}</div>
-          <div className="stat-desc text-blue-600">Successful revenue entries</div>
+          <div className="stat-title text-blue-700">Total Applications</div>
+          <div className="stat-value text-blue-900">{applications.length}</div>
+          <div className="stat-desc text-blue-600">All submitted applications</div>
         </div>
 
         <div className="stat bg-gradient-to-br from-green-50 to-green-100 rounded-lg shadow-md border border-green-200">
-          <div className="stat-title text-green-700">Total Revenue (BDT)</div>
-          <div className="stat-value text-green-900">
-            ৳{payments.reduce((sum, p) => sum + (p.amountBDT || 0), 0).toLocaleString()}
+          <div className="stat-title text-green-700">
+            Total Earned Revenue (BDT)
           </div>
-          <div className="stat-desc text-green-600">Bangladesh Taka</div>
+          <div className="stat-value text-green-900">
+            ৳{totalRevenueBDT.toLocaleString()}
+          </div>
+          <div className="stat-desc text-green-600">Only Approved</div>
         </div>
 
         <div className="stat bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg shadow-md border border-purple-200">
-          <div className="stat-title text-purple-700">Total Revenue (USD)</div>
-          <div className="stat-value text-purple-900">
-            ${(payments.reduce((sum, p) => sum + (p.amountUSD || 0), 0)).toFixed(2)}
+          <div className="stat-title text-purple-700">
+            Total Earned Revenue (USD)
           </div>
-          <div className="stat-desc text-purple-600">US Dollars</div>
+          <div className="stat-value text-purple-900">${totalRevenueUSD}</div>
+          <div className="stat-desc text-purple-600">Approximate</div>
         </div>
-
       </div>
 
       {/* Table */}
-      {payments.length === 0 ? (
+      {applications.length === 0 ? (
         <div className="text-center py-16 bg-base-100 rounded-lg shadow-md">
           <div className="text-6xl mb-4">📄</div>
           <h3 className="text-2xl font-semibold text-gray-700 mb-2">
-            No Revenue Yet
+            No Applications Yet
           </h3>
           <p className="text-gray-500">
             Your earnings will appear here once students pay you
@@ -108,50 +116,45 @@ const RevenueHistory = () => {
             <thead className="bg-gray-100">
               <tr>
                 <th className="text-center">#</th>
-                <th>Student</th>
+                <th>Student Email</th>
                 <th>Tuition ID</th>
-                <th>Amount (BDT)</th>
-                <th>Amount (USD)</th>
+                <th>Subject</th>
+                <th>Class</th>
+                <th>Location</th>
+                <th>Salary</th>
                 <th>Status</th>
-                <th>Paid At</th>
+                <th>Applied At</th>
               </tr>
             </thead>
 
             <tbody>
-              {payments.map((item, index) => (
+              {applications.map((item, index) => (
                 <tr key={item._id} className="hover">
                   <td className="text-center font-semibold">{index + 1}</td>
+                  <td>{item.studentEmail}</td>
+                  <td className="font-semibold">{item.tuitionId}</td>
+                  <td>{item.subject}</td>
+                  <td>{item.class}</td>
+                  <td>{item.location}</td>
+                  <td className="font-bold text-green-600">
+                    ৳{parseInt(item.expectedSalary).toLocaleString()}
+                  </td>
 
                   <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="w-10 rounded-full">
-                          <img src={item.tutorImage} alt="student" />
-                        </div>
-                      </div>
-                      <div>
-                        <p className="font-semibold">{item.tutorName}</p>
-                        <p className="text-xs text-gray-500">{item.studentEmail}</p>
-                      </div>
+                    <div
+                      className={`badge ${
+                        item.status === "Approved"
+                          ? "badge-success"
+                          : item.status === "Rejected"
+                          ? "badge-error"
+                          : "badge-warning"
+                      }`}
+                    >
+                      {item.status}
                     </div>
                   </td>
 
-                  <td className="font-semibold">{item.applicationId}</td>
-
-                  <td className="font-bold text-green-600">
-                    ৳{item.amountBDT.toLocaleString()}
-                  </td>
-
-                  <td className="font-semibold text-purple-600">
-                    ${item.amountUSD.toFixed(2)}
-                  </td>
-
-                  <td>
-                    <div className="badge badge-success">{item.paymentStatus}</div>
-                  </td>
-
-                  <td className="text-sm">{formatDate(item.paidAt)}</td>
-
+                  <td className="text-sm">{formatDate(item.appliedAt)}</td>
                 </tr>
               ))}
             </tbody>
@@ -162,4 +165,4 @@ const RevenueHistory = () => {
   );
 };
 
-export default RevenueHistory;
+export default TutorRevenueHistory;
