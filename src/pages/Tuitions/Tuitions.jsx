@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router";
 import Loading from "../../components/Loading/Loading";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Tuitions = () => {
   const [tuitions, setTuitions] = useState([]);
@@ -11,6 +11,7 @@ const Tuitions = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure()
   const itemsPerPage = 8;
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const Tuitions = () => {
   const fetchApprovedTuitions = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:3000/tuitions/approved");
+      const response = await axiosSecure.get("/tuitions/approved");
       setTuitions(response.data);
     } catch (error) {
       console.error("Error fetching tuitions:", error);

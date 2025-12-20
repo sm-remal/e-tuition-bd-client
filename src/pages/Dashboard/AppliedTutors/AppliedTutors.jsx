@@ -67,7 +67,7 @@ const AppliedTutors = () => {
     };
 
     fetchApplications();
-  }, [email]);
+  }, [email, axiosSecure]);
 
   // Approve → Stripe checkout
   const handleApprove = async (app) => {

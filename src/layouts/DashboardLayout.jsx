@@ -15,12 +15,14 @@ import { FaUserCog } from "react-icons/fa";
 import { FaSquarePollVertical } from "react-icons/fa6";
 import useAuth from '../hooks/useAuth';
 import { Toaster } from 'react-hot-toast';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const DashboardLayout = () => {
 
     const { user } = useAuth();
     const [userRole, setUserRole] = useState(null);
     const [loading, setLoading] = useState(true);
+    const axiosSecure = useAxiosSecure()
 
     // ---------------- FETCH USER ROLE ----------------
     useEffect(() => {
@@ -35,7 +37,7 @@ const DashboardLayout = () => {
                     return;
                 }
 
-                const res = await fetch(
+                const res = await fetch( 
                     `http://localhost:3000/users/details/${userEmail}`
                 );
                 const data = await res.json();

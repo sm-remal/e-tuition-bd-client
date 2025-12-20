@@ -17,7 +17,7 @@ const useRole = () => {
 
       try {
         const res = await axiosSecure.get(`/users/${user.email}`); 
-
+        console.log(res.data)
         setRole(res.data?.role || "");
 
       } catch (err) {
