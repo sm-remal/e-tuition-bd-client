@@ -15,14 +15,15 @@ import { FaUserCog } from "react-icons/fa";
 import { FaSquarePollVertical } from "react-icons/fa6";
 import useAuth from '../hooks/useAuth';
 import { Toaster } from 'react-hot-toast';
-import useAxiosSecure from '../hooks/useAxiosSecure';
+import Loading from '../components/Loading/Loading';
+// import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const DashboardLayout = () => {
 
     const { user } = useAuth();
     const [userRole, setUserRole] = useState(null);
     const [loading, setLoading] = useState(true);
-    const axiosSecure = useAxiosSecure()
+    // const axiosSecure = useAxiosSecure()
 
     // ---------------- FETCH USER ROLE ----------------
     useEffect(() => {
@@ -38,7 +39,7 @@ const DashboardLayout = () => {
                 }
 
                 const res = await fetch( 
-                    `http://localhost:3000/users/details/${userEmail}`
+                    `https://e-tuition-bd.vercel.app/users/details/${userEmail}`
                 );
                 const data = await res.json();
 
@@ -58,11 +59,7 @@ const DashboardLayout = () => {
     }, [user]);
 
     if (loading) {
-        return (
-            <div className="min-h-screen flex justify-center items-center">
-                <span className="loading loading-spinner loading-lg"></span>
-            </div>
-        );
+        return <Loading></Loading>
     }
 
     // Active and normal styles for NavLink

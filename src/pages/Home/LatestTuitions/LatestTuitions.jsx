@@ -14,7 +14,7 @@ const LatestTuitions = () => {
   useEffect(() => {
     const fetchTuitions = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/latest-tuitions");
+        const res = await axios.get("https://e-tuition-bd.vercel.app/latest-tuitions");
         setTuitions(res.data);
         setLoading(false);
       } catch (error) {

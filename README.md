@@ -3,11 +3,11 @@
 A comprehensive platform connecting students with qualified tutors, streamlining tuition management, applications, and payments.
 
 ## 🌐 Live URL
-[Live Website](your-live-url-here)
+[Live Website](https://e-tuition-bd-10b58.web.app/)
 
 ## 🔗 Links
 
-- **Live Site**: 
+- **Live Site**: https://e-tuition-bd-10b58.web.app
 - **Client Repository**: https://github.com/sm-remal/e-tuition-bd-client
 - **Server Repository**: https://github.com/sm-remal/e-tuition-bd-server
 
@@ -97,7 +97,7 @@ eTuitionBd is a full-stack web application designed to solve the real-world prob
 #### Client Setup
 ```bash
 # Clone the repository
-git clone [your-client-repo-url]
+git clone  https://github.com/sm-remal/e-tuition-bd-client
 cd client
 
 # Install dependencies
@@ -169,17 +169,17 @@ VITE_STRIPE_PUBLIC_KEY
 ### Server (.env)
 ```
 MONGODB_URI
-FIREBASE_PROJECT_ID
-FIREBASE_PRIVATE_KEY
-FIREBASE_CLIENT_EMAIL
-STRIPE_SECRET_KEY
-PORT
+USER_NAME
+USER_PASSWORD
+STRIPE_SECRET
+SITE_DOMAIN
+FB_SERVICE_KEY
 ```
 
 ## 👤 Admin Credentials
 ```
-Email: [admin-email]
-Password: [admin-password]
+Email: admin@gmail.com
+Password: admin@1234
 ```
 
 ## 🤝 Contributing

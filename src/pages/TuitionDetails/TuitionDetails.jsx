@@ -58,7 +58,7 @@ const TuitionDetails = () => {
     };
 
     try {
-      const res = await axios.post("http://localhost:3000/applications", applicationData);
+      const res = await axios.post("https://e-tuition-bd.vercel.app/applications", applicationData);
       if (res.data.success) {
         toast.success("Application Submitted Successfully!");
         setShowModal(false);

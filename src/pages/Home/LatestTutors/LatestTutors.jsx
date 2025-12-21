@@ -14,7 +14,7 @@ const LatestTutors = () => {
             once: true,
         });
 
-        fetch("http://localhost:3000/users/role/latest-tutor")
+        fetch("https://e-tuition-bd.vercel.app/users/role/latest-tutor")
             .then(res => res.json())
             .then(data => setTutors(data.data || []));
     }, []);

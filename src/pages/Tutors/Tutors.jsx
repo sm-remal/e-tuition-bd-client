@@ -13,7 +13,7 @@ const Tutors = () => {
 
     const fetchTutors = async () => {
         try {
-            const res = await fetch("http://localhost:3000/users/role/tutor");
+            const res = await fetch("https://e-tuition-bd.vercel.app/users/role/tutor");
             const data = await res.json();
             setTutors(data.data);
         } catch (error) {

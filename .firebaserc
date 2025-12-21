@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "e-tuition-bd-10b58",
+    "prod": "e-tuition-bd-10b58"
+  },
+  "targets": {},
+  "etags": {}
+}

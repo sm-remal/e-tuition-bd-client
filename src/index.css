@@ -1,2 +1,17 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+}

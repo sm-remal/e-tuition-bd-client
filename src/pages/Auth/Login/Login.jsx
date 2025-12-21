@@ -47,7 +47,7 @@ const Login = () => {
             toast.success("Login Successful")
 
             // Check if user already exists in DB
-            const { data } = await axios.get(`http://localhost:3000/users/${user.email}`);
+            const { data } = await axios.get(`https://e-tuition-bd.vercel.app/users/${user.email}`);
 
             if (!data.exists) {
                 // If user not exist → add to DB
@@ -60,7 +60,7 @@ const Login = () => {
                     createdAt: new Date()
                 };
 
-                await axios.post("http://localhost:3000/users", userInfo);
+                await axios.post("https://e-tuition-bd.vercel.app/users", userInfo);
                 console.log("New Google user added to DB");
             } else {
                 console.log("Google user already exists in DB");
