@@ -179,7 +179,7 @@ FB_SERVICE_KEY
 ## 👤 Admin Credentials
 ```
 Email: admin@gmail.com
-Password: admin@1234
+Password: Admin@1234
 ```
 
 ## 🤝 Contributing
