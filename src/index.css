@@ -15,3 +15,16 @@ body {
 body {
   position: relative;
 }
+
+
+@layer components {
+  .container-custom {
+    @apply 
+      max-w-screen-2xl 
+      mx-auto 
+      max-xl:max-w-7xl 
+      max-lg:max-w-5xl 
+      max-md:max-w-3xl 
+      max-sm:max-w-screen-sm;
+  }
+}

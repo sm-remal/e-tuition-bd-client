@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { useEffect } from 'react';
+// import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+// import toast from 'react-hot-toast';
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
@@ -14,6 +16,21 @@ const PaymentSuccess = () => {
       navigate('/dashboard/apply-tutors');
     }
   }, [success, navigate]);
+
+
+  // const axiosSecure = useAxiosSecure();
+  // const sessionId = searchParams.get("session_id");
+
+  // useEffect(() => {
+  //   if (sessionId) {
+  //     axiosSecure
+  //       .patch(`/payment-success?session_id=${sessionId}`)
+  //       .then(() => toast.success("Payment marked successful"))
+  //       .catch((err) => toast.error("Payment error: " + err));
+  //   }
+  // }, [sessionId, axiosSecure]);
+
+
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-50 to-blue-50">

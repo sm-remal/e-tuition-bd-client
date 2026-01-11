@@ -7,7 +7,7 @@ A comprehensive platform connecting students with qualified tutors, streamlining
 
 ## 🔗 Links
 
-- **Live Site**: https://e-tuition-bd-10b58.web.app
+- **Live Site**: https://e-tuition-bd-10b58.web.app/
 - **Client Repository**: https://github.com/sm-remal/e-tuition-bd-client
 - **Server Repository**: https://github.com/sm-remal/e-tuition-bd-server
 
