@@ -80,10 +80,12 @@ const Login = () => {
 
                 {/* ======= Heading ======= */}
                 <div className='flex flex-col justify-center mb-4 text-center space-y-0'>
-                    <h1 className="text-3xl font-bold text-gray-700">
+                    
+                    <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-100">
                         Login Your Account
                     </h1>
-                    <p className="text-center mt-5 text-gray-700 font-medium">
+                    
+                    <p className="text-center mt-5 text-gray-700 dark:text-gray-300 font-medium">
                         Don’t have an account?
                         <Link
                             state={location.state}
@@ -100,18 +102,22 @@ const Login = () => {
                     <fieldset className="fieldset">
 
                         {/* Email */}
-                        <label className="label text-gray-800 font-medium">Email Address</label>
+                        
+                        <label className="label text-gray-800 dark:text-gray-200 font-medium">Email Address</label>
+                        
                         <input
                             type="email"
                             {...register("email", { required: true })}
-                            className="input w-full border border-gray-300 px-4"
+                            className="input w-full border border-gray-300 dark:border-gray-600 dark:bg-slate-800 dark:text-white px-4"
                             placeholder="example@email.com"
                         />
                         {errors.email && <p className='text-red-500'>Email is required</p>}
 
                         {/* Password */}
-                        <label className="label text-gray-800 font-medium mt-3">Password</label>
+                       
+                        <label className="label text-gray-800 dark:text-gray-200 font-medium mt-3">Password</label>
                         <div className="relative flex items-center">
+                           
                             <input
                                 type={showPassword ? "text" : "password"}
                                 {...register("password", {
@@ -119,12 +125,13 @@ const Login = () => {
                                     minLength: 6,
                                     pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
                                 })}
-                                className="input w-full border border-gray-300 pr-12 px-4"
+                                className="input w-full border border-gray-300 dark:border-gray-600 dark:bg-slate-800 dark:text-white pr-12 px-4"
                                 placeholder="Enter a strong password"
                             />
+                            
                             <div
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-4 text-gray-600 cursor-pointer z-10"
+                                className="absolute right-4 text-gray-600 dark:text-gray-400 cursor-pointer z-10"
                             >
                                 {showPassword ? <FaEye /> : <FaEyeSlash />}
                             </div>
@@ -135,7 +142,7 @@ const Login = () => {
                         {errors.password?.type === "pattern" && <p className='text-red-500'>Password must include uppercase, lowercase, number & special character</p>}
 
                         {/* Sign In Button */}
-                        <button className="btn w-full bg-blue-600 text-white font-semibold mt-4">
+                        <button className="btn w-full bg-blue-600 border-none text-white font-semibold mt-4">
                             Sign In
                         </button>
 
@@ -143,12 +150,14 @@ const Login = () => {
                 </form>
 
                 {/* Divider */}
-                <div className="divider text-gray-400">or</div>
+                
+                <div className="divider text-gray-400 dark:text-gray-500">or</div>
 
                 {/* Google Sign-In */}
+               
                 <button
                     onClick={handleGoogleSignIn}
-                    className="btn w-full btn-outline flex items-center justify-center gap-2"
+                    className="btn w-full btn-outline dark:text-white dark:hover:bg-slate-800 flex items-center justify-center gap-2"
                 >
                     <FcGoogle size={20} /> Sign In with Google
                 </button>

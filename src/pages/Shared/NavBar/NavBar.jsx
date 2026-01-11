@@ -1,30 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IoSunny } from "react-icons/io5";
 import { IoMoon } from "react-icons/io5";
 import { Link, NavLink, useNavigate } from "react-router";
 import { FaUserCircle } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import useRole from "../../../hooks/useRole";
+import { useTheme } from "../../../contexts/ThemeContext/ThemeContext";
 
 const NavBar = () => {
 
-    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+    const { theme, toggleTheme } = useTheme();
     const { user, signOutUser } = useAuth();
     const navigate = useNavigate()
     const { role } = useRole()
-
-
-    useEffect(() => {
-        const html = document.querySelector("html");
-        html.setAttribute("data-theme", theme);
-        localStorage.setItem("theme", theme);
-    }, [theme]);
-
-    const handleTheme = (checked) => {
-        setTheme(checked ? "dark" : "light");
-    };
-
-
 
     const handleSignOut = () => {
         signOutUser()
@@ -117,15 +105,12 @@ const NavBar = () => {
                             <div>
                                 <label className="swap swap-rotate">
                                     <input
-                                        onChange={(e) => handleTheme(e.target.checked)}
                                         type="checkbox"
-                                        className="theme-controller"
-                                        value="synthwave"
+                                        onChange={(e) => toggleTheme(e.target.checked)}
+                                        checked={theme === "dark"}
                                     />
-                                    {/* sun icon */}
-                                    <IoSunny className="swap-off h-7 w-7 fill-current" />
-                                    {/* moon icon */}
-                                    <IoMoon className="swap-on h-7 w-7 fill-current" />
+                                    <IoSunny className="swap-off h-7 w-7 fill-current text-white" />
+                                    <IoMoon className="swap-on h-7 w-7 fill-current text-white" />
                                 </label>
                             </div>
                             <Link to="/login" className="text-white font-semibold">Login</Link>
