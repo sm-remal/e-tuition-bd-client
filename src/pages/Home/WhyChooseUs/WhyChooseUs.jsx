@@ -7,64 +7,84 @@ const WhyChooseUs = () => {
     {
       icon: Award,
       title: "Standard Of Excellence",
-      description: "This slide is 100% editable. Adapt it to your needs and capture your audience's attention",
-      color: "bg-blue-500",
+      description: "We maintain high educational standards to ensure every student receives top-quality guidance.",
+      color: "bg-blue-500 dark:bg-blue-600",
     },
     {
       icon: ThumbsUp,
       title: "Easily Customization",
-      description: "This slide is 100% editable. Adapt it to your needs and capture your audience's attention",
-      color: "bg-teal-500",
+      description: "Flexible learning schedules and personalized tutor selection based on your specific goals.",
+      color: "bg-teal-500 dark:bg-teal-600",
     },
     {
       icon: DollarSign,
       title: "Cost Effective",
-      description: "This slide is 100% editable. Adapt it to your needs and capture your audience's attention",
-      color: "bg-green-500",
+      description: "Find the best tutors within your budget without compromising on the quality of education.",
+      color: "bg-green-500 dark:bg-green-600",
     },
     {
       icon: Handshake,
       title: "Commitment To Work",
-      description: "This slide is 100% editable. Adapt it to your needs and capture your audience's attention",
-      color: "bg-blue-600",
+      description: "Our tutors are dedicated professionals committed to the academic growth of their students.",
+      color: "bg-indigo-500 dark:bg-indigo-600",
     },
     {
       icon: Users,
       title: "Solid Teamwork",
-      description: "This slide is 100% editable. Adapt it to your needs and capture your audience's attention",
-      color: "bg-teal-600",
+      description: "A collaborative platform where students, parents, and tutors work together for success.",
+      color: "bg-purple-500 dark:bg-purple-600",
     }
   ];
 
   return (
-    <div className=" mt-[1200px] md:mt-0 py-10 px-4">
+    <div className="py-20 px-4 bg-transparent dark:bg-base-300 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Why Choose <span className="">E-Tuition BD</span>
-          </h1>
-          <p className="text-gray-600 text-sm md:text-base">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4"
+          >
+            Why Choose <span className="text-blue-600 dark:text-blue-400">E-Tuition BD</span>
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-gray-600 dark:text-gray-400 text-sm md:text-base max-w-2xl mx-auto"
+          >
             Discover what makes us different and why our students love learning with us.
-          </p>
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+        {/* Grid Container */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center cursor-pointer border border-gray-100 hover:shadow-2xl transition-shadow duration-300"
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -10 }}
+                className="bg-white dark:bg-base-200 rounded-2xl shadow-md hover:shadow-xl p-6 flex flex-col items-center text-center border border-gray-100 dark:border-gray-700 transition-all duration-300"
               >
-                <div className={`${feature.color} w-16 h-16 flex items-center justify-center rounded-full mb-4`}>
-                  <Icon className="w-8 h-8 text-white" strokeWidth={2.5} />
+                {/* Icon Circle */}
+                <div className={`${feature.color} w-16 h-16 flex items-center justify-center rounded-2xl mb-5 shadow-lg transform group-hover:rotate-6 transition-transform`}>
+                  <Icon className="w-8 h-8 text-white" strokeWidth={2} />
                 </div>
-                <h3 className="text-lg font-bold text-gray-800 mb-2">{feature.title}</h3>
-                <p className="text-gray-600 text-sm">{feature.description}</p>
+
+                {/* Content */}
+                <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3 uppercase tracking-tight">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                  {feature.description}
+                </p>
               </motion.div>
             );
           })}

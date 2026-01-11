@@ -33,12 +33,12 @@ const faqData = [
 // --- Individual FAQ Item Component ---
 const FaqItem = ({ question, answer, isOpen, toggleItem }) => {
   const itemClasses = isOpen 
-    ? "bg-teal-50 border border-teal-300 shadow-md" 
-    : "bg-white border border-gray-200 shadow-sm hover:shadow-md";
+    ? "bg-teal-50 dark:bg-gray-800 border border-teal-300 dark:border-teal-900 shadow-md" 
+    : "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md";
 
   const questionClasses = isOpen 
-    ? "font-semibold text-gray-900" 
-    : "font-medium text-gray-700";
+    ? "font-semibold text-gray-900 dark:text-white" 
+    : "font-medium text-gray-700 dark:text-gray-300";
 
   return (
     <div className={`rounded-lg mb-3 transition-all duration-300 ease-in-out ${itemClasses}`}>
@@ -49,7 +49,7 @@ const FaqItem = ({ question, answer, isOpen, toggleItem }) => {
         <div className={`text-lg ${questionClasses}`}>
           {question}
         </div>
-        <span className="text-xl text-gray-700 transform transition-transform duration-300">
+        <span className="text-xl text-gray-700 dark:text-gray-400 transform transition-transform duration-300">
           {isOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
         </span>
       </div>
@@ -57,7 +57,7 @@ const FaqItem = ({ question, answer, isOpen, toggleItem }) => {
       <div 
         className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-96 opacity-100 p-4 pt-0' : 'max-h-0 opacity-0'}`}
       >
-        <p className="text-sm text-gray-600 leading-relaxed pt-3 border-t border-teal-200">
+        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pt-3 border-t border-teal-200 dark:border-teal-900/50">
           {answer}
         </p>
       </div>
@@ -74,13 +74,13 @@ const FAQ = () => {
   };
 
   return (
-    <div className="py-16">
+    <div className="py-16 bg-white dark:bg-base-300 transition-colors duration-300">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Find answers to common questions about applying for tuitions, payments, and tutor verification.
           </p>
         </header>

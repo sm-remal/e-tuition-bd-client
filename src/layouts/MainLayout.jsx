@@ -8,7 +8,7 @@ const MainLayout = () => {
     return (
         <div className=''>
             <NavBar></NavBar>
-            <div className='flex flex-col min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 mt-16'>
+            <div className='flex flex-col min-h-screen bg-rose-50 dark:bg-base-300 mt-16'>
                 <Outlet></Outlet>
             </div>
             <Footer></Footer>

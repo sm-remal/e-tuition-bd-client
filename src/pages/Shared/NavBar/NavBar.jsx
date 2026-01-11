@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { IoSunny } from "react-icons/io5";
+import { IoMoon } from "react-icons/io5";
 import { Link, NavLink, useNavigate } from "react-router";
 import { FaUserCircle } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
@@ -6,9 +8,21 @@ import useRole from "../../../hooks/useRole";
 
 const NavBar = () => {
 
+    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
     const { user, signOutUser } = useAuth();
     const navigate = useNavigate()
     const { role } = useRole()
+
+
+    useEffect(() => {
+        const html = document.querySelector("html");
+        html.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
+    const handleTheme = (checked) => {
+        setTheme(checked ? "dark" : "light");
+    };
 
 
 
@@ -53,7 +67,7 @@ const NavBar = () => {
     );
 
     return (
-        <div className="bg-blue-800 shadow-sm fixed top-0 right-0 left-0 z-50">
+        <div className="bg-blue-800 dark:bg-base-300 shadow-sm fixed top-0 right-0 left-0 z-50">
             <div className="navbar px-4 md:px-8 container-custom">
                 <div className="navbar-start flex gap-3">
 
@@ -100,6 +114,20 @@ const NavBar = () => {
 
                     {!user && (
                         <div className="flex gap-3">
+                            <div>
+                                <label className="swap swap-rotate">
+                                    <input
+                                        onChange={(e) => handleTheme(e.target.checked)}
+                                        type="checkbox"
+                                        className="theme-controller"
+                                        value="synthwave"
+                                    />
+                                    {/* sun icon */}
+                                    <IoSunny className="swap-off h-7 w-7 fill-current" />
+                                    {/* moon icon */}
+                                    <IoMoon className="swap-on h-7 w-7 fill-current" />
+                                </label>
+                            </div>
                             <Link to="/login" className="text-white font-semibold">Login</Link>
                             <Link to="/register" className="text-white font-semibold">Register</Link>
                         </div>

@@ -60,13 +60,13 @@ const Tuitions = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-white dark:bg-base-300 min-h-screen transition-colors duration-300">
        <title>Tuitions | e-TuitionBD</title>
 
       {/* Header */}
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-gray-800 mb-2">Available Tuitions</h1>
-        <p className="text-gray-500 max-w-xl mx-auto">
+        <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2">Available Tuitions</h1>
+        <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
           Search, Sort, and Find the best tuition for you.
         </p>
       </div>
@@ -83,11 +83,11 @@ const Tuitions = () => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="input input-bordered w-full pr-10 py-3 text-base"
+              className="input input-bordered w-full pr-10 py-3 text-base dark:bg-gray-800 dark:text-white dark:border-gray-700 focus:outline-none"
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 absolute right-3 top-3 text-gray-400 pointer-events-none"
+              className="h-6 w-6 absolute right-3 top-3 text-gray-400 dark:text-gray-500 pointer-events-none"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -104,17 +104,17 @@ const Tuitions = () => {
 
         <div className="w-full md:w-1/3">
           <select
-            className="select select-bordered w-full"
+            className="select select-bordered w-full dark:bg-gray-800 dark:text-white dark:border-gray-700 focus:outline-none"
             value={sortBy}
             onChange={(e) => {
               setSortBy(e.target.value);
               setCurrentPage(1);
             }}
           >
-            <option value="">Sort By</option>
-            <option value="budget-high">Budget: High → Low</option>
-            <option value="budget-low">Budget: Low → High</option>
-            <option value="latest">Latest Posts</option>
+            <option value="" className="dark:bg-gray-800">Sort By</option>
+            <option value="budget-high" className="dark:bg-gray-800">Budget: High → Low</option>
+            <option value="budget-low" className="dark:bg-gray-800">Budget: Low → High</option>
+            <option value="latest" className="dark:bg-gray-800">Latest Posts</option>
           </select>
         </div>
       </div>
@@ -122,13 +122,13 @@ const Tuitions = () => {
       {/* No Data Message */}
       {currentItems.length === 0 ? (
         <div className="text-center py-16">
-          <h3 className="text-xl font-semibold text-gray-600 mb-2">No Tuitions Found</h3>
-          <p className="text-gray-500">Try adjusting your search or filters</p>
+          <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-300 mb-2">No Tuitions Found</h3>
+          <p className="text-gray-500 dark:text-gray-400">Try adjusting your search or filters</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {currentItems.map((tuition) => (
-            <div key={tuition._id} className="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div key={tuition._id} className="card bg-base-100 dark:bg-base-200 shadow-lg hover:shadow-xl dark:shadow-none transition-shadow duration-300 border border-transparent dark:border-gray-700">
               {/* Subject Image */}
               <figure className="h-40 overflow-hidden">
                 <img
@@ -140,22 +140,22 @@ const Tuitions = () => {
 
               <div className="card-body">
                 {/* Subject & Class */}
-                <h2 className="card-title text-lg font-bold">{tuition.subject}</h2>
-                <p className="text-gray-500 mb-1">{tuition.class}</p>
+                <h2 className="card-title text-lg font-bold text-gray-800 dark:text-white">{tuition.subject}</h2>
+                <p className="text-gray-500 dark:text-gray-400 mb-1">{tuition.class}</p>
 
                 {/* Location */}
-                <p className="text-gray-600 mb-1">📍 {tuition.location}</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-1">📍 {tuition.location}</p>
 
                 {/* Budget */}
-                <p className="text-green-600 font-bold text-xl mb-3">
-                  ৳{tuition.budget.toLocaleString()} <span className="text-sm text-gray-500">/month</span>
+                <p className="text-green-600 dark:text-green-400 font-bold text-xl mb-3">
+                  ৳{tuition.budget.toLocaleString()} <span className="text-sm text-gray-500 dark:text-gray-500">/month</span>
                 </p>
 
                 {/* View Details */}
                 <div className="card-actions justify-end">
                   <button
                     onClick={() => handleViewDetails(tuition._id)}
-                    className="btn btn-primary btn-sm w-full"
+                    className="btn btn-primary btn-sm w-full transition-colors"
                   >
                     View Details
                   </button>
@@ -173,7 +173,7 @@ const Tuitions = () => {
             <button
               key={i}
               onClick={() => setCurrentPage(i + 1)}
-              className={`btn btn-sm ${currentPage === i + 1 ? "btn-primary" : ""}`}
+              className={`btn btn-sm ${currentPage === i + 1 ? "btn-primary" : "dark:bg-gray-700 dark:text-white dark:border-gray-600"}`}
             >
               {i + 1}
             </button>

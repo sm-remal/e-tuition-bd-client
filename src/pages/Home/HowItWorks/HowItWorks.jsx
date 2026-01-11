@@ -91,7 +91,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <div className=" bg-indigo-500 mt-12 mb-52 rounded-2xl py-16 h-[400px] px-4">
+    <div className=" bg-indigo-500 dark:bg-base-100 mt-12 mb-52 rounded-2xl py-16 h-[400px] px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -139,7 +139,7 @@ const HowItWorks = () => {
                 )}
 
                 {/* Card */}
-                <div className="bg-white rounded-2xl shadow-2xl p-8 h-full flex flex-col items-center text-center relative overflow-hidden">
+                <div className="bg-white dark:bg-base-200 rounded-2xl shadow-2xl p-8 h-full flex flex-col items-center text-center relative overflow-hidden">
                   {/* Background decoration */}
                   <motion.div
                     animate={{
@@ -158,7 +158,7 @@ const HowItWorks = () => {
                   <motion.div
                     variants={numberVariants}
                     whileHover="hover"
-                    className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg z-10"
+                    className="absolute -top-4 -right-4 w-12 h-12 bg-purple-500 dark:bg-base-100 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg z-10"
                   >
                     {step.number}
                   </motion.div>
@@ -170,7 +170,7 @@ const HowItWorks = () => {
                       rotate: [0, -10, 10, -10, 0],
                       transition: { duration: 0.5 }
                     }}
-                    className="mb-6 p-6 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full"
+                    className="mb-6 p-6 bg-purple-100 dark:bg-base-100 rounded-full"
                   >
                     <Icon className="w-12 h-12 text-indigo-600" />
                   </motion.div>
@@ -180,7 +180,7 @@ const HowItWorks = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 + index * 0.2 }}
-                    className="text-xl font-bold text-gray-800 mb-3"
+                    className="text-xl font-bold text-gray-800 dark:text-gray-300 mb-3"
                   >
                     {step.title}
                   </motion.h3>
@@ -190,7 +190,7 @@ const HowItWorks = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.4 + index * 0.2 }}
-                    className="text-gray-600 text-sm leading-relaxed"
+                    className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed"
                   >
                     {step.description}
                   </motion.p>
@@ -199,25 +199,6 @@ const HowItWorks = () => {
             );
           })}
         </motion.div>
-
-        {/* CTA Button */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
-          className="text-center mt-16"
-        >
-          <motion.button
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
-            }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-white text-indigo-600 px-10 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300"
-          >
-            Get Started Today
-          </motion.button>
-        </motion.div> */}
       </div>
     </div>
   );
