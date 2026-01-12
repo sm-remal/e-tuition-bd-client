@@ -6,7 +6,7 @@ const ErrorPage = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-rose-50 dark:bg-slate-900 text-center px-4 transition-colors duration-300">
+        <div className="flex flex-col items-center justify-center min-h-screen dark:bg-slate-900 text-center px-4 transition-colors duration-300">
 
             <div className="bg-blue-100 dark:bg-slate-800 p-6 rounded-full shadow-sm mb-6">
                 <AlertTriangle className="text-blue-500 dark:text-blue-400 w-16 h-16" />

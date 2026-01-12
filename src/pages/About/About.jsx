@@ -52,7 +52,7 @@ const About = () => {
             <title>About | e-TuitionBD</title>
             
             {/* Hero Section */}
-            <section className="relative bg-blue-50 dark:bg-base-300 text-white overflow-hidden pb-16">
+            <section className="relative bg-blue-500 dark:bg-base-300 text-white overflow-hidden pb-16">
                 <div className="absolute inset-0 opacity-10">
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
                 </div>
@@ -79,7 +79,7 @@ const About = () => {
                         </motion.div>
 
                         <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight text-gray-900 dark:text-white">
-                            About <span className="text-blue-600 dark:text-cyan-300">eTuitionBd</span>
+                            About <span className="text-white dark:text-cyan-300">eTuitionBd</span>
                         </h1>
 
                         <p className="text-lg text-blue-900 dark:text-blue-100 leading-relaxed max-w-3xl mx-auto">
@@ -320,7 +320,7 @@ const About = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-24 bg-gradient-to-br from-blue-700 via-blue-800 to-blue-900 relative overflow-hidden">
+            <section className="py-24 bg-blue-500 dark:bg-base-300 relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10">
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
                 </div>
