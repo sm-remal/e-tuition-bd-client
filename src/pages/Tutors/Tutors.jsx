@@ -32,7 +32,7 @@ const Tutors = () => {
     }
 
     return (
-        <div className="bg-rose-50 dark:bg-base-300 min-h-screen transition-colors duration-300">
+        <div className="dark:bg-base-300 min-h-screen transition-colors duration-300">
              <title>Tutors | e-TuitionBD</title>
 
             <h2 className="text-3xl md:text-4xl font-bold text-center pt-10 text-gray-800 dark:text-white">All Verified Tutors</h2>

@@ -24,7 +24,7 @@ const LatestTutors = () => {
     };
 
     return (
-        <div className="bg-rose-50 dark:bg-base-300 transition-colors duration-300 pb-16">
+        <div className="dark:bg-base-300 transition-colors duration-300 pb-16">
             <h2
                 className="text-3xl md:text-4xl font-bold text-center pt-16 mb-4 text-gray-800 dark:text-white"
                 data-aos="fade-up"
