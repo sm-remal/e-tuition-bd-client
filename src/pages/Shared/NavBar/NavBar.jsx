@@ -100,23 +100,27 @@ const NavBar = () => {
                 {/* Right Side Auth */}
                 <div className="navbar-end text-white">
 
-                    {!user && (
-                        <div className="flex gap-3">
-                            <div>
-                                <label className="swap swap-rotate">
-                                    <input
-                                        type="checkbox"
-                                        onChange={(e) => toggleTheme(e.target.checked)}
-                                        checked={theme === "dark"}
-                                    />
-                                    <IoSunny className="swap-off h-7 w-7 fill-current text-white" />
-                                    <IoMoon className="swap-on h-7 w-7 fill-current text-white" />
-                                </label>
-                            </div>
-                            <Link to="/login" className="text-white font-semibold">Login</Link>
-                            <Link to="/register" className="text-white font-semibold">Register</Link>
+                    <div className="flex items-center">
+                        <div className="mr-3">
+                            <label className="swap swap-rotate">
+                                <input
+                                    type="checkbox"
+                                    onChange={(e) => toggleTheme(e.target.checked)}
+                                    checked={theme === "dark"}
+                                />
+                                <IoSunny className="swap-off h-7 w-7 fill-current text-white" />
+                                <IoMoon className="swap-on h-7 w-7 fill-current text-white" />
+                            </label>
                         </div>
-                    )}
+                        {!user && (
+                            <div className="flex gap-3">
+
+                                <Link to="/login" className="text-white font-semibold">Login</Link>
+                                <Link to="/register" className="text-white font-semibold">Register</Link>
+                            </div>
+                        )}
+
+                    </div>
 
                     {user && (
                         <div className="dropdown dropdown-end">
