@@ -116,11 +116,11 @@ const TuitionManagement = () => {
 
     const getStatusBadge = (status) => {
         const badges = {
-            Pending: 'bg-yellow-100 text-yellow-800',
-            Approved: 'bg-green-100 text-green-800',
-            Rejected: 'bg-red-100 text-red-800'
+            Pending: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+            Approved: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+            Rejected: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
         };
-        return badges[status] || 'bg-gray-100 text-gray-800';
+        return badges[status] || 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
     };
 
     // Filter tuitions based on selected filter
@@ -134,14 +134,14 @@ const TuitionManagement = () => {
     }
 
     return (
-        <div className="container mx-auto p-6">
+        <div className="container mx-auto dark:bg-base-100 p-6">
             <title>Tuitions Management | e-TuitionBD</title>
             {/* Header */}
             <div className="mb-6">
-                <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">
                     Tuition Management
                 </h1>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-400">
                     Total {filteredTuitions.length} tuitions found
                 </p>
             </div>
@@ -152,8 +152,8 @@ const TuitionManagement = () => {
                     onClick={() => setFilter('all')}
                     className={`px-4 py-2 rounded-lg font-medium transition ${
                         filter === 'all'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            ? 'bg-blue-600 text-white dark:bg-blue-500'
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                     }`}
                 >
                     All ({tuitions.length})
@@ -162,8 +162,8 @@ const TuitionManagement = () => {
                     onClick={() => setFilter('Pending')}
                     className={`px-4 py-2 rounded-lg font-medium transition ${
                         filter === 'Pending'
-                            ? 'bg-yellow-600 text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            ? 'bg-yellow-600 text-white dark:bg-yellow-500'
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                     }`}
                 >
                     Pending ({tuitions.filter(t => t.status === 'Pending').length})
@@ -172,8 +172,8 @@ const TuitionManagement = () => {
                     onClick={() => setFilter('Approved')}
                     className={`px-4 py-2 rounded-lg font-medium transition ${
                         filter === 'Approved'
-                            ? 'bg-green-600 text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            ? 'bg-green-600 text-white dark:bg-green-500'
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                     }`}
                 >
                     Approved ({tuitions.filter(t => t.status === 'Approved').length})
@@ -182,8 +182,8 @@ const TuitionManagement = () => {
                     onClick={() => setFilter('Rejected')}
                     className={`px-4 py-2 rounded-lg font-medium transition ${
                         filter === 'Rejected'
-                            ? 'bg-red-600 text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            ? 'bg-red-600 text-white dark:bg-red-500'
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                     }`}
                 >
                     Rejected ({tuitions.filter(t => t.status === 'Rejected').length})
@@ -191,45 +191,45 @@ const TuitionManagement = () => {
             </div>
 
             {/* Tuitions Table */}
-            <div className="overflow-x-auto bg-white rounded-lg shadow">
+            <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow">
                 <table className="table w-full">
-                    <thead className="bg-gray-100">
+                    <thead className="bg-gray-100 dark:bg-gray-700">
                         <tr>
-                            <th className="text-center">#</th>
-                            <th>Student Email</th>
-                            <th>Subject</th>
-                            <th>Class</th>
-                            <th>Location</th>
-                            <th>Budget</th>
-                            <th>Applications</th>
-                            <th>Status</th>
-                            <th className="text-center">Actions</th>
+                            <th className="text-center dark:text-gray-200">#</th>
+                            <th className="dark:text-gray-200">Student Email</th>
+                            <th className="dark:text-gray-200">Subject</th>
+                            <th className="dark:text-gray-200">Class</th>
+                            <th className="dark:text-gray-200">Location</th>
+                            <th className="dark:text-gray-200">Budget</th>
+                            <th className="dark:text-gray-200">Applications</th>
+                            <th className="dark:text-gray-200">Status</th>
+                            <th className="text-center dark:text-gray-200">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {filteredTuitions.length === 0 ? (
                             <tr>
-                                <td colSpan="9" className="text-center py-8 text-gray-500">
+                                <td colSpan="9" className="text-center py-8 text-gray-500 dark:text-gray-400">
                                     No tuitions found
                                 </td>
                             </tr>
                         ) : (
                             filteredTuitions.map((tuition, index) => (
-                                <tr key={tuition._id} className="hover">
-                                    <td className="text-center">{index + 1}</td>
+                                <tr key={tuition._id} className="hover dark:hover:bg-gray-700">
+                                    <td className="text-center dark:text-gray-300">{index + 1}</td>
                                     <td>
-                                        <div className="text-sm text-gray-700">
+                                        <div className="text-sm text-gray-700 dark:text-gray-300">
                                             {tuition.studentEmail}
                                         </div>
                                     </td>
-                                    <td className="font-medium">{tuition.subject}</td>
-                                    <td>{tuition.class}</td>
-                                    <td>{tuition.location}</td>
-                                    <td className="font-semibold text-green-600">
+                                    <td className="font-medium dark:text-gray-200">{tuition.subject}</td>
+                                    <td className="dark:text-gray-300">{tuition.class}</td>
+                                    <td className="dark:text-gray-300">{tuition.location}</td>
+                                    <td className="font-semibold text-green-600 dark:text-green-400">
                                         ৳{tuition.budget.toLocaleString()}
                                     </td>
                                     <td className="text-center">
-                                        <span className="badge badge-primary">
+                                        <span className="badge badge-primary dark:bg-blue-600 dark:text-white">
                                             {tuition.applicationsCount || 0}
                                         </span>
                                     </td>
@@ -246,7 +246,7 @@ const TuitionManagement = () => {
                                         <div className="flex gap-2 justify-center">
                                             <button
                                                 onClick={() => viewDetails(tuition)}
-                                                className="btn btn-sm btn-info"
+                                                className="btn btn-sm btn-info dark:bg-blue-600 dark:hover:bg-blue-700 dark:border-blue-600"
                                                 title="View Details"
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -258,7 +258,7 @@ const TuitionManagement = () => {
                                                 <>
                                                     <button
                                                         onClick={() => handleApprove(tuition._id)}
-                                                        className="btn btn-sm btn-success"
+                                                        className="btn btn-sm btn-success dark:bg-green-600 dark:hover:bg-green-700 dark:border-green-600"
                                                         title="Approve"
                                                     >
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -267,7 +267,7 @@ const TuitionManagement = () => {
                                                     </button>
                                                     <button
                                                         onClick={() => handleReject(tuition._id)}
-                                                        className="btn btn-sm btn-error"
+                                                        className="btn btn-sm btn-error dark:bg-red-600 dark:hover:bg-red-700 dark:border-red-600"
                                                         title="Reject"
                                                     >
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -288,64 +288,64 @@ const TuitionManagement = () => {
             {/* Details Modal */}
             {showModal && selectedTuition && (
                 <div className="modal modal-open">
-                    <div className="modal-box max-w-2xl">
-                        <h3 className="font-bold text-2xl mb-4 text-gray-800">
+                    <div className="modal-box max-w-2xl dark:bg-gray-800">
+                        <h3 className="font-bold text-2xl mb-4 text-gray-800 dark:text-gray-100">
                             Tuition Details
                         </h3>
                         
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-gray-50 p-3 rounded">
-                                <label className="font-semibold text-gray-600 text-sm">
+                            <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                                <label className="font-semibold text-gray-600 dark:text-gray-400 text-sm">
                                     Student Email:
                                 </label>
-                                <p className="text-gray-800">
+                                <p className="text-gray-800 dark:text-gray-200">
                                     {selectedTuition.studentEmail}
                                 </p>
                             </div>
-                            <div className="bg-gray-50 p-3 rounded">
-                                <label className="font-semibold text-gray-600 text-sm">
+                            <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                                <label className="font-semibold text-gray-600 dark:text-gray-400 text-sm">
                                     Subject:
                                 </label>
-                                <p className="text-gray-800 font-medium">
+                                <p className="text-gray-800 dark:text-gray-200 font-medium">
                                     {selectedTuition.subject}
                                 </p>
                             </div>
-                            <div className="bg-gray-50 p-3 rounded">
-                                <label className="font-semibold text-gray-600 text-sm">
+                            <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                                <label className="font-semibold text-gray-600 dark:text-gray-400 text-sm">
                                     Class:
                                 </label>
-                                <p className="text-gray-800">{selectedTuition.class}</p>
+                                <p className="text-gray-800 dark:text-gray-200">{selectedTuition.class}</p>
                             </div>
-                            <div className="bg-gray-50 p-3 rounded">
-                                <label className="font-semibold text-gray-600 text-sm">
+                            <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                                <label className="font-semibold text-gray-600 dark:text-gray-400 text-sm">
                                     Location:
                                 </label>
-                                <p className="text-gray-800">{selectedTuition.location}</p>
+                                <p className="text-gray-800 dark:text-gray-200">{selectedTuition.location}</p>
                             </div>
-                            <div className="bg-gray-50 p-3 rounded">
-                                <label className="font-semibold text-gray-600 text-sm">
+                            <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                                <label className="font-semibold text-gray-600 dark:text-gray-400 text-sm">
                                     Budget:
                                 </label>
-                                <p className="text-green-600 font-bold text-lg">
+                                <p className="text-green-600 dark:text-green-400 font-bold text-lg">
                                     ৳{selectedTuition.budget.toLocaleString()}
                                 </p>
                             </div>
-                            <div className="bg-gray-50 p-3 rounded">
-                                <label className="font-semibold text-gray-600 text-sm">
+                            <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                                <label className="font-semibold text-gray-600 dark:text-gray-400 text-sm">
                                     Schedule:
                                 </label>
-                                <p className="text-gray-800">{selectedTuition.schedule}</p>
+                                <p className="text-gray-800 dark:text-gray-200">{selectedTuition.schedule}</p>
                             </div>
-                            <div className="bg-gray-50 p-3 rounded">
-                                <label className="font-semibold text-gray-600 text-sm">
+                            <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                                <label className="font-semibold text-gray-600 dark:text-gray-400 text-sm">
                                     Applications Count:
                                 </label>
-                                <p className="text-gray-800 font-medium">
+                                <p className="text-gray-800 dark:text-gray-200 font-medium">
                                     {selectedTuition.applicationsCount || 0}
                                 </p>
                             </div>
-                            <div className="bg-gray-50 p-3 rounded">
-                                <label className="font-semibold text-gray-600 text-sm">
+                            <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                                <label className="font-semibold text-gray-600 dark:text-gray-400 text-sm">
                                     Status:
                                 </label>
                                 <p>
@@ -358,27 +358,27 @@ const TuitionManagement = () => {
                                     </span>
                                 </p>
                             </div>
-                            <div className="col-span-2 bg-gray-50 p-3 rounded">
-                                <label className="font-semibold text-gray-600 text-sm">
+                            <div className="col-span-2 bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                                <label className="font-semibold text-gray-600 dark:text-gray-400 text-sm">
                                     Description:
                                 </label>
-                                <p className="text-gray-800 mt-1">
+                                <p className="text-gray-800 dark:text-gray-200 mt-1">
                                     {selectedTuition.description || 'No description provided'}
                                 </p>
                             </div>
-                            <div className="col-span-2 bg-gray-50 p-3 rounded">
-                                <label className="font-semibold text-gray-600 text-sm">
+                            <div className="col-span-2 bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                                <label className="font-semibold text-gray-600 dark:text-gray-400 text-sm">
                                     Requirements:
                                 </label>
-                                <p className="text-gray-800 mt-1">
+                                <p className="text-gray-800 dark:text-gray-200 mt-1">
                                     {selectedTuition.requirements || 'No requirements specified'}
                                 </p>
                             </div>
-                            <div className="col-span-2 bg-gray-50 p-3 rounded">
-                                <label className="font-semibold text-gray-600 text-sm">
+                            <div className="col-span-2 bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                                <label className="font-semibold text-gray-600 dark:text-gray-400 text-sm">
                                     Created At:
                                 </label>
-                                <p className="text-gray-800 mt-1">
+                                <p className="text-gray-800 dark:text-gray-200 mt-1">
                                     {new Date(selectedTuition.createdAt).toLocaleString('en-US', {
                                         year: 'numeric',
                                         month: 'long',
@@ -398,7 +398,7 @@ const TuitionManagement = () => {
                                             handleApprove(selectedTuition._id);
                                             setShowModal(false);
                                         }}
-                                        className="btn btn-success"
+                                        className="btn btn-success dark:bg-green-600 dark:hover:bg-green-700 dark:border-green-600"
                                     >
                                         Approve
                                     </button>
@@ -407,7 +407,7 @@ const TuitionManagement = () => {
                                             handleReject(selectedTuition._id);
                                             setShowModal(false);
                                         }}
-                                        className="btn btn-error"
+                                        className="btn btn-error dark:bg-red-600 dark:hover:bg-red-700 dark:border-red-600"
                                     >
                                         Reject
                                     </button>
@@ -415,7 +415,7 @@ const TuitionManagement = () => {
                             )}
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="btn"
+                                className="btn dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200 dark:border-gray-600"
                             >
                                 Close
                             </button>

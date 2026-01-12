@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Edit, Trash2, Eye, Clock, CheckCircle, XCircle, Search, Filter } from 'lucide-react';
-import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
@@ -45,6 +44,8 @@ const MyTuitions = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
+      background: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
+      color: document.documentElement.classList.contains('dark') ? '#f3f4f6' : '#000000',
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -56,6 +57,8 @@ const MyTuitions = () => {
               icon: "success",
               timer: 1500,
               showConfirmButton: false,
+              background: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
+              color: document.documentElement.classList.contains('dark') ? '#f3f4f6' : '#000000',
             });
             setTuitions(prev => prev.filter(t => t._id !== id));
           } else {
@@ -70,18 +73,21 @@ const MyTuitions = () => {
 
   // Edit tuition
   const handleEdit = async (tuition) => {
+    const isDark = document.documentElement.classList.contains('dark');
     const { value: formValues } = await Swal.fire({
       title: "Update Tuition Info",
       html: `
-        <input id="subject" class="swal2-input" placeholder="Subject" value="${tuition.subject || ''}" />
-        <input id="class" class="swal2-input" placeholder="Class" value="${tuition.class || ''}" />
-        <input id="location" class="swal2-input" placeholder="Location" value="${tuition.location || ''}" />
-        <input id="budget" type="number" class="swal2-input" placeholder="Budget" value="${tuition.budget || ''}" />
-        <input id="schedule" class="swal2-input" placeholder="Schedule" value="${tuition.schedule || ''}" />
+        <input id="subject" class="swal2-input" placeholder="Subject" value="${tuition.subject || ''}" style="background-color: ${isDark ? '#374151' : '#ffffff'}; color: ${isDark ? '#f3f4f6' : '#000000'}; border-color: ${isDark ? '#4b5563' : '#d1d5db'};" />
+        <input id="class" class="swal2-input" placeholder="Class" value="${tuition.class || ''}" style="background-color: ${isDark ? '#374151' : '#ffffff'}; color: ${isDark ? '#f3f4f6' : '#000000'}; border-color: ${isDark ? '#4b5563' : '#d1d5db'};" />
+        <input id="location" class="swal2-input" placeholder="Location" value="${tuition.location || ''}" style="background-color: ${isDark ? '#374151' : '#ffffff'}; color: ${isDark ? '#f3f4f6' : '#000000'}; border-color: ${isDark ? '#4b5563' : '#d1d5db'};" />
+        <input id="budget" type="number" class="swal2-input" placeholder="Budget" value="${tuition.budget || ''}" style="background-color: ${isDark ? '#374151' : '#ffffff'}; color: ${isDark ? '#f3f4f6' : '#000000'}; border-color: ${isDark ? '#4b5563' : '#d1d5db'};" />
+        <input id="schedule" class="swal2-input" placeholder="Schedule" value="${tuition.schedule || ''}" style="background-color: ${isDark ? '#374151' : '#ffffff'}; color: ${isDark ? '#f3f4f6' : '#000000'}; border-color: ${isDark ? '#4b5563' : '#d1d5db'};" />
       `,
       focusConfirm: false,
       showCancelButton: true,
       confirmButtonText: "Save Changes",
+      background: isDark ? '#1f2937' : '#ffffff',
+      color: isDark ? '#f3f4f6' : '#000000',
       preConfirm: () => {
         const subject = document.getElementById("subject").value.trim();
         const classValue = document.getElementById("class").value.trim();
@@ -108,6 +114,8 @@ const MyTuitions = () => {
             icon: "success",
             timer: 1500,
             showConfirmButton: false,
+            background: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
+            color: document.documentElement.classList.contains('dark') ? '#f3f4f6' : '#000000',
           });
           setTuitions(prev => prev.map(t => t._id === tuition._id ? { ...t, ...formValues } : t));
         } else {
@@ -119,13 +127,13 @@ const MyTuitions = () => {
     }
   };
 
-  const handleViewDetails = (id) => console.log('View details:', id);
+  // const handleViewDetails = (id) => console.log('View details:', id);
 
   const getStatusBadge = (status) => {
     const styles = {
-      Approved: 'bg-green-100 text-green-700 border border-green-300',
-      Pending: 'bg-yellow-100 text-yellow-700 border border-yellow-300',
-      Rejected: 'bg-red-100 text-red-700 border border-red-300'
+      Approved: 'bg-green-100 text-green-700 border border-green-300 dark:bg-green-900/30 dark:text-green-400 dark:border-green-700',
+      Pending: 'bg-yellow-100 text-yellow-700 border border-yellow-300 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-700',
+      Rejected: 'bg-red-100 text-red-700 border border-red-300 dark:bg-red-900/30 dark:text-red-400 dark:border-red-700'
     };
     const icons = {
       Approved: <CheckCircle className="w-4 h-4" />,
@@ -152,35 +160,35 @@ const MyTuitions = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 md:p-8">
       <title>My Tuitions | e-TuitionBD</title>
 
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">My Tuitions</h1>
-          <p className="text-gray-600">Manage and track all your tuition posts</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">My Tuitions</h1>
+          <p className="text-gray-600 dark:text-gray-400">Manage and track all your tuition posts</p>
         </div>
 
         {/* Filters and Search */}
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-6">
           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
             <div className="relative flex-1 w-full md:max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" />
               <input
                 type="text"
                 placeholder="Search by subject, class, or location..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
             </div>
             <div className="flex gap-2 flex-wrap">
-              <Filter className="w-5 h-5 text-gray-500 mt-2 hidden md:block" />
+              <Filter className="w-5 h-5 text-gray-500 dark:text-gray-400 mt-2 hidden md:block" />
               {['all', 'approved', 'pending', 'rejected'].map(f => (
                 <button
                   key={f}
                   onClick={() => setFilter(f)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all capitalize text-sm ${filter === f ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all capitalize text-sm ${filter === f ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'}`}
                 >
                   {f} <span className="ml-1.5 text-xs opacity-75">({f === 'all' ? tuitions.length : tuitions.filter(t => t.status.toLowerCase() === f).length})</span>
                 </button>
@@ -190,14 +198,14 @@ const MyTuitions = () => {
         </div>
 
         {/* Table */}
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
           {filteredTuitions.length === 0 ? (
             <div className="p-12 text-center">
-              <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="w-10 h-10 text-gray-400" />
+              <div className="w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Search className="w-10 h-10 text-gray-400 dark:text-gray-500" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">No tuitions found</h3>
-              <p className="text-gray-500">{searchTerm ? "Try adjusting your search or filter criteria" : filter === 'all' ? "You haven't posted any tuitions yet" : `No ${filter} tuitions available`}</p>
+              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">No tuitions found</h3>
+              <p className="text-gray-500 dark:text-gray-400">{searchTerm ? "Try adjusting your search or filter criteria" : filter === 'all' ? "You haven't posted any tuitions yet" : `No ${filter} tuitions available`}</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -213,25 +221,25 @@ const MyTuitions = () => {
                     <th className="px-6 py-4 text-center text-sm font-semibold">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                   {filteredTuitions.map((tuition, index) => (
-                    <tr key={tuition._id} className={`hover:bg-blue-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+                    <tr key={tuition._id} className={`hover:bg-blue-50 dark:hover:bg-gray-700/50 transition-colors ${index % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-900'}`}>
                       <td className="px-6 py-4">
                         <div className="flex flex-col">
-                          <span className="font-semibold text-gray-900">{tuition.subject}</span>
-                          <span className="text-sm text-gray-600">{tuition.class}</span>
+                          <span className="font-semibold text-gray-900 dark:text-white">{tuition.subject}</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">{tuition.class}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4">{tuition.location}</td>
-                      <td className="px-6 py-4">৳{Number(tuition.budget).toLocaleString()}</td>
-                      <td className="px-6 py-4">{tuition.schedule}</td>
-                      <td className="px-6 py-4 text-center">{tuition.applicationsCount || 0}</td>
+                      <td className="px-6 py-4 text-gray-900 dark:text-gray-300">{tuition.location}</td>
+                      <td className="px-6 py-4 text-gray-900 dark:text-gray-300">৳{Number(tuition.budget).toLocaleString()}</td>
+                      <td className="px-6 py-4 text-gray-900 dark:text-gray-300">{tuition.schedule}</td>
+                      <td className="px-6 py-4 text-center text-gray-900 dark:text-gray-300">{tuition.applicationsCount || 0}</td>
                       <td className="px-6 py-4 text-center">{getStatusBadge(tuition.status)}</td>
                       <td className="px-6 py-4">
                         <div className="flex items-center justify-center gap-2">
                           {/* <button onClick={() => handleViewDetails(tuition._id)} className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-all"><Eye className="w-5 h-5" /></button> */}
-                          <button onClick={() => handleEdit(tuition)} className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-all"><Edit className="w-5 h-5" /></button>
-                          <button onClick={() => handleDelete(tuition._id)} className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-all"><Trash2 className="w-5 h-5" /></button>
+                          <button onClick={() => handleEdit(tuition)} className="p-2 text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg transition-all"><Edit className="w-5 h-5" /></button>
+                          <button onClick={() => handleDelete(tuition._id)} className="p-2 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg transition-all"><Trash2 className="w-5 h-5" /></button>
                         </div>
                       </td>
                     </tr>

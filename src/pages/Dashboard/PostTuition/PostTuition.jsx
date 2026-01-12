@@ -88,19 +88,19 @@ const PostTuition = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 p-4 md:p-8 transition-colors duration-300">
       <title>Post Tuitions | e-TuitionBD</title>
 
       <div className="max-w-4xl mx-auto">
 
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
             Post New Tuition
           </h1>
-          <p className="text-gray-600">Fill in the details to find the perfect tutor</p>
+          <p className="text-gray-600 dark:text-gray-400">Fill in the details to find the perfect tutor</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8 border dark:border-slate-700 transition-colors duration-300">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
             {/* Subject & Class */}
@@ -108,46 +108,46 @@ const PostTuition = () => {
 
               {/* Subject */}
               <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                  <BookOpen className="w-4 h-4 text-blue-600" />
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  <BookOpen className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   Subject *
                 </label>
                 <select
                   {...register("subject", { required: "Subject is required" })}
-                  className={`w-full px-4 py-3 border rounded-lg select ${
-                    errors.subject ? "border-red-500" : "border-gray-300"
+                  className={`w-full px-4 py-3 border rounded-lg select dark:bg-slate-700 dark:text-white ${
+                    errors.subject ? "border-red-500" : "border-gray-300 dark:border-slate-600"
                   }`}
                 >
-                  <option value="">Select Subject</option>
+                  <option value="" className="dark:bg-slate-800">Select Subject</option>
                   {subjects.map((s) => (
-                    <option key={s} value={s}>{s}</option>
+                    <option key={s} value={s} className="dark:bg-slate-800">{s}</option>
                   ))}
                 </select>
                 {errors.subject && (
-                  <p className="text-red-500 text-sm">{errors.subject.message}</p>
+                  <p className="text-red-500 text-sm mt-1">{errors.subject.message}</p>
                 )}
               </div>
 
               {/* Class */}
               <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                  <BookOpen className="w-4 h-4 text-blue-600" />
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  <BookOpen className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   Class/Grade *
                 </label>
 
                 <select
                   {...register("class", { required: "Class is required" })}
-                  className={`w-full px-4 py-3 border rounded-lg select ${
-                    errors.class ? "border-red-500" : "border-gray-300"
+                  className={`w-full px-4 py-3 border rounded-lg select dark:bg-slate-700 dark:text-white ${
+                    errors.class ? "border-red-500" : "border-gray-300 dark:border-slate-600"
                   }`}
                 >
-                  <option value="">Select Class</option>
+                  <option value="" className="dark:bg-slate-800">Select Class</option>
                   {classes.map((cls) => (
-                    <option key={cls} value={cls}>{cls}</option>
+                    <option key={cls} value={cls} className="dark:bg-slate-800">{cls}</option>
                   ))}
                 </select>
                 {errors.class && (
-                  <p className="text-red-500 text-sm">{errors.class.message}</p>
+                  <p className="text-red-500 text-sm mt-1">{errors.class.message}</p>
                 )}
               </div>
 
@@ -158,32 +158,32 @@ const PostTuition = () => {
 
               {/* Location */}
               <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                  <MapPin className="w-4 h-4 text-blue-600" />
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  <MapPin className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   Location *
                 </label>
 
                 <select
                   {...register("location", { required: "Location is required" })}
-                  className={`w-full px-4 py-3 border rounded-lg select ${
-                    errors.location ? "border-red-500" : "border-gray-300"
+                  className={`w-full px-4 py-3 border rounded-lg select dark:bg-slate-700 dark:text-white ${
+                    errors.location ? "border-red-500" : "border-gray-300 dark:border-slate-600"
                   }`}
                 >
-                  <option value="">Select Location</option>
+                  <option value="" className="dark:bg-slate-800">Select Location</option>
                   {locations.map((loc) => (
-                    <option key={loc} value={loc}>{loc}, Dhaka</option>
+                    <option key={loc} value={loc} className="dark:bg-slate-800">{loc}, Dhaka</option>
                   ))}
                 </select>
 
                 {errors.location && (
-                  <p className="text-red-500 text-sm">{errors.location.message}</p>
+                  <p className="text-red-500 text-sm mt-1">{errors.location.message}</p>
                 )}
               </div>
 
               {/* Budget */}
               <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                  <DollarSign className="w-4 h-4 text-blue-600" />
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  <DollarSign className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   Budget (BDT/Month) *
                 </label>
 
@@ -193,24 +193,24 @@ const PostTuition = () => {
                     required: "Budget is required",
                     min: { value: 1, message: "Budget must be greater than 0" }
                   })}
-                  className={`w-full px-4 py-3 border rounded-lg ${
-                    errors.budget ? "border-red-500" : "border-gray-300"
+                  className={`w-full px-4 py-3 border rounded-lg dark:bg-slate-700 dark:text-white ${
+                    errors.budget ? "border-red-500" : "border-gray-300 dark:border-slate-600"
                   }`}
                   placeholder="e.g. 8000"
                 />
                 {errors.budget && (
-                  <p className="text-red-500 text-sm">{errors.budget.message}</p>
+                  <p className="text-red-500 text-sm mt-1">{errors.budget.message}</p>
                 )}
               </div>
             </div>
 
             {/* Image & Schedule */}
-            <div className='flex justify-between items-center gap-6'>
+            <div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-6'>
               
               {/* Image Upload */}
-              <div className='flex-1'>
-                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                  <FileText className="w-4 h-4 text-blue-600" />
+              <div className='w-full flex-1'>
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  <FileText className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   Subject Image *
                 </label>
 
@@ -218,35 +218,35 @@ const PostTuition = () => {
                   type="file"
                   accept="image/*"
                   {...register("subjectImage", { required: "Image is required" })}
-                  className="w-full border border-gray-300 rounded-lg p-3"
+                  className="w-full border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-gray-300 rounded-lg p-2.5"
                 />
 
                 {errors.subjectImage && (
-                  <p className="text-red-500 text-sm">{errors.subjectImage.message}</p>
+                  <p className="text-red-500 text-sm mt-1">{errors.subjectImage.message}</p>
                 )}
               </div>
 
               {/* Schedule */}
-              <div className='flex-1'>
-                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                  <Calendar className="w-4 h-4 text-blue-600" />
+              <div className='w-full flex-1'>
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  <Calendar className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   Schedule *
                 </label>
 
                 <select
                   {...register("schedule", { required: "Schedule is required" })}
-                  className={`w-full px-4 py-3 border rounded-lg select ${
-                    errors.schedule ? "border-red-500" : "border-gray-300"
+                  className={`w-full px-4 py-3 border rounded-lg select dark:bg-slate-700 dark:text-white ${
+                    errors.schedule ? "border-red-500" : "border-gray-300 dark:border-slate-600"
                   }`}
                 >
-                  <option value="">Select Schedule</option>
+                  <option value="" className="dark:bg-slate-800">Select Schedule</option>
                   {schedules.map((s) => (
-                    <option key={s} value={s}>{s}</option>
+                    <option key={s} value={s} className="dark:bg-slate-800">{s}</option>
                   ))}
                 </select>
 
                 {errors.schedule && (
-                  <p className="text-red-500 text-sm">{errors.schedule.message}</p>
+                  <p className="text-red-500 text-sm mt-1">{errors.schedule.message}</p>
                 )}
               </div>
 
@@ -254,8 +254,8 @@ const PostTuition = () => {
 
             {/* Description */}
             <div>
-              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                <FileText className="w-4 h-4 text-blue-600" />
+              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <FileText className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 Description *
               </label>
 
@@ -263,17 +263,17 @@ const PostTuition = () => {
                 {...register("description", { required: "Description is required" })}
                 rows="4"
                 placeholder="Describe what you expect..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg"
               />
               {errors.description && (
-                <p className="text-red-500 text-sm">{errors.description.message}</p>
+                <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>
               )}
             </div>
 
             {/* Requirements */}
             <div>
-              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                <FileText className="w-4 h-4 text-blue-600" />
+              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <FileText className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 Special Requirements *
               </label>
 
@@ -281,19 +281,19 @@ const PostTuition = () => {
                 {...register("requirements", { required: "Requirements is required" })}
                 rows="3"
                 placeholder="e.g. Female tutor preferred..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg"
               />
               {errors.requirements && (
-                <p className="text-red-500 text-sm">{errors.requirements.message}</p>
+                <p className="text-red-500 text-sm mt-1">{errors.requirements.message}</p>
               )}
             </div>
 
             {/* Submit */}
-            <div className="flex gap-4 pt-4">
+            <div className="flex flex-col md:flex-row gap-4 pt-4">
               <button
                 disabled={isSubmitting}
-                className={`flex-1 flex items-center justify-center cursor-pointer gap-2 px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold shadow-lg ${
-                  isSubmitting ? "opacity-70" : "hover:scale-101"
+                className={`flex-1 flex items-center justify-center cursor-pointer gap-2 px-6 py-3 bg-blue-500 dark:bg-blue-600 text-white rounded-lg font-semibold shadow-lg ${
+                  isSubmitting ? "opacity-70" : "hover:scale-101 active:scale-95"
                 } transition-all`}
               >
                 {isSubmitting ? (
@@ -312,7 +312,7 @@ const PostTuition = () => {
               <button
                 type="button"
                 onClick={() => navigate("/dashboard/my-tuitions")}
-                className="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-semibold"
+                className="px-6 py-3 bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-lg font-semibold transition-colors"
               >
                 Cancel
               </button>
